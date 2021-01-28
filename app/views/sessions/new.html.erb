@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Log in</title>
-</head>
 <body class="hold-transition login-page">
+<div class="container">
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-<%= message_type %>"><%= message %></div>
+  <% end %>
+</div>
 <div class="login-box">
   <div class="login-logo">
     <a href="#"><b>Admin</b>LTE</a>
@@ -17,7 +15,7 @@
 
       <%= form_with(url: sessions_path, scope: :session, local: true) do |f| %>
         <div class="input-group mb-3">
-          <%= f.email_field :email, class: "form-control" ,placeholder:"email@example.com"%>
+          <%= f.email_field :email, class: "form-control", placeholder: "email@example.com" %>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -25,7 +23,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <%= f.password_field :password, class: "form-control",placeholder:"password" %>
+          <%= f.password_field :password, class: "form-control", placeholder: "password" %>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -41,11 +39,12 @@
               </label>
             <% end %>
           </div>
+          <div class="col-4">
+            <%= f.submit "Sign In", class: "btn btn-primary btn-bloc" %>
+          </div>
         </div>
         <!-- /.col -->
-        <div class="col-4">
-          <%= f.submit "Sign In", class: "btn btn-primary btn-bloc" %>
-        </div>
+
 
       <% end %>
 
@@ -64,19 +63,13 @@
         <a href="forgot-password.html">I forgot my password</a>
       </p>
       <p class="mb-0">
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <%= link_to "Register a new membership", new_user_path, class: "text-center" %>
       </p>
-      </div>
-  <!-- /.login-card-body -->
+    </div>
+    <!-- /.login-card-body -->
+  </div>
 </div>
-</div>
-<!-- /.login-box -->
 
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
+
 </body>
-</html>
+

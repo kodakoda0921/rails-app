@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   layout "default"
 
   def new
+
   end
 
   def create
