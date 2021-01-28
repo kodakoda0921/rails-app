@@ -11,5 +11,14 @@ import "channels"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
-require("bootstrap");
+// ここから追加
+let jQuery = require('jquery')
+global.$ = global.jQuery = jQuery;
+window.$ = window.jQuery = jQuery;
+// ここまで
 require("admin-lte");
+require("admin-lte/plugins/jquery/jquery.min");
+require("admin-lte/plugins/bootstrap/js/bootstrap.bundle.min");
+require("admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min");
+require("admin-lte/dist/js/adminlte.min");
+require("admin-lte/dist/js/demo");

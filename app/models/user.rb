@@ -24,6 +24,11 @@ class User < ApplicationRecord
     return false if activated.nil?
   end
 
+  # リメンバーを破棄
+  def forget
+    update_attribute(:remember_digest, nil)
+  end
+
   private
 
   # メールアドレスをすべて小文字にする

@@ -3,8 +3,11 @@ class UsersController < ApplicationController
   end
 
   def home
-    session[:user_id] = 1
-    @current_user = current_user
+    if logged_in?
+      @current_user = current_user
+    else
+      redirect_to new_session_path
+    end
   end
 
   def index
