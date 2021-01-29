@@ -27,9 +27,9 @@
         <div class="card card-primary card-outline">
           <div class="card-body box-profile">
             <div class="text-center">
-<!--              <img class="profile-user-img img-fluid img-circle"-->
-<!--                   src=""-->
-<!--                   alt="User profile picture">-->
+              <!--              <img class="profile-user-img img-fluid img-circle"-->
+              <!--                   src=""-->
+              <!--                   alt="User profile picture">-->
             </div>
 
             <h3 class="profile-username text-center"><%= @current_user.name %></h3>
@@ -109,27 +109,102 @@
           <div class="card-body">
             <div class="tab-content">
               <div class="active tab-pane" id="activity">
+                <!-- MyPost -->
+                <div class="post">
+                  <%= form_with(scope: :micropost, url: microposts_path, local: true, class: "form-horizontal") do |f| %>
+                    <div class="input-group input-group-sm mb-0">
+
+                      <%#= render 'shared/error_messages', object: f.object %>
+
+                      <%= f.text_field :content, class: "form-control form-control-sm", placeholder: "Post message" %>
+                      <div class="input-group-append">
+                        <%= f.submit "Post", class: "btn btn-primary" %>
+                      </div>
+                    </div>
+                    <label class="upload-img-btn">
+                      <i class="far fa-image"></i>
+                      <%= f.file_field :image, style: "display:none", name: "image", id: "myfile", onClick: "openFile()" %>
+                      <p id=image-name></p>
+                    </label>
+                  <% end %>
+
+                  <img id="img1" style="width:300px;height:300px;display:none;"/>
+
+
+                  <!-- /.Mypost -->
+                  <script>
+                      $(function () {
+                          $('#myfile').change(function (e) {
+                              //ファイルオブジェクトを取得する
+                              const file = e.target.files[0];
+                              const reader = new FileReader();
+
+                              //画像でない場合は処理終了
+                              if (file.type.indexOf("image") < 0) {
+                                  alert("画像ファイルを指定してください。");
+                                  return false;
+                              }
+
+                              //アップロードした画像を設定する
+                              reader.onload = (function (file) {
+                                  return function (e) {
+                                      e.target.result
+                                      $("#img1").attr("src", e.target.result);
+                                      $("#img1").attr("title", file.name);
+                                      $(document).Toasts('create', {
+                                          body: '画像のイメージプレビュー',
+                                          title: file.name,
+                                          subtitle: 'Preview',
+                                          image: e.target.result,
+                                          imageAlt: file.name,
+                                          autohide: true,
+                                          delay: 5000
+                                      })
+                                      let a = document.getElementById("image-name");
+                                      a.innerHTML = file.name;
+                                  };
+                              })(file);
+                              reader.readAsDataURL(file);
+                          });
+
+                      });
+                      const inputFile = document.getElementById("myfile");
+
+                      function openFile() {
+                          document.body.onfocus = getEvent;
+                      }
+
+                      function getEvent() {
+                          setTimeout(() => {
+                              if (inputFile.value.length) {
+
+
+                              } else {
+                                  $("#img1").attr("src", null);
+                                  $("#img1").attr("title", null);
+                                  document.getElementById("image-name").innerHTML = ""
+                              }
+                              document.body.onfocus = null;
+                          }, 500);
+                      };
+
+
+                  </script>
+                </div>
+
                 <!-- Post -->
                 <div class="post">
                   <div class="user-block">
-<!--                    <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">-->
+                    <!--                    <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">-->
                     <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
+                          <a href="#">Adam Jones</a>
                           <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
                         </span>
-                    <span class="description">Shared publicly - 7:30 PM today</span>
+                    <span class="description">Posted - 5 days ago</span>
                   </div>
                   <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
 
                   <p>
-                    <a href="#" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i> Share</a>
                     <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i> Like</a>
                     <span class="float-right">
                           <a href="#" class="link-black text-sm">
@@ -141,74 +216,19 @@
                   <input class="form-control form-control-sm" type="text" placeholder="Type a comment">
                 </div>
                 <!-- /.post -->
-
-                <!-- Post -->
-                <div class="post clearfix">
-                  <div class="user-block">
-<!--                    <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image">-->
-                    <span class="username">
-                          <a href="#">Sarah Ross</a>
-                          <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
-                        </span>
-                    <span class="description">Sent you a message - 3 days ago</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
-
-                  <form class="form-horizontal">
-                    <div class="input-group input-group-sm mb-0">
-                      <input class="form-control form-control-sm" placeholder="Response">
-                      <div class="input-group-append">
-                        <button type="submit" class="btn btn-danger">Send</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <!-- /.post -->
-
                 <!-- Post -->
                 <div class="post">
                   <div class="user-block">
-<!--                    <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">-->
+                    <!--                    <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">-->
                     <span class="username">
                           <a href="#">Adam Jones</a>
                           <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
                         </span>
-                    <span class="description">Posted 5 photos - 5 days ago</span>
+                    <span class="description">Posted - 5 days ago</span>
                   </div>
                   <!-- /.user-block -->
-                  <div class="row mb-3">
-                    <div class="col-sm-6">
-<!--                      <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo">-->
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-6">
-                      <div class="row">
-                        <div class="col-sm-6">
-<!--                          <img class="img-fluid mb-3" src="../../dist/img/photo2.png" alt="Photo">-->
-<!--                          <img class="img-fluid" src="../../dist/img/photo3.jpg" alt="Photo">-->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-6">
-<!--                          <img class="img-fluid mb-3" src="../../dist/img/photo4.jpg" alt="Photo">-->
-<!--                          <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo">-->
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.row -->
-                    </div>
-                    <!-- /.col -->
-                  </div>
-                  <!-- /.row -->
 
                   <p>
-                    <a href="#" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i> Share</a>
                     <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i> Like</a>
                     <span class="float-right">
                           <a href="#" class="link-black text-sm">
@@ -261,7 +281,8 @@
                     <div class="timeline-item">
                       <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
 
-                      <h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted your friend request
+                      <h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted your friend
+                        request
                       </h3>
                     </div>
                   </div>
@@ -367,15 +388,18 @@
                 </form>
               </div>
               <!-- /.tab-pane -->
+
             </div>
             <!-- /.tab-content -->
-          </div><!-- /.card-body -->
+          </div>
+          <!-- /.card-body -->
         </div>
         <!-- /.card -->
       </div>
       <!-- /.col -->
     </div>
     <!-- /.row -->
-  </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.container-fluid -->
 </section>
 

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :microposts,dependent: :destroy
   validates(:name, presence: true, length: { maximum: 50 })
   validates(:email, presence: true, length: { maximum: 255 })
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -22,13 +23,19 @@ class User < ApplicationRecord
   end
 
   # 認証済かどうか確認する
-  def authenticated?(attribute,token)
+  def authenticated?(attribute, token)
     digest = self.send("#{attribute}_digest")
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end
 
-  # リメンバーを破棄
+  # ランダムな文字列（トークン）を作成し、それをハッシュ化し、DBのremember_digestに保存
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, digest(self.remember_token))
+  end
+
+  # DBのremember_digestを破棄
   def forget
     update_attribute(:remember_digest, nil)
   end

@@ -10,8 +10,13 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       if user.activated?
         log_in(user)
-        # params[:session][:remember_me] == "1" ? remember(user) : forget(user)
+        params[:session][:remember_me] == "1" ? remember(user) : forget(user)
         flash[:success] = "ようこそ" + user.name + "さん"
+        if user.authenticated?("remember", user.remember_token)
+          flash[:info] = user.name + "さんのログイン情報は現在、クッキーに記憶されています"
+        else
+          flash[:info] = user.name + "さんのログイン情報は現在、クッキーに記憶されていません"
+        end
         redirect_to root_path
       else
         message = "アカウントが有効化されていません！"
