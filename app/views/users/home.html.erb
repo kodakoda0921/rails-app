@@ -111,7 +111,7 @@
               <div class="active tab-pane" id="activity">
                 <!-- MyPost -->
                 <div class="post">
-                  <%= form_with(scope: :micropost, url: microposts_path, local: true, class: "form-horizontal") do |f| %>
+                  <%= form_with(model: @microposts, url: microposts_path, local: true, class: "form-horizontal") do |f| %>
                     <div class="input-group input-group-sm mb-0">
 
                       <%#= render 'shared/error_messages', object: f.object %>
@@ -123,7 +123,7 @@
                     </div>
                     <label class="upload-img-btn">
                       <i class="far fa-image"></i>
-                      <%= f.file_field :image, style: "display:none", name: "image", id: "myfile", onClick: "openFile()" %>
+                      <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", style: "display:none", name: "image", id: "myfile", onClick: "openFile()" %>
                       <p id=image-name></p>
                     </label>
                   <% end %>
@@ -193,52 +193,39 @@
                 </div>
 
                 <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <!--                    <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">-->
-                    <span class="username">
-                          <a href="#">Adam Jones</a>
+                <% if !@microposts.nil? %>
+                  <% @microposts.each do |micropost| %>
+                    <div class="post">
+
+                      <div class="user-block">
+                        <!--                    <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">-->
+
+                        <span class="username">
+                          <%= link_to micropost.user.name, micropost.user %>
                           <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
                         </span>
-                    <span class="description">Posted - 5 days ago</span>
-                  </div>
-                  <!-- /.user-block -->
+                        <span class="description"><%= time_ago_in_words(micropost.created_at) %>-ago.</span>
+                      </div>
+                      <!-- /.user-block -->
+                      <%= image_tag micropost.display_image, class: "img-fluid pad" if micropost.image.attached? %>
+                      <p>
+                        <%= micropost.content %>
+                      </p>
 
-                  <p>
-                    <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i> Like</a>
-                    <span class="float-right">
+
+                      <p>
+                        <a href="#" class="link-black text-sm mr-2"><i class="far fa-thumbs-up mr-1"></i> Like</a>
+                        <span class="float-right">
                           <a href="#" class="link-black text-sm">
                             <i class="far fa-comments mr-1"></i> Comments (5)
                           </a>
-                        </span>
-                  </p>
+                      </span>
+                      </p>
 
-                  <input class="form-control form-control-sm" type="text" placeholder="Type a comment">
-                </div>
-                <!-- /.post -->
-                <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <!--                    <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">-->
-                    <span class="username">
-                          <a href="#">Adam Jones</a>
-                          <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
-                        </span>
-                    <span class="description">Posted - 5 days ago</span>
-                  </div>
-                  <!-- /.user-block -->
-
-                  <p>
-                    <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i> Like</a>
-                    <span class="float-right">
-                          <a href="#" class="link-black text-sm">
-                            <i class="far fa-comments mr-1"></i> Comments (5)
-                          </a>
-                        </span>
-                  </p>
-
-                  <input class="form-control form-control-sm" type="text" placeholder="Type a comment">
-                </div>
+                      <input class="form-control form-control-sm" type="text" placeholder="Type a comment">
+                    </div>
+                  <% end %>
+                <% end %>
                 <!-- /.post -->
               </div>
               <!-- /.tab-pane -->

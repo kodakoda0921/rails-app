@@ -20,6 +20,7 @@ class UsersController < ApplicationController
   def home
     if logged_in?
       @current_user = current_user
+      @microposts = current_user.microposts
     else
       redirect_to new_session_path
     end
