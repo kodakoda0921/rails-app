@@ -1,9 +1,5 @@
 <body class="hold-transition register-page">
 <div class="container">
-
-  <%= render 'shared/error_messages', object: @user %>
-
-
 </div>
 <div class="register-box">
   <div class="register-logo">
@@ -14,6 +10,7 @@
     <div class="card-body register-card-body">
       <p class="login-box-msg">Register a new membership</p>
       <%= form_with(model: @user, url: users_path, local: true) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
         <div class="input-group mb-3">
           <%= f.text_field :name, class: "form-control", placeholder: "Full name" %>
           <div class="input-group-append">
@@ -77,8 +74,7 @@
           Sign up using Google+
         </a>
       </div>
-
-      <a href="login.html" class="text-center">I already have a membership</a>
+      <%= link_to "I already have a membership", sessions_path, class: "text-center" %>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->

@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
       if user.activated?
         log_in(user)
         # params[:session][:remember_me] == "1" ? remember(user) : forget(user)
+        flash[:success] = "ようこそ" + user.name + "さん"
         redirect_to root_path
       else
         message = "アカウントが有効化されていません！"
