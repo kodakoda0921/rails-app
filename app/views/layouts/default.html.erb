@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>RailsApp</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta charset="utf-8">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-</head>
+<%= render "layouts/head" %>
 
-<%= yield %>
+<body class="hold-transition register-page">
+<div class="container">
+  <%= render "shared/flash_messages" %>
+</div>
+<div class="register-box">
+  <div class="register-logo">
+    <%= link_to "AdminLTE", root_path %>
+  </div>
+  <%= yield %>
 
+</div>
+<!-- /.register-box -->
+
+</body>
 </html>

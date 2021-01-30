@@ -1,85 +1,73 @@
-<body class="hold-transition register-page">
-<div class="container">
-  <%= render "shared/flash_messages" %>
-</div>
-<div class="register-box">
-  <div class="register-logo">
-    <a href="#"><b>Admin</b>LTE</a>
-  </div>
-
-  <div class="card">
-    <div class="card-body register-card-body">
-      <p class="login-box-msg">Register a new membership</p>
-      <%= form_with(model: @user, url: users_path, local: true) do |f| %>
-        <div class="input-group mb-3">
-          <%= f.text_field :name, class: "form-control", placeholder: "Full name" %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
-            </div>
+<% provide(:title, 'Regist') %>
+<div class="card">
+  <div class="card-body register-card-body">
+    <p class="login-box-msg">Register a new membership</p>
+    <%= form_with(model: @user, url: users_path, local: true) do |f| %>
+      <div class="input-group mb-3">
+        <%= f.text_field :name, class: "form-control", placeholder: "Full name" %>
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-user"></span>
           </div>
         </div>
-        <div class="input-group mb-3">
-          <%= f.email_field :email, class: "form-control", placeholder: "email@example.com" %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
-
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <%= f.password_field :password_confirmation, class: 'form-control', placeholder: "Retype password" %>
-
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <%= f.check_box :terms, id: "agreeTerms" %>
-              <label for="agreeTerms">
-                I agree to the <%= link_to "Terms", new_user_path %>
-              </label>
-            </div>
-          </div>
-          <!-- /.col -->
-          <div class="col-4">
-            <%= f.submit "Register", class: "btn btn-primary btn-block" %>
-          </div>
-      <% end %>
-      <!-- /.col -->
       </div>
-
-
-      <div class="social-auth-links text-center">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i>
-          Sign up using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i>
-          Sign up using Google+
-        </a>
+      <div class="input-group mb-3">
+        <%= f.email_field :email, class: "form-control", placeholder: "email@example.com" %>
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-envelope"></span>
+          </div>
+        </div>
       </div>
-      <%= link_to "I already have a membership", new_session_path, class: "text-center" %>
+      <div class="input-group mb-3">
+        <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
+
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-lock"></span>
+          </div>
+        </div>
+      </div>
+      <div class="input-group mb-3">
+        <%= f.password_field :password_confirmation, class: 'form-control', placeholder: "Retype password" %>
+
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-lock"></span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8">
+          <div class="icheck-primary">
+            <%= f.check_box :terms, id: "agreeTerms" %>
+            <label for="agreeTerms">
+              I agree to the <%= link_to "Terms", new_user_path %>
+            </label>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-4">
+          <%= f.submit "Register", class: "btn btn-primary btn-block" %>
+        </div>
+    <% end %>
+    <!-- /.col -->
     </div>
-    <!-- /.form-box -->
-  </div><!-- /.card -->
-</div>
-<!-- /.register-box -->
 
-</body>
+
+    <div class="social-auth-links text-center">
+      <p>- OR -</p>
+      <a href="#" class="btn btn-block btn-primary">
+        <i class="fab fa-facebook mr-2"></i>
+        Sign up using Facebook
+      </a>
+      <a href="#" class="btn btn-block btn-danger">
+        <i class="fab fa-google-plus mr-2"></i>
+        Sign up using Google+
+      </a>
+    </div>
+    <%= link_to "I already have a membership", new_session_path, class: "text-center" %>
+  </div>
+  <!-- /.form-box -->
+</div>
 
