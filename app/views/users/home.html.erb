@@ -1,6 +1,5 @@
 <% provide(:title, 'Home') %>
 <%= render "user_top_path" %>
-
 <!-- Main content -->
 <section class="content">
 
@@ -100,24 +99,82 @@
                   <div class="user-block">
                     Post
                   </div>
-                  <%= form_with(model: @microposts, url: microposts_path, local: true, class: "form-horizontal") do |f| %>
+                  <%= form_with(model: @microposts, url: microposts_path, class: "form-horizontal", local: true) do |f| %>
                     <div class="input-group input-group-sm mb-0">
                       <%= f.text_field :content, class: "form-control form-control-sm", placeholder: "Post message" %>
                       <div class="input-group-append">
                         <%= f.submit "Post", class: "btn btn-primary" %>
                       </div>
                     </div>
+
                     <label class="upload-img-btn">
                       <i class="fas fa-image col-md fa-2x"></i>
-                      <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", style: "display:none", name: "image", id: "myfile", onClick: "openFile()" %>
+                      <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", style: "display:none", name: "image", id: "myfile", onclick: "openFile()" %>
                       <p id=image-name></p>
                     </label>
+
                   <% end %>
 
                   <img id="img1" style="width:300px;height:300px;display:none;" alt="hidden_img" src=""/>
+                  <script>
+                      $(function () {
+                          $('#myfile').change(function (e) {
+                              //ファイルオブジェクトを取得する
+                              const file = e.target.files[0];
+                              const reader = new FileReader();
 
-                  <%= javascript_pack_tag "users/home" %>
+                              //画像でない場合は処理終了
+                              if (file.type.indexOf("image") < 0) {
+                                  alert("画像ファイルを指定してください。");
+                                  return false;
+                              }
 
+                              //アップロードした画像を設定する
+                              reader.onload = (function (file) {
+                                  return function (e) {
+                                      e.target.result
+                                      $("#img1").attr("src", e.target.result);
+                                      $("#img1").attr("title", file.name);
+                                      $(document).Toasts('create', {
+                                          body: '画像のイメージプレビュー',
+                                          title: file.name,
+                                          subtitle: 'Preview',
+                                          image: e.target.result,
+                                          imageAlt: file.name,
+                                          autohide: true,
+                                          delay: 5000
+                                      })
+                                      let a = document.getElementById("image-name");
+                                      a.innerHTML = file.name;
+                                  };
+                              })(file);
+                              reader.readAsDataURL(file);
+                          });
+
+                      });
+                      const inputFile = document.getElementById("myfile");
+
+                      function openFile() {
+                          document.body.onfocus = getEvent;
+                      }
+
+                      function getEvent() {
+                          setTimeout(() => {
+                              if (inputFile.value.length) {
+
+
+                              } else {
+                                  $("#img1").attr("src", null);
+                                  $("#img1").attr("title", null);
+                                  document.getElementById("image-name").innerHTML = ""
+                              }
+                              document.body.onfocus = null;
+                          }, 500);
+                      };
+
+
+                  </script>
+                  
                 </div>
 
                 <!-- Post -->
