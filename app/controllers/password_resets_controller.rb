@@ -16,11 +16,11 @@ class PasswordResetsController < ApplicationController
     if @user
       @user.create_reset_digest
       @user.send_password_reset_email
-      flash[:info] = "入力されたメールアドレスにパスワードリセットリンクを送信しました。"
-      redirect_to root_path
+      flash[:success] = "入力されたメールアドレスにパスワードリセットリンクを送信しました。"
+      redirect_to new_password_reset_path
     else
-      flash.now[:danger] = "入力されたメールアドレスは存在しません。"
-      render "new"
+      flash[:danger] = "入力されたメールアドレスは存在しません。"
+      redirect_to new_password_reset_path
     end
   end
 

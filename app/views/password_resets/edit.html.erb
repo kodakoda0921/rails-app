@@ -1,4 +1,5 @@
 <body class="hold-transition login-page">
+<%= render "shared/flash_messages" %>
 <div class="login-box">
   <div class="login-logo">
     <%= link_to "AdminLTE", root_path %>
@@ -8,7 +9,6 @@
       <div class="card-body login-card-body">
       <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
       <%= form_with(url: password_reset_path, model: @user, local: true) do |f| %>
-        <%= render 'shared/error_messages', object: f.object %>
           <%= hidden_field_tag :email, @user.email %>
         <div class="input-group mb-3">
           <%= f.password_field :password, class: "form-control", placeholder: "Password" %>

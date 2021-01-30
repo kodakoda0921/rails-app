@@ -101,8 +101,8 @@
         <div class="card">
           <div class="card-header p-2">
             <ul class="nav nav-pills">
-              <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Activity</a></li>
-              <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
+              <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">MyPost</a></li>
+              <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Activity</a></li>
               <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
             </ul>
           </div><!-- /.card-header -->
@@ -110,12 +110,12 @@
             <div class="tab-content">
               <div class="active tab-pane" id="activity">
                 <!-- MyPost -->
-                <div class="post">
+                <div class="post" style="border-bottom:5px double #adb5bd;">
+                  <div class="user-block">
+                    投稿フォーム
+                  </div>
                   <%= form_with(model: @microposts, url: microposts_path, local: true, class: "form-horizontal") do |f| %>
                     <div class="input-group input-group-sm mb-0">
-
-                      <%#= render 'shared/error_messages', object: f.object %>
-
                       <%= f.text_field :content, class: "form-control form-control-sm", placeholder: "Post message" %>
                       <div class="input-group-append">
                         <%= f.submit "Post", class: "btn btn-primary" %>

@@ -7,12 +7,18 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      @user.send_activation_email
-      flash[:info] = "確認用のメールを送りました。ご確認の上、記載のリンクをクリックしてください。"
-      redirect_to root_path
+    if params[:user][:terms] == "1"
+      if @user.save
+        @user.send_activation_email
+        flash[:info] = "確認用のメールを送りました。ご確認の上、記載のリンクをクリックしてください。"
+        redirect_to root_path
+      else
+        flash[:danger] = @user.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
+        redirect_to new_user_path
+      end
     else
-      render "new"
+      flash[:info] = "利用規約に同意していません。"
+      redirect_to new_user_path
     end
 
   end

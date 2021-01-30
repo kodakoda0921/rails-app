@@ -22,11 +22,11 @@ class SessionsController < ApplicationController
         message = "アカウントが有効化されていません！"
         message += "登録時のメールを確認し、アカウント有効化リンクを開いてください"
         flash[:warning] = message
-        render "new"
+        redirect_to root_path
       end
     else
-      flash.now[:danger] = "emailまたはパスワードに誤りがあります"
-      render "new"
+      flash[:danger] = "emailまたはパスワードに誤りがあります"
+      redirect_to root_path
     end
   end
 
