@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many(:microposts, dependent: :destroy)
   has_one(:profiles, dependent: :destroy, class_name: "Profile")
+  accepts_nested_attributes_for :profiles
   has_one_attached :image
   has_one_attached :back_ground
   validates(:name, presence: true, length: { maximum: 50 })

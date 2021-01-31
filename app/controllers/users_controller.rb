@@ -27,6 +27,7 @@ class UsersController < ApplicationController
     if logged_in?
       @current_user = current_user
       @microposts = current_user.microposts
+      @profiles = current_user.profiles
     else
       redirect_to new_session_path
     end
@@ -40,9 +41,25 @@ class UsersController < ApplicationController
     @microposts = @user.microposts.build
   end
 
+  def update
+    @user = current_user
+    if @user.update(user_params)
+      flash[:success] = "プロフィールを更新しました！"
+      redirect_to root_path
+    else
+      if @user.errors.any?
+        flash[:danger] = @user.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
+        redirect_to root_path
+      else
+        flash[:danger] = "不明なエラーが発生しました"
+        redirect_to root_path
+      end
+    end
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, profiles_attributes: [:id, :location, :skills, :notes, :url])
   end
 end
