@@ -8,10 +8,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if params[:user][:terms] == "1"
-      if @user.save
+      if @user.save && Profile.create(user_id: @user.id)
         @user.send_activation_email
         flash[:info] = "確認用のメールを送りました。ご確認の上、記載のリンクをクリックしてください。"
-        redirect_to root_path
+        redirect_to new_user_path
       else
         flash[:danger] = @user.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
         redirect_to new_user_path

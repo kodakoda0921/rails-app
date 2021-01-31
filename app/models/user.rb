@@ -1,14 +1,20 @@
 class User < ApplicationRecord
   has_many(:microposts, dependent: :destroy)
+  has_one(:profiles, dependent: :destroy, class_name: "Profile")
+  has_one_attached :image
+  has_one_attached :back_ground
   validates(:name, presence: true, length: { maximum: 50 })
   validates(:email, presence: true, length: { maximum: 255 })
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates(:email, format: { with: VALID_EMAIL_REGEX }, uniqueness: true)
   has_secure_password
   validates(:password, presence: true, length: { minimum: 6 }, allow_nil: true)
+  before_create :default_image, :default_back_ground_image, :create_activation_digest
   before_save :downcase_email
   attr_accessor :remember_token, :activation_token, :reset_token
-  before_create :create_activation_digest
+  validates :image, content_type: { in: %w[image/jpeg image/gif image/png],
+                                    message: "must be a valid image format" },
+            size: { less_than: 5.megabytes, message: "should be less than 5MB" }
 
   # 渡された文字列のハッシュ値を返す
   def digest(string)
@@ -65,6 +71,14 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
+  def display_image
+    image.variant(resize_to_limit: [500, 500])
+  end
+
+  def display_background_image
+    back_ground.variant(resize_to_limit: [500, 500]).processed
+  end
+
   private
 
   # メールアドレスをすべて小文字にする
@@ -75,5 +89,17 @@ class User < ApplicationRecord
   def create_activation_digest
     self.activation_token = User.new_token
     self.activation_digest = digest(activation_token)
+  end
+
+  def default_image
+    if !self.image.attached?
+      self.image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'user_default.png')), filename: 'user_default.png', content_type: 'image/png')
+    end
+  end
+
+  def default_back_ground_image
+    if !self.back_ground.attached?
+      self.back_ground.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'photo4.jpg')), filename: 'photo4.jpg', content_type: 'image/jpg')
+    end
   end
 end
