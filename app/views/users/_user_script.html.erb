@@ -1,0 +1,109 @@
+<script>
+    $(function () {
+        $('#myfile').change(function (e) {
+            //ファイルオブジェクトを取得する
+            const file = e.target.files[0];
+            const reader = new FileReader();
+
+            //画像でない場合は処理終了
+            if (file.type.indexOf("image") < 0) {
+                alert("画像ファイルを指定してください。");
+                return false;
+            }
+
+            //アップロードした画像を設定する
+            reader.onload = (function (file) {
+                return function (e) {
+                    e.target.result
+                    $("#img1").attr("src", e.target.result);
+                    $("#img1").attr("title", file.name);
+                    $(document).Toasts('create', {
+                        body: '画像のイメージプレビュー',
+                        title: file.name,
+                        subtitle: 'Preview',
+                        image: e.target.result,
+                        imageAlt: file.name,
+                        autohide: true,
+                        delay: 5000
+                    })
+                    let a = document.getElementById("image-name");
+                    a.innerHTML = file.name;
+                };
+            })(file);
+            reader.readAsDataURL(file);
+        });
+
+    });
+    const inputFile = document.getElementById("myfile");
+
+    function openFile() {
+        document.body.onfocus = getEvent;
+    }
+
+    function getEvent() {
+        setTimeout(() => {
+            if (inputFile.value.length) {
+
+
+            } else {
+                $("#img1").attr("src", null);
+                $("#img1").attr("title", null);
+                document.getElementById("image-name").innerHTML = ""
+            }
+            document.body.onfocus = null;
+        }, 500);
+    };
+    $(function () {
+        $('#modal_file').change(function (e) {
+            //ファイルオブジェクトを取得する
+            const file = e.target.files[0];
+            const reader = new FileReader();
+
+            //画像でない場合は処理終了
+            if (file.type.indexOf("image") < 0) {
+                alert("画像ファイルを指定してください。");
+                return false;
+            }
+
+            //アップロードした画像を設定する
+            reader.onload = (function (file) {
+                return function (e) {
+                    e.target.result
+                    $("#img1").attr("src", e.target.result);
+                    $("#img1").attr("title", file.name);
+                    $(document).Toasts('create', {
+                        body: '画像のイメージプレビュー',
+                        title: file.name,
+                        subtitle: 'Preview',
+                        image: e.target.result,
+                        imageAlt: file.name,
+                        autohide: true,
+                        delay: 5000
+                    })
+                    let a = document.getElementById("image-name");
+                    a.innerHTML = file.name;
+                };
+            })(file);
+            reader.readAsDataURL(file);
+        });
+
+    });
+    $(function () {
+        $('#backGround_file').change(function (e) {
+
+            //ファイルオブジェクトを取得する
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            //アップロードした画像を設定する
+            reader.onload = (function (file) {
+                return function (e) {
+                    e.target.result
+                    console.log(e.target.result)
+                    $("#preview_img").attr("style", "background: url(" + e.target.result + ")");
+                    $("#image-name2").attr("value", file.name);
+                };
+            })(file);
+            reader.readAsDataURL(file);
+        });
+    });
+</script>

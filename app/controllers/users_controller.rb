@@ -43,6 +43,10 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
+    logger.debug("-----------------------------------------------------------------")
+    logger.debug(params[:user][:back_ground])
+    logger.debug("-----------------------------------------------------------------")
+    @user.back_ground.attach(params[:user][:back_ground]) if params[:user][:back_ground]
     if @user.update(user_params)
       flash[:success] = "プロフィールを更新しました！"
       redirect_to root_path
@@ -60,6 +64,9 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, profiles_attributes: [:id, :location, :skills, :notes, :url])
+    params.require(:user).permit(:name, :email, :password, :password_confirmation,
+                                 profiles_attributes: [:id, :location, :skills, :notes, :url],
+                                 image_attributes: [:image],
+                                 back_ground_attributes: [:back_ground])
   end
 end
