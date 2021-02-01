@@ -4,6 +4,8 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :profiles
   has_one_attached :image
   has_one_attached :back_ground
+  has_one_attached :image_preview
+  has_one_attached :back_ground_preview
   validates(:name, presence: true, length: { maximum: 50 })
   validates(:email, presence: true, length: { maximum: 255 })
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -15,6 +17,15 @@ class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
   validates :image, content_type: { in: %w[image/jpeg image/gif image/png],
                                     message: "must be a valid image format" },
+            size: { less_than: 5.megabytes, message: "should be less than 5MB" }
+  validates :back_ground, content_type: { in: %w[image/jpeg image/gif image/png],
+                                          message: "must be a valid image format" },
+            size: { less_than: 5.megabytes, message: "should be less than 5MB" }
+  validates :image_preview, content_type: { in: %w[image/jpeg image/gif image/png],
+                                            message: "must be a valid image format" },
+            size: { less_than: 5.megabytes, message: "should be less than 5MB" }
+  validates :back_ground_preview, content_type: { in: %w[image/jpeg image/gif image/png],
+                                                  message: "must be a valid image format" },
             size: { less_than: 5.megabytes, message: "should be less than 5MB" }
 
   # 渡された文字列のハッシュ値を返す
@@ -72,12 +83,21 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  def display_image
-    image.variant(resize_to_limit: [500, 500])
+  def display_image()
+    image.variant(gravity: :center, resize: "640x640^", crop: "640x640+0+0") if self.image.attached?
   end
 
-  def display_background_image
-    back_ground.variant(resize_to_limit: [300, 300]).processed
+  def display_background_image()
+    back_ground.variant(gravity: :center, resize: "280x180^", crop: "300x140+0+0") if self.back_ground.attached?
+  end
+
+  def preview_image()
+
+    image_preview.variant(gravity: :center, resize: "640x640^", crop: "640x640+0+0") if self.image.attached?
+  end
+
+  def preview_background_image()
+    back_ground_preview.variant(gravity: :center, resize: "310x180^", crop: "300x140+0+0") if self.back_ground.attached?
   end
 
   private

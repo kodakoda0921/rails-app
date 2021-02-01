@@ -42,18 +42,37 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = current_user
-    @user.back_ground.attach(params[:user][:back_ground]) if params[:user][:back_ground]
-    if @user.update(user_params)
-      flash[:success] = "プロフィールを更新しました！"
-      redirect_to root_path
-    else
-      if @user.errors.any?
-        flash[:danger] = @user.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
+
+    if params[:preview]
+      @user = current_user
+      @image_flg = false
+      @back_ground_flg = false
+      if params[:user]
+        if params[:user][:image].present?
+          @user.image_preview.attach(params[:user][:image])
+          @image_flg = true
+        end
+        if params[:user][:back_ground].present?
+          @user.back_ground_preview.attach(params[:user][:back_ground])
+          @back_ground_flg = true
+        end
+      end
+    end
+    if params[:save]
+      @user = current_user
+      @user.back_ground.attach(params[:user][:back_ground]) if params[:user][:back_ground]
+      @user.image.attach(params[:user][:image]) if params[:user][:image]
+      if @user.update(user_params)
+        flash[:success] = "プロフィールを更新しました！"
         redirect_to root_path
       else
-        flash[:danger] = "不明なエラーが発生しました"
-        redirect_to root_path
+        if @user.errors.any?
+          flash[:danger] = @user.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
+          redirect_to root_path
+        else
+          flash[:danger] = "不明なエラーが発生しました"
+          redirect_to root_path
+        end
       end
     end
   end

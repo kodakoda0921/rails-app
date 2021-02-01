@@ -1,0 +1,12 @@
+<% if @image_flg && !@back_ground_flg %>
+$('#preview_profile_img').attr('src', "<%= image_url Rails.application.routes.url_helpers.rails_representation_url(@user.preview_image.processed,only_path: true)%>")
+<% end %>
+<% if @back_ground_flg && !@image_flg %>
+$("#preview_background_img").attr("style",
+    'background: url("<%= Rails.application.routes.url_helpers.rails_representation_url(@user.preview_background_image.processed,only_path: true)%>");center: center;')
+<% end %>
+<% if @image_flg && @back_ground_flg %>
+$('#preview_profile_img').attr('src', "<%= image_url Rails.application.routes.url_helpers.rails_representation_url(@user.preview_image.processed,only_path: true)%>")
+$("#preview_background_img").attr("style",
+    'background: url("<%= Rails.application.routes.url_helpers.rails_representation_url(@user.preview_background_image.processed,only_path: true)%>");center: center;')
+<% end %>

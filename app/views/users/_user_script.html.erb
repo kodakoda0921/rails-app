@@ -88,22 +88,5 @@
         });
 
     });
-    $(function () {
-        $('#backGround_file').change(function (e) {
 
-            //ファイルオブジェクトを取得する
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            //アップロードした画像を設定する
-            reader.onload = (function (file) {
-                return function (e) {
-                    e.target.result
-                    console.log(e.target.result)
-                    $("#preview_img").attr("style", "background: url(" + e.target.result + ")");
-                    $("#image-name2").attr("value", file.name);
-                };
-            })(file);
-            reader.readAsDataURL(file);
-        });
-    });
 </script>
