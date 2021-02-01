@@ -18,11 +18,13 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="col-md-9">
-                    <%= render "users/user_widget_preview", user: @current_user %>
+                  <div class="col-md-8">
+                    <%= render "users/user_widget", user: @current_user, preview: true %>
+
                   </div>
                   <div class="form-group">
                     <div class="custom-file">
+
                       <%= f.file_field :back_ground, accept: "image/jpeg,image/gif,image/png", class: "custom-file-input", id: 'backGround_file' %>
                       <%= f.label :back_ground, class: "custom-file-label" %>
                     </div>
@@ -39,7 +41,7 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
-        <%= render "users/user_widget", user: @current_user %>
+        <%= render "users/user_widget", user: @current_user, preview: false %>
         <%= render "users/user_profile", user: @current_user %>
       </div>
       <!-- /.col -->

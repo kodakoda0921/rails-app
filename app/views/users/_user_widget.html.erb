@@ -1,13 +1,20 @@
 <!-- Widget: user widget style 1 -->
 <div class="card card-widget widget-user shadow-lg">
   <!-- Add the bg color to the header using any of the bg-* classes -->
-  <div class="widget-user-header text-gray-dark" style='background: url("<%= Rails.application.routes.url_helpers.rails_representation_url(user.display_background_image.processed, only_path: true) if user.image.attached? %>");center: center;'>
+
+  <div class="widget-user-header text-gray-dark"
+       <% if preview %>
+       id="preview_img"
+       <% end %>
+       style='background: url("<%= Rails.application.routes.url_helpers.rails_representation_url(user.display_background_image.processed, only_path: true) if user.image.attached? %>");center: center;'>
+
     <div class="row">
       <div class="col-md-1">
-
-        <a href="#" class="text-muted" data-toggle="modal" data-target="#modal-sm">
-          <i class="fas fa-edit text-white text-left"></i>
-        </a>
+        <% if preview == false %>
+          <a href="#" class="text-muted" data-toggle="modal" data-target="#modal-sm">
+            <i class="fas fa-edit text-white text-left"></i>
+          </a>
+        <% end %>
 
       </div>
       <div class="col-md-11">
@@ -20,6 +27,7 @@
   <div class="widget-user-image">
     <%= image_tag user.display_image, class: "profile-user-img img-fluid img-circle" if user.image.attached? %>
   </div>
+
   <div class="card-footer">
     <div class="row">
       <div class="col-sm-4 border-right">

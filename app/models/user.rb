@@ -77,7 +77,7 @@ class User < ApplicationRecord
   end
 
   def display_background_image
-    back_ground.variant(resize_to_limit: [280, 280]).processed
+    back_ground.variant(resize_to_limit: [300, 300]).processed
   end
 
   private

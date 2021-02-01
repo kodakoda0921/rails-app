@@ -43,9 +43,6 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    logger.debug("-----------------------------------------------------------------")
-    logger.debug(params[:user][:back_ground])
-    logger.debug("-----------------------------------------------------------------")
     @user.back_ground.attach(params[:user][:back_ground]) if params[:user][:back_ground]
     if @user.update(user_params)
       flash[:success] = "プロフィールを更新しました！"
