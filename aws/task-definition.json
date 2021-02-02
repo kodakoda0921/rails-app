@@ -100,7 +100,7 @@
       ],
       "command": [
         "rails",
-        "db:migrate",
+        "db:migrate:reset",
         "db:seed",
         "RAILS_ENV=development"
       ],
