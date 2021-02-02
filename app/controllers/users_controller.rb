@@ -50,10 +50,18 @@ class UsersController < ApplicationController
       if params[:user]
         if params[:user][:image].present?
           @user.image_preview.attach(params[:user][:image])
+          if @user.errors.any?
+            flash[:danger] = @user.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
+            ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
+          end
           @image_flg = true
         end
         if params[:user][:back_ground].present?
           @user.back_ground_preview.attach(params[:user][:back_ground])
+          if @user.errors.any?
+            flash[:danger] = @user.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
+            ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
+          end
           @back_ground_flg = true
         end
       end

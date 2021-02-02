@@ -6,7 +6,6 @@ class MicropostsController < ApplicationController
     if params[:micropost][:content].empty?
       params[:image].nil? ? flash.now[:info] = "空のデータは送信できません。" : flash.now[:info] = "画像のみの投稿はできません。"
       ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
-      return
     else
       @micropost = current_user.microposts.build(micropost_params)
       @micropost.image.attach(params[:image])
@@ -20,11 +19,12 @@ class MicropostsController < ApplicationController
           flash.now[:danger] = @micropost.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
           ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
           return
+        else
+          flash.now[:danger] = "不明なエラー"
+          ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
+          return
         end
       end
-      flash.now[:danger] = "不明なエラー"
-      ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
-      return
     end
   end
 end

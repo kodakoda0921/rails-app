@@ -32,7 +32,7 @@
                   <div class="user-block">
                     Post
                   </div>
-                  <%= form_with(model: @microposts, url: microposts_path, class: "form-horizontal", local: false) do |f| %>
+                  <%= form_with(model: @microposts, url: microposts_path, class: "form-horizontal", local: false,id: "microposts_form") do |f| %>
                     <div class="input-group input-group-sm mb-0">
                       <%= f.text_field :content, class: "form-control form-control-sm", placeholder: "Post message" %>
                       <div class="input-group-append">
@@ -275,7 +275,7 @@
   <!-- /.container-fluid -->
 </section>
 <script>
-    $(function(){
+    $(function () {
         $(document).ready(function () {
             $('.toast').toast({delay: 5000}).toast('show');
         });
