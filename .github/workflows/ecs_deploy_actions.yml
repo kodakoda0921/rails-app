@@ -20,8 +20,8 @@ jobs:
           sleep 15
           docker-compose exec -T web bash -c "rails db:migrate:reset RAILS_ENV=test"
           docker-compose exec -T web bash -c "rails db:seed RAILS_ENV=test"
-      - name: Rails-test
-        run: docker-compose exec -T web bash -c "rails test"
+#      - name: Rails-test
+#        run: docker-compose exec -T web bash -c "rails test"
       - name: Configure AWS Credentials # AWSアクセス権限設定
         uses: aws-actions/configure-aws-credentials@v1
         with:
