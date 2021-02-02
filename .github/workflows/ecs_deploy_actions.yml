@@ -18,6 +18,8 @@ jobs:
           docker-compose down
           docker-compose up -d
           sleep 15
+          docker-compose exec -T web bash -c "rails webpacker:install"
+          docker-compose exec -T web bash -c "rails webpacker:compile"
           docker-compose exec -T web bash -c "rails db:migrate:reset RAILS_ENV=test"
           docker-compose exec -T web bash -c "rails db:seed RAILS_ENV=test"
 #      - name: Rails-test
