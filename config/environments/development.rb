@@ -77,4 +77,8 @@ Rails.application.configure do
   # hostのホワイトリスト全体をクリア　https://qiita.com/kodai_0122/items/67c6d390f18698950440
   # ただし、せっかくRails6で追加された保護機能を無効化してしまうため、推奨はhostを指定すること
   config.hosts.clear
+
+  # 静的なファイルをRailsから返す
+  config.public_file_server.enabled = true
+
 end
