@@ -11,11 +11,11 @@ class SessionsController < ApplicationController
       if user.activated?
         log_in(user)
         params[:session][:remember_me] == "1" ? remember(user) : forget(user)
-        flash[:success] = "ようこそ" + user.name + "さん！まもなくログインします"
+        flash.now[:success] = "ようこそ" + user.name + "さん！まもなくログインします"
         if user.authenticated?("remember", user.remember_token)
-          flash[:info] = user.name + "さんのログイン情報は現在、クッキーに記憶されています"
+          flash.now[:info] = user.name + "さんのログイン情報は現在、クッキーに記憶されています"
         else
-          flash[:info] = user.name + "さんのログイン情報は現在、クッキーに記憶されていません"
+          flash.now[:info] = user.name + "さんのログイン情報は現在、クッキーに記憶されていません"
         end
         ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
         sleep 2

@@ -6,7 +6,7 @@
       <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="../../index3.html" class="nav-link">Home</a>
+      <a href="<%= root_path %>" class="nav-link">Home</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
       <a href="#" class="nav-link">Contact</a>
@@ -116,7 +116,7 @@
       <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">User
         Menu</a>
       <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-        <li><a href="#" class="dropdown-item">My Page</a></li>
+        <li><a href="<%= root_path %>" class="dropdown-item">My Page</a></li>
 
         <li><%= link_to "Logout", session_path(current_user), method: :delete, class: "dropdown-item" %></li>
         <!-- End Level two -->
