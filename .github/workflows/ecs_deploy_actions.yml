@@ -11,11 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Ruby 2.7
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7
       - name: Compile with Webpacker
         run: |
           yarn upgrade
-          bundle exec rake webpacker:install
-          bundle exec rake webpacker:compile
+          rails webpacker:install
+          rails webpacker:compile
         env:
           NODE_ENV: production
       - name: Build the Docker image
