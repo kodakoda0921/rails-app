@@ -128,4 +128,5 @@ Rails.application.configure do
 
   # 静的なファイルをRailsから返す
   config.public_file_server.enabled = true
+  config.server_static_files = true
 end
