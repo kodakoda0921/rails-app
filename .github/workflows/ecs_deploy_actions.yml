@@ -11,13 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Compile with Webpacker
+        run: |
+          yarn upgrade
+          bundle exec rake webpacker:install
+          bundle exec rake webpacker:compile
+        env:
+          NODE_ENV: production
       - name: Build the Docker image
         run: docker-compose build
       - name: docker-compose up
         run: |
-          docker-compose run -T web bash -c "rails webpacker:install"
           docker-compose down
-          docker-compose build
           docker-compose up -d
           sleep 10
           docker-compose exec -T web bash -c "rails db:migrate:reset RAILS_ENV=test"
