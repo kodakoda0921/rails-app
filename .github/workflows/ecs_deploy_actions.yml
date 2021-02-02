@@ -15,14 +15,15 @@ jobs:
         run: docker-compose build
       - name: docker-compose up
         run: |
+          docker-compose run -T web bash -c "rails webpacker:install"
           docker-compose down
+          docker-compose build
           docker-compose up -d
-          sleep 15
-          docker-compose exec -T web bash -c "rails webpacker:install"
+          sleep 10
           docker-compose exec -T web bash -c "rails db:migrate:reset RAILS_ENV=test"
           docker-compose exec -T web bash -c "rails db:seed RAILS_ENV=test"
-#      - name: Rails-test
-#        run: docker-compose exec -T web bash -c "rails test"
+      #      - name: Rails-test
+      #        run: docker-compose exec -T web bash -c "rails test"
       - name: Configure AWS Credentials # AWSアクセス権限設定
         uses: aws-actions/configure-aws-credentials@v1
         with:
