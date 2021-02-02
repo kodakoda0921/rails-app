@@ -99,8 +99,11 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   #ACTIVE STRAGEがおそらくproduction.rbを開発環境でも参照してしまっているため、一時的に追加
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
-
+  if ENV['RAILS_HOST_URL'].present?
+    config.action_mailer.default_url_options = { host: ENV['RAILS_HOST_URL'], port: 3000 }
+  else
+    config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  end
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
   # middleware. The `delay` is used to determine how long to wait after a write

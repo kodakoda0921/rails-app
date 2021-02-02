@@ -41,6 +41,10 @@
         {
           "name": "RAILS_DB_USER",
           "value": "admin"
+        },
+        {
+          "name": "RAILS_HOST_URL",
+          "value": "http://0.0.0.0"
         }
       ],
       "resourceRequirements": null,
@@ -122,6 +126,10 @@
         {
           "name": "RAILS_DB_USER",
           "value": "admin"
+        },
+        {
+          "name": "RAILS_HOST_URL",
+          "value": "http://0.0.0.0"
         }
       ],
       "resourceRequirements": null,
