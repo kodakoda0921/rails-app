@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
   get 'password_resets/edit'
   get 'password_resets/new'
   root 'users#home'

@@ -10,7 +10,7 @@
 
     <div class="row">
       <div class="col-md-1">
-        <% if preview == false %>
+        <% if preview == false && user == @current_user %>
           <a href="#" class="text-muted" data-toggle="modal" data-target="#modal-sm">
             <i class="fas fa-edit text-white text-left"></i>
           </a>
@@ -56,7 +56,9 @@
       <!-- /.col -->
     </div>
     <!-- /.row -->
-    <a href="#" class="btn btn-primary btn-flat btn-sm float-lg-right">Follow</a>
+    <% if user != @current_user %>
+      <a href="#" class="btn btn-primary btn-flat btn-sm float-lg-right">Follow</a>
+    <% end %>
   </div>
 </div>
 <!-- /.widget-user -->

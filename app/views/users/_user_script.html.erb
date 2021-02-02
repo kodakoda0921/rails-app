@@ -6,10 +6,10 @@
             const reader = new FileReader();
 
             //画像でない場合は処理終了
-            if (file.type.indexOf("image") < 0) {
-                alert("画像ファイルを指定してください。");
-                return false;
-            }
+            // if (file.type.indexOf("image") < 0) {
+            //     alert("画像ファイルを指定してください。");
+            //     return false;
+            // }
 
             //アップロードした画像を設定する
             reader.onload = (function (file) {
@@ -34,13 +34,15 @@
         });
 
     });
-    const inputFile = document.getElementById("myfile");
+
 
     function openFile() {
+
         document.body.onfocus = getEvent;
     }
 
     function getEvent() {
+        let inputFile = document.getElementById("myfile");
         setTimeout(() => {
             if (inputFile.value.length) {
 
@@ -60,10 +62,10 @@
             const reader = new FileReader();
 
             //画像でない場合は処理終了
-            if (file.type.indexOf("image") < 0) {
-                alert("画像ファイルを指定してください。");
-                return false;
-            }
+            // if (file.type.indexOf("image") < 0) {
+            //     alert("画像ファイルを指定してください。");
+            //     return false;
+            // }
 
             //アップロードした画像を設定する
             reader.onload = (function (file) {

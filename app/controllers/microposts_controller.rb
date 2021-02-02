@@ -4,25 +4,29 @@ class MicropostsController < ApplicationController
 
   def create
     if params[:micropost][:content].empty?
-      params[:image].nil? ? flash[:info] = "空のデータは送信できません。" : flash[:info] = "画像のみの投稿はできません。"
-      redirect_to root_path
+      params[:image].nil? ? flash.now[:info] = "空のデータは送信できません。" : flash.now[:info] = "画像のみの投稿はできません。"
+      ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
+      return
     else
       @micropost = current_user.microposts.build(micropost_params)
       @micropost.image.attach(params[:image])
       if @micropost.save
-        flash[:success] = "投稿に成功しました！"
-        redirect_to root_path and return
+        flash.now[:success] = "投稿に成功しました！"
+        ActionCable.server.broadcast("home_channel", { micropost: @micropost.html_template })
+        ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
+        return
       else
         if @micropost.errors.any?
-          flash[:danger] = @micropost.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
-          redirect_to root_path and return
+          flash.now[:danger] = @micropost.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
+          ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
+          return
         end
       end
-      flash[:danger] = "不明なエラー"
-      redirect_to root_path
+      flash.now[:danger] = "不明なエラー"
+      ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
+      return
     end
   end
-
 end
 
 def destroy

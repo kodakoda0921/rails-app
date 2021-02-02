@@ -11,4 +11,10 @@ class Micropost < ApplicationRecord
   def display_image
     image.variant(resize_to_limit: [500, 500])
   end
+
+  # 投稿されたメッセージをメッセージ用の部分テンプレートでHTMLに変換
+  def html_template
+    ApplicationController.renderer.render partial: "microposts/microposts_create", locals: { micropost: self }
+  end
+
 end

@@ -3,7 +3,7 @@
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
-    <%= render "shared/flash_messages" %>
+    <div id="flash-container"></div>
     <div class="row">
       <div class="col-md-3">
         <%= render "users/user_widget_modal", user: @current_user %>
@@ -32,7 +32,7 @@
                   <div class="user-block">
                     Post
                   </div>
-                  <%= form_with(model: @microposts, url: microposts_path, class: "form-horizontal", local: true) do |f| %>
+                  <%= form_with(model: @microposts, url: microposts_path, class: "form-horizontal", local: false) do |f| %>
                     <div class="input-group input-group-sm mb-0">
                       <%= f.text_field :content, class: "form-control form-control-sm", placeholder: "Post message" %>
                       <div class="input-group-append">
@@ -54,49 +54,52 @@
                   <%= render "user_script" %>
 
                 </div>
+                <div id="microposts-container">
 
-                <!-- Post -->
-                <% if @microposts.present? %>
-                  <% @microposts.each do |micropost| %>
-                    <div class="post">
+                  <!-- Post -->
+                  <% if @microposts.present? %>
+                    <% @microposts.first(10).each do |micropost| %>
+                      <div class="post">
 
-                      <div class="user-block">
-                        <%= image_tag micropost.user.display_image, class: "profile-user-img img-fluid img-circle" if micropost.user.image.attached? %>
-                        <span class="username">
+                        <div class="user-block">
+                          <%= image_tag micropost.user.display_image, class: "profile-user-img img-fluid img-circle" if micropost.user.image.attached? %>
+                          <span class="username">
                           <%= link_to micropost.user.name, micropost.user %>
-                          <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
+                            <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
                         </span>
-                        <span class="description"><%= time_ago_in_words(micropost.created_at) %>
-                          -ago.</span>
-                      </div>
-                      <!-- /.user-block -->
+                          <span class="description"><%= time_ago_in_words(micropost.created_at) %>
+                            -ago.</span>
+                        </div>
 
-                      <p>
-                        <%= micropost.content %>
-                      </p>
-                      <div class="text-left">
-                        <%= image_tag micropost.display_image, class: "img-fluid rounded" if micropost.image.attached? %>
-                      </div>
-                      <p>
-                        <a href="#" class="link-black text-sm mr-2"><i class="far fa-thumbs-up mr-1"></i>
-                          Like</a>
-                        <span class="float-right">
+
+                        <p>
+                          <%= micropost.content %>
+                        </p>
+                        <div class="text-left">
+                          <%= image_tag micropost.display_image, class: "img-fluid rounded" if micropost.image.attached? %>
+                        </div>
+                        <p>
+                          <a href="#" class="link-black text-sm mr-2"><i class="far fa-thumbs-up mr-1"></i>
+                            Like</a>
+                          <span class="float-right">
                           <a href="#" class="link-black text-sm">
                             <i class="far fa-comments mr-1"></i> Comments (5)
                           </a>
                       </span>
-                      </p>
+                        </p>
 
-                      <input class="form-control form-control-sm" type="text" placeholder="Type a comment">
+                        <input class="form-control form-control-sm" type="text" placeholder="Type a comment">
+                      </div>
+                    <% end %>
+                  <% else %>
+                    <div class="post">
+                      <p>まだ何も投稿されていません</p>
                     </div>
                   <% end %>
-                <% else %>
-                  <div class="post">
-                    <p>まだ何も投稿されていません</p>
-                  </div>
-                <% end %>
-                <!-- /.post -->
+                  <!-- /.post -->
+                </div>
               </div>
+
               <!-- /.tab-pane -->
               <div class="tab-pane" id="timeline">
                 <!-- The timeline -->
@@ -271,4 +274,11 @@
   </div>
   <!-- /.container-fluid -->
 </section>
+<script>
+    $(function(){
+        $(document).ready(function () {
+            $('.toast').toast({delay: 5000}).toast('show');
+        });
+    });
+</script>
 

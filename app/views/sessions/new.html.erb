@@ -3,7 +3,7 @@
   <div class="card-body login-card-body">
     <p class="login-box-msg">Sign in to start your session</p>
 
-    <%= form_with(url: sessions_path, scope: :session, local: true) do |f| %>
+    <%= form_with(url: sessions_path, scope: :session, local: false, remote: true) do |f| %>
       <div class="input-group mb-3">
         <%= f.email_field :email, class: "form-control", placeholder: "email@example.com" %>
         <div class="input-group-append">
