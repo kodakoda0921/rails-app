@@ -132,4 +132,5 @@ Rails.application.configure do
   # 静的なファイルをRailsから返す
   config.public_file_server.enabled = true
   config.server_static_files = true
+  Rails.application.routes.default_url_options[:host] = 'http://rails-app-alb-215737975.ap-northeast-1.elb.amazonaws.com/'
 end
