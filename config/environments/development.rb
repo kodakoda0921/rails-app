@@ -73,4 +73,7 @@ Rails.application.configure do
   config.logger = Logger.new('log/development.log')
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # hostのホワイトリスト全体をクリア　https://qiita.com/kodai_0122/items/67c6d390f18698950440
+  config.hosts.clear
 end
