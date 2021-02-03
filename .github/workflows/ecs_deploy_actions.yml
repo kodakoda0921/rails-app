@@ -17,9 +17,9 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
       - name: Compile with Webpacker
         run: |
-               sudo apt-get -yqq install libpq-dev
-               bundle exec rails webpacker:install
-               bundle exec rails webpacker:compile
+          sudo apt-get -yqq install libpq-dev
+          bundle exec rails webpacker:install
+        #               bundle exec rails webpacker:compile
         env:
           NODE_ENV: production
       - name: Build the Docker image

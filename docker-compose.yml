@@ -33,8 +33,20 @@ services:
     tty: true
     depends_on:
       - db
+#      - redis
     environment:
       RAILS_DB_HOST: db # データベースコンテナ名と一致させる
       RAILS_DB_NAME: myapp_development # MYSQL_DATABASEと一致させる
       RAILS_DB_USER: root # MYSQL_USERと一致させる
       RAILS_DB_PASSWORD: password # MYSQL_PASSWORDと一致させる
+      RAILS_ENV: development
+      RACK_ENV: development
+#      REDIS_HOST: redis
+#      REDIS_PORT: 6379
+#  redis:
+#    image: redis:latest
+#    ports:
+#      - 6379:6379
+#    volumes:
+#      - ./redis:/data
+#    command: bash -c "redis-server --appendonly yes"
