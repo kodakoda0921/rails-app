@@ -18,10 +18,7 @@ jobs:
       - name: Compile with Webpacker
         run: |
           sudo apt-get -yqq install libpq-dev
-          bundle exec rails webpacker:install
-          echo n
-          echo n
-          echo n
+          echo -e "n\nn\nn" | bundle exec rails webpacker:install
           bundle exec rails webpacker:compile
         env:
           NODE_ENV: production
