@@ -3,4 +3,9 @@ module ApplicationHelper
   def flash_template(flash)
     ApplicationController.renderer.render partial: "shared/flash_messages", locals: { flash: flash }
   end
+
+  def host_url
+    request.protocol + request.host + ":" + request.port.to_s
+  end
+
 end

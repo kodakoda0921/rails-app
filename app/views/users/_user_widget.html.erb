@@ -6,8 +6,8 @@
        <% if preview %>
        id="preview_background_img"
        <% end %>
-       style='background: url("<%= Rails.application.routes.url_helpers.rails_representation_url(user.display_background_image.processed, only_path: true) if user.image.attached? %>");center: center;'>
-
+       <% logger.warn(host_url+rails_representation_url(user.display_background_image.processed, only_path: true)) %>
+       style='background: url("<%= host_url+rails_representation_url(user.display_background_image.processed, only_path: true) if user.image.attached? %>");center: center;'>
     <div class="row">
       <div class="col-md-1">
         <% if preview == false && user == @current_user %>

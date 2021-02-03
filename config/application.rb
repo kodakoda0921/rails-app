@@ -20,5 +20,12 @@ module RailsApp
     # config.eager_load_paths << Rails.root.join("extras")
     # 認証トークンをremoteフォームに埋め込む
     config.action_view.embed_authenticity_token_in_remote_forms = true
+    # ログにrequest_idの名前付きタグをつける
+    config.log_tags = { request_id: :request_id }
+    # ログをファイル出力しない
+    config.rails_semantic_logger.add_file_appender = false
+    # 標準出力のみにJSON形式で出力
+    config.semantic_logger.add_appender(io: $stdout, level: config.log_level)
+    # :
   end
 end

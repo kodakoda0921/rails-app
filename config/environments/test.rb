@@ -59,4 +59,5 @@ Rails.application.configure do
   # config.action_view.annotate_rendered_view_with_filenames = true
   config.server_static_files = true
   Rails.application.routes.default_url_options[:host] = 'localhost'
+  config.log_level = :warn
 end
