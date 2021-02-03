@@ -2,7 +2,7 @@
 
   <div class="user-block">
     <% if micropost.user.image.attached? %>
-      <img src="<%= Rails.application.routes.url_helpers.rails_representation_url(micropost.user.display_image.processed, only_path: true) if micropost.user.image.attached? %>" class="profile-user-img img-fluid img-circle">
+      <img src="<%= url_for(micropost.user.display_image.processed) if micropost.user.image.attached? %>" class="profile-user-img img-fluid img-circle">
     <% end %>
     <span class="username">
       <%= link_to micropost.user.name, micropost.user %>
@@ -15,7 +15,7 @@
     <%= micropost.content %>
   </p>
   <div class="text-left">
-    <%= image_tag Rails.application.routes.url_helpers.rails_representation_url(micropost.display_image.processed, only_path: true), class: "img-fluid rounded" if micropost.image.attached? %>
+    <%= image_tag url_for(micropost.display_image.processed), class: "img-fluid rounded" if micropost.image.attached? %>
   </div>
   <p>
     <a href="#" class="link-black text-sm mr-2"><i class="far fa-thumbs-up mr-1"></i>

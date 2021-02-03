@@ -12,12 +12,12 @@ services:
       - SYS_NICE
     ports:
       - "3306:3306"
-    volumes:
-      # 初期データを投入するSQLが格納されているdir
-      - ./db/mysql_init:/docker-entrypoint-initdb.d
-      # 永続化するときにマウントするdir
-      - ./db/mysql_data:/var/lib/mysql
-      - ./db/mysql_init/mysql-confd:/etc/mysql/conf.d
+#    volumes:
+#      # 初期データを投入するSQLが格納されているdir
+#      - ./db/mysql_init:/docker-entrypoint-initdb.d
+#      # 永続化するときにマウントするdir
+#      - ./db/mysql_data:/var/lib/mysql
+#      - ./db/mysql_init/mysql-confd:/etc/mysql/conf.d
 
     #MySQL8.0からセキュリティが強化されたようで、--default-authentication-plugin=mysql_native_password を実行して認証方式を mysql_native_password へ変更する必要があり
     command: --default-authentication-plugin=mysql_native_password
@@ -33,20 +33,9 @@ services:
     tty: true
     depends_on:
       - db
-#      - redis
     environment:
       RAILS_DB_HOST: db # データベースコンテナ名と一致させる
       RAILS_DB_NAME: myapp_development # MYSQL_DATABASEと一致させる
       RAILS_DB_USER: root # MYSQL_USERと一致させる
       RAILS_DB_PASSWORD: password # MYSQL_PASSWORDと一致させる
       RAILS_ENV: development
-      RACK_ENV: development
-#      REDIS_HOST: redis
-#      REDIS_PORT: 6379
-#  redis:
-#    image: redis:latest
-#    ports:
-#      - 6379:6379
-#    volumes:
-#      - ./redis:/data
-#    command: bash -c "redis-server --appendonly yes"
