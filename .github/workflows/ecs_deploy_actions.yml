@@ -18,9 +18,6 @@ jobs:
       - name: Compile with Webpacker
         run: |
                sudo apt-get -yqq install libpq-dev
-          #          gem install bundler
-          #          bundle install --jobs 4 --retry 3
-          #          yarn upgrade
                bundle exec rails webpacker:install
                bundle exec rails webpacker:compile
         env:
