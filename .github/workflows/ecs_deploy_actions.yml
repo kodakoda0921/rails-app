@@ -19,7 +19,7 @@ jobs:
         run: |
           sudo apt-get -yqq install libpq-dev
           bundle exec rails webpacker:install
-        #               bundle exec rails webpacker:compile
+          bundle exec rails webpacker:compile
         env:
           NODE_ENV: production
       - name: Build the Docker image
