@@ -35,14 +35,6 @@
           "value": "myapp_development"
         },
         {
-          "name": "RAILS_DB_PASSWORD",
-          "value": "password"
-        },
-        {
-          "name": "RAILS_DB_USER",
-          "value": "admin"
-        },
-        {
           "name": "RAILS_HOST_URL",
           "value": "http://0.0.0.0"
         }
@@ -52,7 +44,20 @@
       "dnsServers": null,
       "mountPoints": [],
       "workingDirectory": null,
-      "secrets": null,
+      "secrets": [
+        {
+          "valueFrom": "RAILS_DB_PASSWORD",
+          "name": "RAILS_DB_PASSWORD"
+        },
+        {
+          "valueFrom": "RAILS_DB_USER",
+          "name": "RAILS_DB_USER"
+        },
+        {
+          "valueFrom": "RAILS_MASTER_KEY",
+          "name": "RAILS_MASTER_KEY"
+        }
+      ],
       "dockerSecurityOptions": null,
       "memory": null,
       "memoryReservation": 300,
@@ -120,14 +125,6 @@
           "value": "myapp_development"
         },
         {
-          "name": "RAILS_DB_PASSWORD",
-          "value": "password"
-        },
-        {
-          "name": "RAILS_DB_USER",
-          "value": "admin"
-        },
-        {
           "name": "RAILS_HOST_URL",
           "value": "http://0.0.0.0"
         }
@@ -137,7 +134,20 @@
       "dnsServers": null,
       "mountPoints": [],
       "workingDirectory": null,
-      "secrets": null,
+      "secrets": [
+        {
+          "valueFrom": "RAILS_DB_PASSWORD",
+          "name": "RAILS_DB_PASSWORD"
+        },
+        {
+          "valueFrom": "RAILS_DB_USER",
+          "name": "RAILS_DB_USER"
+        },
+        {
+          "valueFrom": "RAILS_MASTER_KEY",
+          "name": "RAILS_MASTER_KEY"
+        }
+      ],
       "dockerSecurityOptions": null,
       "memory": null,
       "memoryReservation": 300,
@@ -170,7 +180,7 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:282706015608:task-definition/rails-app-task-difinitions:1",
+  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:282706015608:task-definition/rails-app-task-difinitions:34",
   "family": "rails-app-task-difinitions",
   "requiresAttributes": [
     {
@@ -219,6 +229,12 @@
       "targetId": null,
       "targetType": null,
       "value": null,
+      "name": "ecs.capability.secrets.ssm.environment-variables"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
     },
     {
@@ -234,7 +250,7 @@
   ],
   "networkMode": "awsvpc",
   "cpu": "512",
-  "revision": 1,
+  "revision": 34,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
