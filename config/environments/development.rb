@@ -83,5 +83,5 @@ Rails.application.configure do
   config.server_static_files = true
   Rails.application.routes.default_url_options[:host] = 'localhost'
 
-  config.log_level = :warn
+  config.log_level = :info
 end

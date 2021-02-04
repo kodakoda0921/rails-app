@@ -1,6 +1,6 @@
 class FlashChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "flash_channel_#{params['user_id']}"
+    stream_from "flash_channel"
   end
 
   def unsubscribed

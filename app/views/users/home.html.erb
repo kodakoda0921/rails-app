@@ -6,7 +6,7 @@
     <div id="flash-container"></div>
     <div class="row">
       <div class="col-md-3">
-        <%= hidden_field_tag :user_id, @current_user.id, id: "current_user_id" %>
+        <div id="current_user_id" data-user_id="<%= @current_user.id %>"></div>
         <%= render "users/user_widget_modal", user: @current_user %>
         <%= render "users/user_widget", user: @current_user, preview: false %>
         <%= render "users/user_profile", user: @current_user %>
