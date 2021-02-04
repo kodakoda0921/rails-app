@@ -7,8 +7,8 @@ document.addEventListener('turbolinks:load', () => {
     if (flashContainer === null) {
         return
     }
-    const current_user_id = document.getElementById("current_user_id").getAttribute("data-user_id");
-
+    let current_user_id_int = document.getElementById("current_user_id").getAttribute("data-user_id");
+    const current_user_id = current_user_id_int.toString()
     consumer.subscriptions.create("FlashChannel", {
         connected() {
             // Called when the subscription is ready for use on the server
@@ -18,9 +18,9 @@ document.addEventListener('turbolinks:load', () => {
             // Called when the subscription has been terminated by the server
         },
 
-        received(data) {
+        received: function (data) {
             // Called when there's incoming data on the websocket for this channel
-            if (data["user_id"] === current_user_id) {
+            if (data["user_id"] == current_user_id) {
                 // サーバー側から受け取ったHTMLを一番最後に加える
                 flashContainer.innerHTML = data["flash"]
                 $(document).ready(function () {

@@ -9,6 +9,8 @@ document.addEventListener('turbolinks:load', () => {
     if (micropostsContainer === null) {
         return
     }
+    let current_user_id_int = document.getElementById("current_user_id").getAttribute("data-user_id");
+    const current_user_id = current_user_id_int.toString()
     consumer.subscriptions.create("HomeChannel", {
         connected() {
             // Called when the subscription is ready for use on the server
@@ -20,8 +22,10 @@ document.addEventListener('turbolinks:load', () => {
 
         received(data) {
             // Called when there's incoming data on the websocket for this channel
-            // サーバー側から受け取ったHTMLを一番最後に加える
-            micropostsContainer.insertAdjacentHTML("afterbegin", data["micropost"])
+            if (data["user_id"] == current_user_id) {
+                // サーバー側から受け取ったHTMLを一番最後に加える
+                micropostsContainer.insertAdjacentHTML("afterbegin", data["micropost"])
+            }
         }
     })
 });
