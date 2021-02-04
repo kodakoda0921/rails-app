@@ -1,12 +1,15 @@
 <script>
     $(document).ready(function () {
         $('.toast').toast({delay: 5000}).toast('show');
-        var obj = document.getElementById("login_flash");
-        setTimeout(
-            function () {
-                obj.setAttribute("style", "display:none")
-            },
-            "4000"
-        );
+        const obj = document.getElementById("login_flash");
+        if (obj != null) {
+            setTimeout(
+                function () {
+                    obj.setAttribute("style", "display:none")
+                },
+                "4000"
+            );
+        }
+
     });
 </script>
