@@ -13,3 +13,11 @@
              activated_at: Time.zone.now)
 @user.build_profiles(job:"a")
 @user.save
+@user = User.create!(name: "bibi",
+                     email: "bi@gmail.com",
+                     password: "11111111",
+                     password_confirmation: "11111111",
+                     activated: true,
+                     activated_at: Time.zone.now)
+@user.build_profiles(job:"bibiWEB")
+@user.save
