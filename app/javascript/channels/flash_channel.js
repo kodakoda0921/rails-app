@@ -10,6 +10,7 @@ document.addEventListener('turbolinks:load', () => {
         return
     }
     consumer.subscriptions.create("FlashChannel", {
+        user_id: $('#current_user_id').data('user_id'),
         connected() {
             // Called when the subscription is ready for use on the server
         },
