@@ -4,9 +4,11 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
-
+  <div id="login_flash">
+    <%= render "shared/flash_messages" %>
+    <%= render "shared/flash_messages_script" %>
+  </div>
   <%= render "layouts/navbar" %>
-
   <%= render "layouts/sidebar" %>
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->

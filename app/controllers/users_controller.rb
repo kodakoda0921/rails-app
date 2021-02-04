@@ -52,7 +52,7 @@ class UsersController < ApplicationController
           @user.image_preview.attach(params[:user][:image])
           if @user.errors.any?
             flash[:danger] = @user.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
-            ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
+            ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash), user_id: @user.id.to_s })
           end
           @image_flg = true
         end
@@ -60,7 +60,7 @@ class UsersController < ApplicationController
           @user.back_ground_preview.attach(params[:user][:back_ground])
           if @user.errors.any?
             flash[:danger] = @user.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
-            ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
+            ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash), user_id: @user.id.to_s })
           end
           @back_ground_flg = true
         end

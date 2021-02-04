@@ -11,25 +11,22 @@ class SessionsController < ApplicationController
       if user.activated?
         log_in(user)
         params[:session][:remember_me] == "1" ? remember(user) : forget(user)
-        flash.now[:success] = "ようこそ" + user.name + "さん！まもなくログインします"
+        flash[:success] = "ようこそ" + user.name + "さん！"
         if user.authenticated?("remember", user.remember_token)
-          flash.now[:info] = user.name + "さんのログイン情報は現在、クッキーに記憶されています"
+          flash[:info] = user.name + "さんのログイン情報は現在、クッキーに記憶されています"
         else
-          flash.now[:info] = user.name + "さんのログイン情報は現在、クッキーに記憶されていません"
+          flash[:info] = user.name + "さんのログイン情報は現在、クッキーに記憶されていません"
         end
-        ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
-        sleep 2
         redirect_to root_path
       else
         message = "アカウントが有効化されていません！"
         message += "登録時のメールを確認し、アカウント有効化リンクを開いてください"
-        flash.now[:warning] = message
-        ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
-        return
+        flash[:warning] = message
+        redirect_to root_path
       end
     else
-      flash.now[:danger] = "emailまたはパスワードに誤りがあります"
-      ActionCable.server.broadcast("flash_channel", { flash: flash_template(flash) })
+      flash[:danger] = "emailまたはパスワードに誤りがあります"
+      redirect_to root_path
     end
   end
 
