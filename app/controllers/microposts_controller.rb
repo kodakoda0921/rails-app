@@ -38,7 +38,8 @@ end
 private
 
 def micropost_params
-  params.require(:micropost).permit(:content, :image)
+  params.require(:micropost).permit(:id, :content, :image,
+                                    post_comments_attributes: [:id, :content, :image])
 end
 
 def current_user2

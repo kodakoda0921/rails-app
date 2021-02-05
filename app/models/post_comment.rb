@@ -1,9 +1,9 @@
-class Micropost < ApplicationRecord
+class PostComment < ApplicationRecord
+  belongs_to :micropost
   belongs_to :user
-  has_many :post_comment
   has_one_attached :image
   default_scope -> { order(created_at: :desc) }
-  validates :user_id, presence: true
+  validates :micropost_id, presence: true
   validates :content, presence: true, length: { minimum: 1, maximum: 140 }
   validates :image, content_type: { in: %w[image/jpeg image/gif image/png],
                                     message: "must be a valid image format" },
@@ -14,8 +14,8 @@ class Micropost < ApplicationRecord
   end
 
   # 投稿されたメッセージをメッセージ用の部分テンプレートでHTMLに変換
-  def html_template
-    ApplicationController.renderer.render partial: "microposts/microposts_create", locals: { micropost: self }
-  end
+  # def html_template
+  #   ApplicationController.renderer.render partial: "microposts/microposts_create", locals: { micropost: self }
+  # end
 
 end
