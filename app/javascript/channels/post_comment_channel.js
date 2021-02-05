@@ -27,13 +27,18 @@ document.addEventListener('turbolinks:load', () => {
             let match_micropost_id = html_micropost_id.dataset.micropost_id.toString()
             if (match_micropost_id == data["micropost_id"]) {
                 // サーバー側から受け取ったHTMLを一番最初に加える
-                console.log(postCommentContainer)
-                postCommentContainer.insertAdjacentHTML("beforebegin", data["post_comment"])
+
+                postCommentContainer.insertAdjacentHTML("beforeend", data["post_comment"])
                 postCommentCountContainer.innerHTML = data["post_comment_count"]
                 document.getElementById('post_comment_form-' + current_user_id + '-' + match_micropost_id).reset();
+                if ($('#collapse-card-comment-' + match_micropost_id).hasClass("show") == false) {
+                    $('#collapse-card-comment-' + match_micropost_id).collapse('show')
+                }
+
+                // if (a == true) {
+                //     $('#collapse-card-comment-' + match_micropost_id).click()
+                // }
             }
-
-
         }
     });
 })

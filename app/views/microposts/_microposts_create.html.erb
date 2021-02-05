@@ -42,8 +42,12 @@
       <%= image_tag url_for(micropost.user.display_image), class: "img-fluid img-circle img-sm" if micropost.user.image.attached? %>
       <div class="img-push">
         <%= f.hidden_field :micropost_id, value: micropost.id, id: "micropost_hidden_field-#{micropost.id}" %>
-        <%= f.text_field :content, class: "form-control form-control-sm", placeholder: "Type a comment", id: "micropost_content_field-#{micropost.id}" %>
-        <%= f.submit "Post", class: "btn btn-primary" %>
+        <div class="input-group input-group-sm mb-0">
+          <%= f.text_field :content, class: "form-control form-control-sm", placeholder: "Type a comment", id: "micropost_content_field-#{micropost.id}" %>
+          <div class="input-group-append">
+            <%= f.submit "Post", class: "btn btn-warning" %>
+          </div>
+        </div>
       </div>
     </div>
   <% end %>
