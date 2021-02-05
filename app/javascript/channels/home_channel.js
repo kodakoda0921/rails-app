@@ -25,6 +25,8 @@ document.addEventListener('turbolinks:load', () => {
             if (data["user_id"] == current_user_id) {
                 // サーバー側から受け取ったHTMLを一番最後に加える
                 micropostsContainer.insertAdjacentHTML("afterbegin", data["micropost"])
+                document.getElementById('microposts_form-' + current_user_id).reset();
+                document.getElementById("image-name-" + current_user_id).innerHTML = "";
             }
         }
     })
