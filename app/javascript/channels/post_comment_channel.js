@@ -1,9 +1,9 @@
 import consumer from "./consumer"
 // turbolinks の読み込みが終わった後にidを取得しないと，エラーが出ます。
-document.addEventListener('turbolinks:load', () => {
-    const postCommentContainerClass = document.getElementsByClassName('post-comment-container')
+$(document).on('turbolinks:load', function () {
+    const postCommentContainerClass = Array.from($(".post-comment-container"))
 // 以下のプログラムが他のページで動作しないようにしておく
-    if (postCommentContainerClass === null) {
+    if (postCommentContainerClass[0].className === null) {
         return
     }
     let current_user_id_int = document.getElementById("current_user_id").getAttribute("data-user_id");

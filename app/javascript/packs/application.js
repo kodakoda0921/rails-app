@@ -11,7 +11,6 @@ import "channels"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
-
 const jQuery = require("admin-lte/plugins/jquery/jquery.min");
 global.$ = global.jQuery = jQuery;
 window.$ = window.jQuery = jQuery;
@@ -20,5 +19,4 @@ require("admin-lte/plugins/bootstrap/js/bootstrap.bundle.min");
 require("admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min");
 require("admin-lte/dist/js/adminlte.min");
 require("admin-lte/dist/js/demo");
-
 
