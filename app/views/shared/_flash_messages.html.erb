@@ -3,7 +3,7 @@
   <div style="position: relative">
     <% flash.each do |message_type, message| %>
 
-      <div class="toast" role="status" aria-live="polite" aria-atomic="true">
+      <div class="toast" role="status" aria-live="polite" aria-atomic="true" id="toast-<%= user.id %>">
         <div class="toast-header">
           <rect width="100%" height="100%" fill="#007aff"/>
           <i class="fa fa-square " style="<%= case message_type

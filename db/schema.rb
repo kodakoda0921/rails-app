@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_31_070517) do
+ActiveRecord::Schema.define(version: 2021_02_05_012231) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -49,6 +49,17 @@ ActiveRecord::Schema.define(version: 2021_01_31_070517) do
     t.index ["user_id"], name: "index_microposts_on_user_id"
   end
 
+  create_table "post_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "micropost_id"
+    t.bigint "user_id"
+    t.string "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["micropost_id", "user_id", "created_at"], name: "index_post_comments_on_micropost_id_and_user_id_and_created_at"
+    t.index ["micropost_id"], name: "index_post_comments_on_micropost_id"
+    t.index ["user_id"], name: "index_post_comments_on_user_id"
+  end
+
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "job"
@@ -80,5 +91,7 @@ ActiveRecord::Schema.define(version: 2021_01_31_070517) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "microposts", "users"
+  add_foreign_key "post_comments", "microposts"
+  add_foreign_key "post_comments", "users"
   add_foreign_key "profiles", "users"
 end

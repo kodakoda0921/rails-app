@@ -24,9 +24,7 @@ document.addEventListener('turbolinks:load', () => {
                 // サーバー側から受け取ったHTMLを一番最後に加える
                 flashContainer.innerHTML = data["flash"]
                 $(document).ready(function () {
-                    $('.toast').toast({delay: 5000}).toast('show');
-                    document.getElementById('microposts_form').reset();
-                    document.getElementById("image-name").innerHTML = "";
+                    $('#toast-' + current_user_id).toast({delay: 5000}).toast('show');
                 });
             }
         }

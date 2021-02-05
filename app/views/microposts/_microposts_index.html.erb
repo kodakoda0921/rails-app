@@ -1,0 +1,11 @@
+<!-- Post -->
+<% if @microposts.present? %>
+  <% @microposts.first(10).each do |micropost| %>
+    <%= render "microposts/microposts_create", micropost: micropost, post_comment: @post_comment %>
+  <% end %>
+<% else %>
+  <div class="post">
+    <p>まだ何も投稿されていません</p>
+  </div>
+<% end %>
+<!-- /.post -->
