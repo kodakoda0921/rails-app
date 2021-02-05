@@ -1,17 +1,15 @@
-<div id="post-comment-container-<%= comment.micropost_id %>" class="post-comment-container">
-  <div class="card-footer card-comments">
-    <div class="card-comment">
-      <!-- User image -->
-      <%= image_tag url_for(comment.micropost.user.display_image), class: "img-circle img-sm" if comment.micropost.user.image.attached? %>
-      <div class="comment-text">
+<div class="card-footer card-comments">
+  <div class="card-comment">
+    <!-- User image -->
+    <%= image_tag url_for(comment.micropost.user.display_image), class: "img-circle img-sm" if comment.micropost.user.image.attached? %>
+    <div class="comment-text">
                                     <span class="username"><%= comment.micropost.user.name %>
                                       <span class="text-muted float-right"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
                                     </span>
-        <!-- /.username -->
-        <%= comment.content %>
-      </div>
-      <!-- /.comment-text -->
+      <!-- /.username -->
+      <%= comment.content %>
     </div>
-    <!-- /.card-comment -->
+    <!-- /.comment-text -->
   </div>
+  <!-- /.card-comment -->
 </div>

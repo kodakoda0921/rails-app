@@ -18,4 +18,8 @@ class PostComment < ApplicationRecord
     ApplicationController.renderer.render partial: "post_comments/post_comment_container", locals: { comment: self }
   end
 
+  def html_template_count
+    ApplicationController.renderer.render partial: "post_comments/post_comment_count_container", locals: { micropost: self.micropost }
+  end
+
 end

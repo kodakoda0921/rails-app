@@ -1,55 +1,7 @@
 <!-- Post -->
 <% if @microposts.present? %>
   <% @microposts.first(10).each do |micropost| %>
-    <div class="post">
-
-      <div class="user-block">
-        <%= image_tag micropost.user.display_image, class: "profile-user-img img-fluid img-circle" if micropost.user.image.attached? %>
-        <span class="username">
-                          <%= link_to micropost.user.name, micropost.user %>
-          <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
-                          </span>
-        <span class="description"><%= micropost.created_at.strftime('%Y/%m/%d %H:%M') %>
-                          </span>
-      </div>
-      <p>
-        <%= micropost.content %>
-      </p>
-      <div class="text-left">
-        <%= image_tag micropost.display_image, class: "img-fluid rounded" if micropost.image.attached? %>
-      </div>
-      <p>
-        <a href="#" class="link-black text-sm mr-2"><i class="far fa-thumbs-up mr-1"></i>
-          Like</a>
-        <span class="float-right">
-          <a href="#collapse-card-comment-<%= micropost.id %>" class="link-black text-sm" data-toggle="collapse">
-            <i class="far fa-comments mr-1"></i> Comments(<%= micropost.post_comment.count %>)
-          </a>
-        </span>
-      </p>
-
-      <% if micropost.post_comment.present? %>
-        <!--チャネル使用時に下記1行を使用する-->
-        <div class="html_micropost_id" data-micropost_id="<%= micropost.id %>"></div>
-        <% micropost.post_comment.each do |comment| %>
-          <div id="collapse-card-comment-<%= micropost.id %>" class="collapse">
-            <%= render "post_comments/post_comment_container", comment: comment %>
-          </div>
-        <% end %>
-      <% end %>
-
-      <%= form_with(model: @post_comment, url: post_comments_path, class: "form-horizontal", local: false, id: "post_comment_form-#{current_user.id.to_s + '-' + micropost.id.to_s}") do |f| %>
-        <div class="card-footer">
-          <%= image_tag @current_user.display_image, class: "img-fluid img-circle img-sm" if @current_user.image.attached? %>
-          <div class="img-push">
-            <%= f.hidden_field :micropost_id, value: micropost.id, id: "micropost_hidden_field-#{micropost.id}" %>
-            <%= f.text_field :content, class: "form-control form-control-sm", placeholder: "Type a comment", id: "micropost_content_field-#{micropost.id}" %>
-            <%= f.submit "Post", class: "btn btn-primary" %>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
+    <%= render "microposts/microposts_create", micropost: micropost, post_comment: @post_comment %>
   <% end %>
 <% else %>
   <div class="post">

@@ -22,12 +22,14 @@ document.addEventListener('turbolinks:load', () => {
             // Called when there's incoming data on the websocket for this channel
             // js.erb 内で使用できるように変数を定義しておく
             let postCommentContainer = document.getElementById("post-comment-container-" + data["micropost_id"])
+            let postCommentCountContainer = document.getElementById("post-comment-count-container-" + data["micropost_id"])
             let html_micropost_id = Array.from(html_micropost_id_array).find(a => a.dataset.micropost_id.toString() == data["micropost_id"])
             let match_micropost_id = html_micropost_id.dataset.micropost_id.toString()
             if (match_micropost_id == data["micropost_id"]) {
                 // サーバー側から受け取ったHTMLを一番最初に加える
                 console.log(postCommentContainer)
                 postCommentContainer.insertAdjacentHTML("beforebegin", data["post_comment"])
+                postCommentCountContainer.innerHTML = data["post_comment_count"]
                 document.getElementById('post_comment_form-' + current_user_id + '-' + match_micropost_id).reset();
             }
 
