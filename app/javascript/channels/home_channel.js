@@ -1,6 +1,6 @@
 import consumer from "./consumer"
 // turbolinks の読み込みが終わった後にidを取得しないと，エラーが出ます。
-document.addEventListener('turbolinks:load', () => {
+$(document).on('turbolinks:load', function () {
 
     // js.erb 内で使用できるように変数を定義しておく
     window.micropostsContainer = document.getElementById('microposts-container')
