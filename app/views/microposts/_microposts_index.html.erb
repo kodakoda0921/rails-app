@@ -29,7 +29,7 @@
       </p>
       <% if micropost.post_comment.present? %>
         <% micropost.post_comment.each do |comment| %>
-          <div id="collapse-card-comment" class="collapse">
+          <div id="collapse-card-comment-<%=micropost.id %>" class="collapse">
             <div class="card-footer card-comments">
               <div class="card-comment">
                 <!-- User image -->
