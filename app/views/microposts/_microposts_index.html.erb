@@ -30,7 +30,7 @@
 
       <% if micropost.post_comment.present? %>
         <!--チャネル使用時に下記1行を使用する-->
-        <div id="html_micropost_id" data-micropost_id="<%= micropost.id %>"></div>
+        <div class="html_micropost_id" data-micropost_id="<%= micropost.id %>"></div>
         <% micropost.post_comment.each do |comment| %>
           <div id="collapse-card-comment-<%= micropost.id %>" class="collapse">
             <%= render "post_comments/post_comment_container", comment: comment %>
