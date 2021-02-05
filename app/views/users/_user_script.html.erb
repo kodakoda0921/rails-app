@@ -26,7 +26,7 @@
                         autohide: true,
                         delay: 5000
                     })
-                    let a = document.getElementById("image-name");
+                    let a = document.getElementById("image-name-<%= @current_user.id.to_s %>");
                     a.innerHTML = file.name;
                 };
             })(file);
@@ -50,7 +50,7 @@
             } else {
                 $("#img1").attr("src", null);
                 $("#img1").attr("title", null);
-                document.getElementById("image-name").innerHTML = ""
+                document.getElementById("image-name-<%= @current_user.id.to_s %>").innerHTML = "";
             }
             document.body.onfocus = null;
         }, 500);
@@ -82,7 +82,7 @@
                         autohide: true,
                         delay: 5000
                     })
-                    let a = document.getElementById("image-name");
+                    let a = document.getElementById("image-name-<%=@current_user.id.to_s %>");
                     a.innerHTML = file.name;
                 };
             })(file);
@@ -90,5 +90,16 @@
         });
 
     });
+    $(function(){
+        $("#profile_image_file").change(function(){
+            $("#preview_user_image").click();
+        });
+    });
+    $(function(){
+        $("#backGround_file").change(function(){
+            $("#preview_user_image").click();
+        });
+    });
+
 
 </script>
