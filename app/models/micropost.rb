@@ -1,4 +1,5 @@
 class Micropost < ApplicationRecord
+  include UsersHelper
   belongs_to :user
   has_many :post_comment
   has_one_attached :image
@@ -15,7 +16,7 @@ class Micropost < ApplicationRecord
 
   # 投稿されたメッセージをメッセージ用の部分テンプレートでHTMLに変換
   def html_template
-    ApplicationController.renderer.render partial: "microposts/microposts_create", locals: { micropost: self }
+    ApplicationController.renderer.render partial: "microposts/microposts_create", locals: { micropost: self, post_comment: PostComment.new }
   end
 
 end
