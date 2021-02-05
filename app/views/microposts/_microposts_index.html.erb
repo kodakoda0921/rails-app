@@ -1,0 +1,69 @@
+<!-- Post -->
+<% if @microposts.present? %>
+  <% @microposts.first(10).each do |micropost| %>
+    <div class="post">
+
+      <div class="user-block">
+        <%= image_tag micropost.user.display_image, class: "profile-user-img img-fluid img-circle" if micropost.user.image.attached? %>
+        <span class="username">
+                          <%= link_to micropost.user.name, micropost.user %>
+          <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
+                          </span>
+        <span class="description"><%= micropost.created_at.strftime('%Y/%m/%d %H:%M') %>
+                          </span>
+      </div>
+      <p>
+        <%= micropost.content %>
+      </p>
+      <div class="text-left">
+        <%= image_tag micropost.display_image, class: "img-fluid rounded" if micropost.image.attached? %>
+      </div>
+      <p>
+        <a href="#" class="link-black text-sm mr-2"><i class="far fa-thumbs-up mr-1"></i>
+          Like</a>
+        <span class="float-right">
+          <a href="#collapse-card-comment-<%=micropost.id %>" class="link-black text-sm" data-toggle="collapse">
+            <i class="far fa-comments mr-1"></i> Comments(<%=micropost.post_comment.count %>)
+          </a>
+        </span>
+      </p>
+      <% if micropost.post_comment.present? %>
+        <% micropost.post_comment.each do |comment| %>
+          <div id="collapse-card-comment-<%=micropost.id %>" class="collapse">
+            <div class="card-footer card-comments">
+              <div class="card-comment">
+                <!-- User image -->
+                <%= image_tag comment.micropost.user.display_image, class: "img-circle img-sm" if comment.micropost.user.image.attached? %>
+                <div class="comment-text">
+                                    <span class="username"><%= comment.micropost.user.name %>
+                                      <span class="text-muted float-right"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                                    </span>
+                  <!-- /.username -->
+                  <%= comment.content %>
+                </div>
+                <!-- /.comment-text -->
+              </div>
+              <!-- /.card-comment -->
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      <%= form_with(model: @post_comment, url: post_comments_path, class: "form-horizontal", local: false, id: "post_comments_form") do |f| %>
+        <div class="card-footer">
+          <%= image_tag @current_user.display_image, class: "img-fluid img-circle img-sm" if @current_user.image.attached? %>
+          <div class="img-push">
+            <%= f.hidden_field :micropost_id, value: micropost.id %>
+            <%= f.text_field :content, class: "form-control form-control-sm", placeholder: "Type a comment" %>
+            <%= f.submit "Post", class: "btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  <% end %>
+<% else %>
+  <div class="post">
+    <p>まだ何も投稿されていません</p>
+  </div>
+<% end %>
+<!-- /.post -->

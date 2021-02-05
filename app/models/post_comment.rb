@@ -2,7 +2,7 @@ class PostComment < ApplicationRecord
   belongs_to :micropost
   belongs_to :user
   has_one_attached :image
-  default_scope -> { order(created_at: :desc) }
+  default_scope -> { order(created_at: :asc) }
   validates :micropost_id, presence: true
   validates :content, presence: true, length: { minimum: 1, maximum: 140 }
   validates :image, content_type: { in: %w[image/jpeg image/gif image/png],
