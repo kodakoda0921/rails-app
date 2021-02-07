@@ -4,11 +4,10 @@
     <%= image_tag url_for(comment.micropost.user.display_image), class: "img-circle img-sm" if comment.micropost.user.image.attached? %>
     <div class="comment-text">
       <span class="username">
-        <%= comment.micropost.user.name %>
-        <span class="text-muted float-right">
-          <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>
-        </span>
+        <%= link_to comment.micropost.user.name, comment.micropost.user %>
+        <a href="#" class="float-right text-muted" data-toggle="modal" data-target="#modal_destroy-<%= micropost.id %>"><i class="fas fa-times"></i></a>
       </span>
+      <span class="description"><%= micropost.created_at.strftime('%Y/%m/%d %H:%M') %></span>
       <%= comment.content %>
     </div>
 
