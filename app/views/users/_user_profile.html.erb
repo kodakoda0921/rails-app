@@ -7,7 +7,7 @@
   <div class="card-body">
     <strong><i class="fas fa-book mr-1"></i> Url</strong>
 
-    <p class="text-muted">
+    <p class="text-muted" id="user_profile_url">
       <%= link_to user.profiles.url, user.profiles.url if user.profiles.url.present? %>
     </p>
 
@@ -15,21 +15,21 @@
 
     <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
 
-    <p class="text-muted"><%= user.profiles.location if user.profiles.location.present? %></p>
+    <p class="text-muted" id="user_profile_location"><%= user.profiles.location if user.profiles.location.present? %></p>
 
     <hr>
 
     <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
 
     <p class="text-muted">
-      <span class="tag tag-primary"><%= user.profiles.skills if user.profiles.skills.present? %></span>
+      <span class="tag tag-primary" id="user_profile_skill"><%= user.profiles.skills if user.profiles.skills.present? %></span>
     </p>
 
     <hr>
 
     <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
 
-    <p class="text-muted"><%= user.profiles.notes if user.profiles.notes.present? %></p>
+    <p class="text-muted" id="user_profile_notes"><%= user.profiles.notes if user.profiles.notes.present? %></p>
   </div>
   <!-- /.card-body -->
 </div>

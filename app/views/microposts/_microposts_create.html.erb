@@ -1,10 +1,10 @@
-<div class="post" style="border-bottom:1px solid #adb5bd;">
+<div class="post" style="border-bottom:1px solid #adb5bd;" id="micropost-<%= micropost.id %>">
 
   <div class="user-block">
     <%= image_tag url_for(micropost.user.display_image), class: "profile-user-img img-fluid img-circle" if micropost.user.image.attached? %>
     <span class="username">
                           <%= link_to micropost.user.name, micropost.user %>
-      <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
+      <a href="#" class="float-right text-muted" data-toggle="modal" data-target="#modal_destroy-<%= micropost.id %>"><i class="fas fa-times"></i></a>
                           </span>
     <span class="description"><%= micropost.created_at.strftime('%Y/%m/%d %H:%M') %>
                           </span>
@@ -52,3 +52,22 @@
     </div>
   <% end %>
 </div>
+<!--削除確認モーダル-->
+<div class="modal fade" id="modal_destroy-<%= micropost.id %>">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        削除しますか？
+      </div>
+      <div class="modal-body">
+        <%= micropost.content %>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= link_to "Delete", micropost_path(micropost), method: :delete, class: "btn btn-danger" %>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/削除確認モーダル-->
+
