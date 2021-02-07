@@ -4,7 +4,7 @@
     <%= render "microposts/microposts_create", micropost: micropost, post_comment: @post_comment %>
   <% end %>
 <% else %>
-  <div class="post" id="micropost_no_post_anything">
+  <div class="post" id="micropost_no_post_anything-<%= @current_user.id.to_s %>">
     <p>まだ何も投稿されていません</p>
   </div>
 <% end %>
