@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include UsersHelper
   include ApplicationHelper
   protect_from_forgery with: :null_session
+
   private
 
   def logged_in_user
@@ -11,4 +12,5 @@ class ApplicationController < ActionController::Base
       redirect_to login_url
     end
   end
+
 end

@@ -1,7 +1,7 @@
 class Micropost < ApplicationRecord
   include UsersHelper
   belongs_to :user
-  has_many :post_comment
+  has_many :post_comment, dependent: :destroy
   has_one_attached :image
   default_scope -> { order(created_at: :desc) }
   validates :user_id, presence: true

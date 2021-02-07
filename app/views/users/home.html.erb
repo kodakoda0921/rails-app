@@ -3,7 +3,7 @@
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
-    <div id="flash-container"></div>
+    <div class="flash-container" id="flash-container-<%= @current_user %>"></div>
     <div class="row">
       <div class="col-md-3">
         <!--チャネル使用時に下記の1行を使う-->
@@ -56,7 +56,7 @@
                   <%= render "user_script" %>
 
                 </div>
-                <div id="microposts-container">
+                <div class="microposts-container" id="microposts-container-<%= @current_user.id %>">
                   <%= render "microposts/microposts_index" %>
                 </div>
               </div>
@@ -161,7 +161,7 @@
               <!-- /.tab-pane -->
 
               <div class="tab-pane" id="settings">
-                <%= form_with(model: @current_user, method: "PUT", local: true) do |f| %>
+                <%= form_with(model: @current_user, method: "PUT", local: false, remote: true) do |f| %>
                   <div class="form-group row">
                     <%= f.label :name, class: "col-sm-2 col-form-label" %>
                     <div class="col-sm-10">
@@ -209,13 +209,13 @@
                   <div class="form-group row">
                     <%= f.label :password, class: "col-sm-2 col-form-label" %>
                     <div class="col-sm-10">
-                      <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
+                      <%= f.password_field :password, class: "form-control", placeholder: "Password", id: "profile_password_field-#{@current_user.id.to_s}" %>
                     </div>
                   </div>
                   <div class="form-group row">
                     <%= f.label :password_confirmation, "Confirmation", class: "col-sm-2 col-form-label" %>
                     <div class="col-sm-10">
-                      <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Password confirmation" %>
+                      <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Password confirmation", id: "profile_password_confirmation_field-#{@current_user.id.to_s}" %>
                     </div>
                   </div>
                   <div class="form-group row">
