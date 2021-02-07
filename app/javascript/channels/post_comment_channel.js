@@ -1,11 +1,13 @@
 import consumer from "./consumer"
 // turbolinks の読み込みが終わった後にidを取得しないと，エラーが出ます。
 $(document).on('turbolinks:load', function () {
-    const postCommentContainerClass = Array.from($(".post-comment-container"))
+    window.micropostsClassContainer = document.getElementsByClassName('microposts-container')
 // 以下のプログラムが他のページで動作しないようにしておく
-    if (postCommentContainerClass[0].className === null) {
+    // 以下のプログラムが他のページで動作しないようにしておく
+    if (micropostsClassContainer === null) {
         return
     }
+    const postCommentContainerClass = Array.from($(".post-comment-container"))
     let current_user_id_int = document.getElementById("current_user_id").getAttribute("data-user_id");
     const current_user_id = current_user_id_int.toString()
     const html_micropost_id_array = document.getElementsByClassName("html_micropost_id");
@@ -21,7 +23,9 @@ $(document).on('turbolinks:load', function () {
         received(data) {
             // Called when there's incoming data on the websocket for this channel
             // js.erb 内で使用できるように変数を定義しておく
+            console.log("aaa")
             let postCommentContainer = document.getElementById("post-comment-container-" + data["micropost_id"])
+
             let postCommentCountContainer = document.getElementById("post-comment-count-container-" + data["micropost_id"])
             let html_micropost_id = Array.from(html_micropost_id_array).find(a => a.dataset.micropost_id.toString() == data["micropost_id"])
             let match_micropost_id = html_micropost_id.dataset.micropost_id.toString()

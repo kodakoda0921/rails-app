@@ -7,8 +7,8 @@
   <div class="card-body">
     <strong><i class="fas fa-book mr-1"></i> Url</strong>
 
-    <p class="text-muted" id="user_profile_url">
-      <%= link_to user.profiles.url, user.profiles.url if user.profiles.url.present? %>
+    <p class="text-muted">
+      <%= link_to user.profiles.url, user.profiles.url, id: "user_profile_url" if user.profiles.url.present? %>
     </p>
 
     <hr>
