@@ -1,15 +1,38 @@
-<div class="card-footer card-comments">
-  <div class="card-comment">
+<div class="card-footer card-comments" id="comment-<%= comment.id %>">
+  <div class="card-comment" style="border-bottom:1px dashed #adb5bd;">
     <!-- User image -->
-    <%= image_tag url_for(comment.micropost.user.display_image), class: "img-circle img-sm" if comment.micropost.user.image.attached? %>
+    <div class="user-block">
+      <%= image_tag url_for(comment.micropost.user.display_image), class: "img-circle img-sm" if comment.micropost.user.image.attached? %>
+
+      <a href="#" class="float-right text-muted" data-toggle="modal" data-target="#modal_comment_destroy-<%= comment.id %>"><i class="fas fa-times"></i></a>
+      <span class="username"><%= link_to comment.micropost.user.name, comment.micropost.user %>
+
+      </span>
+      <span class="description"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+    </div>
     <div class="comment-text">
-                                    <span class="username"><%= comment.micropost.user.name %>
-                                      <span class="text-muted float-right"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
-                                    </span>
       <!-- /.username -->
       <%= comment.content %>
     </div>
     <!-- /.comment-text -->
   </div>
   <!-- /.card-comment -->
+  <!--削除確認モーダル-->
+  <div class="modal fade" id="modal_comment_destroy-<%= comment.id %>">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          削除しますか？
+        </div>
+        <div class="modal-body">
+          <%= comment.content %>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= link_to "Delete", post_comment_path(comment.id), method: :delete, class: "btn btn-danger" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/削除確認モーダル-->
 </div>

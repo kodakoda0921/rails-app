@@ -28,9 +28,8 @@ $(document).on('turbolinks:load', function () {
                     // サーバー側から受け取ったHTMLを一番最後に加える
                     micropostsContainer.insertAdjacentHTML("afterbegin", data["micropost"])
                     document.getElementById('microposts_form-' + data["user_id"]).reset();
-                    // document.getElementById("image-name-" + current_user_id).innerHTML = "";
                     if (document.getElementById("micropost_no_post_anything-" + data["user_id"]) != null) {
-                        $("#micropost_no_post_anything").remove();
+                        $("#micropost_no_post_anything-" + data["user_id"]).remove();
                     }
                 }
                 if (data["method"] == "destroy") {
