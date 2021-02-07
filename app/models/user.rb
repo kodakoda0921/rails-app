@@ -100,6 +100,10 @@ class User < ApplicationRecord
     back_ground_preview.variant(gravity: :center, resize: "310x180^", crop: "300x140+0+0") if self.back_ground.attached?
   end
 
+  def user_widget_html
+    ApplicationController.renderer.render partial: "users/user_widget", locals: { preview: false, user: self, current_user: self }
+  end
+
   private
 
   # メールアドレスをすべて小文字にする

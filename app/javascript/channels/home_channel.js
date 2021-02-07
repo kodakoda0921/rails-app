@@ -28,6 +28,7 @@ $(document).on('turbolinks:load', function () {
                     // サーバー側から受け取ったHTMLを一番最後に加える
                     micropostsContainer.insertAdjacentHTML("afterbegin", data["micropost"])
                     document.getElementById('microposts_form-' + data["user_id"]).reset();
+                    document.getElementById("image-name-" + data["user_id"]).innerHTML = "";
                     if (document.getElementById("micropost_no_post_anything-" + data["user_id"]) != null) {
                         $("#micropost_no_post_anything-" + data["user_id"]).remove();
                     }
@@ -39,20 +40,25 @@ $(document).on('turbolinks:load', function () {
                     $("#" + micropost_view).remove();
                 }
                 if (data["method"] == "update") {
-                    let user_name_all = document.getElementsByClassName("user_widget_user_name")
-                    let user_job_all = document.getElementsByClassName("user_widget_user_job")
-                    document.getElementById("user_profile_url").innerHTML = data["profiles"].url
-                    document.getElementById("user_profile_location").innerHTML = data["profiles"].location
-                    document.getElementById("user_profile_skill").innerHTML = data["profiles"].skills
-                    document.getElementById("user_profile_notes").innerHTML = data["profiles"].notes
+                    let user_name_all = document.getElementsByClassName("user_widget_user_name-" + data["user"].id.toString())
+                    let user_job_all = document.getElementsByClassName("user_widget_user_job-" + data["user"].id.toString())
+                    let user_widget_images = $(".user_widget_images")
+                    document.getElementById("user_profile_url-" + data["user"].id.toString()).innerHTML = data["profiles"].url
+                    document.getElementById("user_profile_location-" + data["user"].id.toString()).innerHTML = data["profiles"].location
+                    document.getElementById("user_profile_skill-" + data["user"].id.toString()).innerHTML = data["profiles"].skills
+                    document.getElementById("user_profile_notes-" + data["user"].id.toString()).innerHTML = data["profiles"].notes
                     Array.prototype.forEach.call(user_name_all, function (user_name) {
                         user_name.innerHTML = data["user"].name
                     })
                     Array.prototype.forEach.call(user_job_all, function (user_job) {
                         user_job.innerHTML = data["profiles"].job
                     })
+                    Array.prototype.forEach.call(user_widget_images, function (user_images) {
+                        $(data["profile_images"]).replaceAll(user_images);
+                    })
                     document.getElementById('profile_password_field-' + current_user_id).value = "";
                     document.getElementById('profile_password_confirmation_field-' + current_user_id).value = "";
+                    $("#modal-user_widget-" + data["user"].id.toString()).modal('hide');
                 }
             }
         }
