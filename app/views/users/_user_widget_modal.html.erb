@@ -1,7 +1,7 @@
 <div class="modal fade" id="modal-user_widget-<%= @current_user.id.to_s %>">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
-      <%= form_with(model: user, method: "PUT", remote: true, local: false) do |f| %>
+      <%= form_with(model: user, method: "PUT", remote: true, local: false,class: "user_image_preview") do |f| %>
         <div class="modal-header">
           <h4 class="modal-title">Preview</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -26,7 +26,7 @@
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <%= f.submit "Preview", class: "btn btn-primary", name: :preview, id: "preview_user_image", remote: true, method: "PUT", style: ("display:none") %>
-          <%= f.submit "Save changes", class: "btn btn-primary", name: :save %>
+          <%= f.submit "Save changes", class: "btn btn-primary", name: :save ,id:"submit_save_user_image"%>
         </div>
       <% end %>
     </div>

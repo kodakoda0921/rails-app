@@ -90,14 +90,26 @@
         });
 
     });
-    $(function(){
-        $("#profile_image_file").change(function(){
+
+    $(document).on('ajax:success', '.user_image_preview', function (e) {
+        let data = e.detail[0];
+        document.getElementById('profile_image_file').disabled = false
+        document.getElementById('backGround_file').disabled = false
+    });
+
+
+    $(function () {
+        $("#profile_image_file").change(function () {
+            document.getElementById('backGround_file').disabled = true
             $("#preview_user_image").click();
+            document.getElementById('profile_image_file').disabled = true
         });
     });
-    $(function(){
-        $("#backGround_file").change(function(){
+    $(function () {
+        $("#backGround_file").change(function () {
+            document.getElementById('profile_image_file').disabled = true
             $("#preview_user_image").click();
+            document.getElementById('backGround_file').disabled = true
         });
     });
 
