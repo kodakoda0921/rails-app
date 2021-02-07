@@ -1,63 +1,69 @@
 <!-- Widget: user widget style 1 -->
-<div class="card card-widget widget-user shadow-lg">
-  <!-- Add the bg color to the header using any of the bg-* classes -->
+<div id="user_widget_images-<%= user.id.to_s %>" class="user_widget_images">
+  <div class="card card-widget widget-user shadow-lg">
+    <!-- Add the bg color to the header using any of the bg-* classes -->
 
-  <div class="widget-user-header text-white"
-       <% if preview %>
-       id="preview_background_img"
-       <% end %>
-       style='background: url("<%= url_for(user.display_background_image.processed) if user.image.attached? %>");center: center;'>
-    <div class="row">
-      <div class="col-md-1">
-        <% if preview == false && user == @current_user %>
-          <a href="#" class="text-muted" data-toggle="modal" data-target="#modal-sm">
-            <i class="fas fa-edit text-white text-left"></i>
-          </a>
-        <% end %>
+    <div class="widget-user-header text-white"
+         <% if preview %>
+         id="preview_background_img"
+         <% end %>
+         style='background: url("<%= url_for(user.display_background_image.processed) if user.image.attached? %>");center: center;'>
+      <div class="row">
+        <div class="col-md-1">
+          <% if preview == false && user == current_user %>
+            <a href="#" class="text-muted" data-toggle="modal" data-target="#modal-user_widget-<%= current_user.id.to_s %>">
+              <i class="fas fa-edit text-white text-left"></i>
+            </a>
+          <% end %>
 
+        </div>
+        <div class="col-md-11">
+          <h3 class="widget-user-username text-right">
+            <div class="user_widget_user_name-<%= user.id.to_s %>"><%= user.name %></div>
+          </h3>
+        </div>
       </div>
-      <div class="col-md-11">
-        <h3 class="widget-user-username text-right"><div class="user_widget_user_name"><%= user.name %></div></h3>
-      </div>
+      <h5 class="widget-user-desc text-right">
+        <div class="user_widget_user_job-<%= user.id.to_s %>"><%= user.profiles.job %></div>
+      </h5>
+
     </div>
-    <h5 class="widget-user-desc text-right"><div class="user_widget_user_job"><%= user.profiles.job %></div></h5>
-
-  </div>
-  <div class="widget-user-image">
-    <%= image_tag user.display_image, class: "profile-user-img img-fluid img-circle", id: "#{"preview_profile_img" if preview }" %>
-  </div>
-
-  <div class="card-footer">
-    <div class="row">
-      <div class="col-sm-4 border-right">
-        <div class="description-block">
-          <h5 class="description-header">3,200</h5>
-          <span class="description-text small">Following</span>
-        </div>
-        <!-- /.description-block -->
-      </div>
-      <!-- /.col -->
-      <div class="col-sm-4 border-right">
-        <div class="description-block">
-          <h5 class="description-header">13,000</h5>
-          <span class="description-text small">Followers</span>
-        </div>
-        <!-- /.description-block -->
-      </div>
-      <!-- /.col -->
-      <div class="col-sm-4">
-        <div class="description-block">
-          <h5 class="description-header">35</h5>
-          <span class="description-text small">Groupe</span>
-        </div>
-        <!-- /.description-block -->
-      </div>
-      <!-- /.col -->
+    <div class="widget-user-image">
+      <%= image_tag url_for(user.display_image), class: "profile-user-img img-fluid img-circle", id: "#{"preview_profile_img" if preview }" %>
     </div>
-    <!-- /.row -->
-    <% if user != @current_user %>
-      <a href="#" class="btn btn-primary btn-flat btn-sm float-lg-right">Follow</a>
-    <% end %>
+
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-sm-4 border-right">
+          <div class="description-block">
+            <h5 class="description-header">3,200</h5>
+            <span class="description-text small">Following</span>
+          </div>
+          <!-- /.description-block -->
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 border-right">
+          <div class="description-block">
+            <h5 class="description-header">13,000</h5>
+            <span class="description-text small">Followers</span>
+          </div>
+          <!-- /.description-block -->
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4">
+          <div class="description-block">
+            <h5 class="description-header">35</h5>
+            <span class="description-text small">Groupe</span>
+          </div>
+          <!-- /.description-block -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+      <% if user != current_user %>
+        <a href="#" class="btn btn-primary btn-flat btn-sm float-lg-right">Follow</a>
+      <% end %>
+    </div>
   </div>
+  <!-- /.widget-user -->
 </div>
-<!-- /.widget-user -->

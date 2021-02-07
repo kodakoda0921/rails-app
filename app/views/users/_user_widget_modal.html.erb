@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-sm">
+<div class="modal fade" id="modal-user_widget-<%= @current_user.id.to_s %>">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <%= form_with(model: user, method: "PUT", remote: true, local: false) do |f| %>
@@ -10,7 +10,7 @@
         </div>
         <div class="modal-body">
           <div class="col-md-8">
-            <%= render "users/user_widget", user: user, preview: true %>
+            <%= render "users/user_widget", user: user, current_user: @current_user, preview: true %>
           </div>
           <div class="form-group">
             <div class="custom-file">

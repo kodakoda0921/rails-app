@@ -8,7 +8,7 @@
     <%= render "shared/flash_messages", user: @current_user %>
     <div class="row">
       <div class="col-md-3">
-        <%= render "users/user_widget", user: @user, preview: false %>
+        <%= render "users/user_widget", user: @user, current_user: @current_user, preview: false %>
         <%= render "users/user_profile", user: @user %>
       </div>
       <!-- /.col -->
