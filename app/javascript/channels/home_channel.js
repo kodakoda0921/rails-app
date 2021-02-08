@@ -44,6 +44,7 @@ $(document).on('turbolinks:load', function () {
                     let user_job_all = document.getElementsByClassName("user_widget_user_job-" + data["user"].id.toString())
                     let user_widget_images = $(".user_widget_images")
                     document.getElementById("user_profile_url-" + data["user"].id.toString()).innerHTML = data["profiles"].url
+                    document.getElementById("user_profile_url-" + data["user"].id.toString()).href = data["profiles"].url
                     document.getElementById("user_profile_location-" + data["user"].id.toString()).innerHTML = data["profiles"].location
                     document.getElementById("user_profile_skill-" + data["user"].id.toString()).innerHTML = data["profiles"].skills
                     document.getElementById("user_profile_notes-" + data["user"].id.toString()).innerHTML = data["profiles"].notes
