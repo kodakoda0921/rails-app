@@ -1,10 +1,13 @@
 <% provide(:title, 'flame') %>
-
 <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
+
   <div class="nav navbar navbar-expand-lg navbar-white navbar-light border-bottom p-0">
-    <ul class="navbar-nav" role="tablist"></ul>
-    <a class="nav-link bg-danger" href="#" data-widget="iframe-close"><i class="fas fa-times"></i></a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav" role="tablist"></ul>
+      <a class="nav-link bg-danger" href="#" data-widget="iframe-close"><i class="fas fa-times"></i></a>
+    </div>
   </div>
+
   <div class="tab-content">
     <div class="tab-empty">
       <h2 class="display-9">左メニュからタブを選択して下さい</h2>
@@ -15,8 +18,8 @@
       </div>
     </div>
   </div>
-</div>
 
+</div>
 <script>
     $('.content-wrapper').IFrame('createTab', 'Home', '<%= users_home_path %>', 'home', true)
 </script>
