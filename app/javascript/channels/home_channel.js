@@ -32,14 +32,14 @@ $(document).on('turbolinks:load', function () {
                     let container = document.getElementById('microposts-container-' + data["user_id"])
                     data["followed_list"].forEach(function (id_int) {
                         let id = id_int.toString()
-                        container.insertAdjacentHTML("afterbegin", `<div class="hidden"><div class="microposts-container-` + id + `"><div class="hidden-microposts-container"></div></div>`)
-                        console.log(container)
+                        container.insertAdjacentHTML("afterbegin", `<div class="microposts-container-` + id + `"></div>`)
                         let micropostsContainer = document.getElementsByClassName('microposts-container-' + id);
                         Array.from(micropostsContainer).forEach(function (container) {
                             container.insertAdjacentHTML("afterbegin", data["micropost"])
+                            console.log(container)
                         });
                     });
-                    $('.hidden').removeClass('hidden');
+                    $('.hidden-microposts-container').removeClass('hidden-microposts-container');
                     document.getElementById('microposts_form-' + data["user_id"]).reset();
                     document.getElementById("image-name-" + data["user_id"]).innerHTML = "";
                     if (document.getElementById("micropost_no_post_anything-" + data["user_id"]) != null) {
