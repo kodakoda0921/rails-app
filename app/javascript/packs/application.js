@@ -18,5 +18,6 @@ require("admin-lte");
 require("admin-lte/plugins/bootstrap/js/bootstrap.bundle.min");
 require("admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min");
 require("admin-lte/dist/js/adminlte.min");
+require("admin-lte/plugins/jquery-ui/jquery-ui.min");
 require("admin-lte/dist/js/demo");
 

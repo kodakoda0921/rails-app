@@ -14,7 +14,7 @@
         <%= image_tag @current_user.display_image, class: "img-circle elevation-2" %>
       </div>
       <div class="info">
-        <a href="<%= root_path %>" class="d-block"><%= current_user.name %></a>
+        <a href="#" class="d-block" id="user_home_path_tab_open"><%= current_user.name %></a>
       </div>
     </div>
 
@@ -45,7 +45,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="../../index.html" class="nav-link">
+              <a href="" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Dashboard v1</p>
               </a>

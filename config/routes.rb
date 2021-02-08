@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  get 'frame/show'
   mount ActionCable.server => '/cable'
   get 'password_resets/edit'
   get 'password_resets/new'
-  root 'users#home'
+  root "frame#show"
+  get 'users/home'
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :account_activations, only: [:edit]
