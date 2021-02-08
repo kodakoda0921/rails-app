@@ -39,7 +39,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @current_user = current_user
     @microposts = @user.microposts.build
+    @profiles = current_user.profiles
   end
 
   def update

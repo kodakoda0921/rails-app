@@ -61,7 +61,11 @@
       </div>
       <!-- /.row -->
       <% if user != current_user %>
-        <a href="#" class="btn btn-primary btn-flat btn-sm float-lg-right">Follow</a>
+        <% if current_user.following?(user) %>
+          <%= link_to "Unfollow", follow_relation_path(id: current_user.active_relation.find_by(following_id: user.id).id), class: "btn btn-primary btn-flat btn-sm float-lg-right", method: :delete %>
+        <% else %>
+          <%= link_to "Follow", follow_relation_index_path(following_id: user.id), class: "btn btn-primary btn-flat btn-sm float-lg-right", method: :post %>
+        <% end %>
       <% end %>
     </div>
   </div>

@@ -2,6 +2,13 @@ class User < ApplicationRecord
   has_many :microposts, dependent: :destroy
   has_one(:profiles, dependent: :destroy, class_name: "Profile")
   accepts_nested_attributes_for :profiles
+  # active_relation(follower_id)を持つユーザは、それを通して、さらにfollowing_idを持っている。
+  has_many :active_relation, class_name: "FollowRelation", foreign_key: :follower_id, dependent: :destroy
+  has_many :following, through: :active_relation, source: :following
+  # passive_relation(following_id)を持つユーザは、それを通して、さらにfollower_idを持っている。
+  has_many :passive_relation, class_name: "FollowRelation", foreign_key: :following_id, dependent: :destroy
+  has_many :follower, through: :passive_relation, source: :follower
+  # 画像のアタッチ
   has_one_attached :image
   has_one_attached :back_ground
   has_one_attached :image_preview
@@ -74,6 +81,7 @@ class User < ApplicationRecord
     update_attribute(:reset_sent_at, Time.zone.now)
   end
 
+  # パスワード再設定のメールを送る
   def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
   end
@@ -83,25 +91,45 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
+  # ユーザプロフィールイメージを圧縮する
   def display_image()
     image.variant(gravity: :center, resize: "640x640^", crop: "640x640+0+0") if self.image.attached?
   end
 
+  # ユーザプロフィールイメージを圧縮する
   def display_background_image()
     back_ground.variant(gravity: :center, resize: "280x180^", crop: "300x140+0+0") if self.back_ground.attached?
   end
 
+  # プレビューイメージを圧縮する
   def preview_image()
 
     image_preview.variant(gravity: :center, resize: "640x640^", crop: "640x640+0+0") if self.image.attached?
   end
 
+  # プレビューイメージを圧縮する
   def preview_background_image()
     back_ground_preview.variant(gravity: :center, resize: "310x180^", crop: "300x140+0+0") if self.back_ground.attached?
   end
 
+  # channelを使用したリアルタイム表示の際に差し替えるhtmlテンプレートを生成する
   def user_widget_html
     ApplicationController.renderer.render partial: "users/user_widget", locals: { preview: false, user: self, current_user: self }
+  end
+
+  # other_userのフォローを行う
+  def follow(other_user)
+    self.following << other_user
+  end
+
+  # active_relation(follower_id)を通してfollowing_idがあるか探し、あったら削除
+  def unfollow(other_user)
+    self.active_relation.find_by(following_id: other_user.id).destroy
+  end
+
+  # other_userをフォローしているかを確認しbooleanを返す
+  def following?(other_user)
+    self.following.include?(other_user)
   end
 
   private

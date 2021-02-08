@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   resources :microposts, only: [:create, :destroy]
   resources :profiles, only: [:edit, :destroy]
   resources :post_comments, only: [:create, :destroy]
+  resources :follow_relation, only: [:create, :destroy]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
