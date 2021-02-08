@@ -76,7 +76,7 @@ class UsersController < ApplicationController
         flash.now[:success] = "プロフィールを更新しました！"
         ActionCable.server.broadcast("home_channel", { method: "update", user_id: @user.id, user: @user, profiles: @user.profiles, profile_images: @user.user_widget_html })
         ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: @user.id })
-        render :json => 'success'
+        render json: 'success'
       else
         if @user.errors.any?
           flash.now[:danger] = @user.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "")
