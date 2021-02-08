@@ -22,30 +22,30 @@ $(document).on('turbolinks:load', function () {
 
         received(data) {
             // Called when there's incoming data on the websocket for this channel
-            if (data["user_id"] == current_user_id) {
-                if (data["method"] == "create") {
+
+            if (data["method"] == "create") {
+                if (data["user_id"] == current_user_id) {
                     // サーバー側から受け取ったHTMLを一番最後に加える
                     let micropostsContainersSelf = document.getElementsByClassName('microposts-container-' + data["user_id"]);
                     Array.from(micropostsContainersSelf).forEach(function (container) {
                         container.insertAdjacentHTML("afterbegin", data["micropost"])
                     });
-                    let container = document.getElementById('microposts-container-' + data["user_id"])
-                    data["followed_list"].forEach(function (id_int) {
-                        let id = id_int.toString()
-                        container.insertAdjacentHTML("afterbegin", `<div class="microposts-container-` + id + `"></div>`)
-                        let micropostsContainer = document.getElementsByClassName('microposts-container-' + id);
-                        Array.from(micropostsContainer).forEach(function (container) {
-                            container.insertAdjacentHTML("afterbegin", data["micropost"])
-                            console.log(container)
-                        });
-                    });
-                    $('.hidden-microposts-container').removeClass('hidden-microposts-container');
                     document.getElementById('microposts_form-' + data["user_id"]).reset();
                     document.getElementById("image-name-" + data["user_id"]).innerHTML = "";
                     if (document.getElementById("micropost_no_post_anything-" + data["user_id"]) != null) {
                         $("#micropost_no_post_anything-" + data["user_id"]).remove();
                     }
+                } else {
+                    let following_users_micropost_find = data["followed_list"].find(i => i.toString() == current_user_id)
+                    if (following_users_micropost_find !== undefined) {
+                        let micropostsContainers = document.getElementsByClassName('microposts-container-' + following_users_micropost_find.toString());
+                        Array.from(micropostsContainers).forEach(function (container) {
+                            container.insertAdjacentHTML("afterbegin", data["micropost"])
+                        });
+                    }
                 }
+            }
+            if (data["user_id"] == current_user_id) {
                 if (data["method"] == "destroy") {
                     let micropost_view = "micropost-" + data["micropost_id"]
                     let micropost_modal = "modal_destroy-" + data["micropost_id"]
