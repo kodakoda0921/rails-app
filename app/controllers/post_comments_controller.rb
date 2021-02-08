@@ -34,10 +34,13 @@ class PostCommentsController < ApplicationController
     if @post_comment.destroy
       flash.now[:success] = "削除完了しました！"
       ActionCable.server.broadcast("post_comment_channel", { user_id: current_user.id, post_comment_count: destroyed_post_comment.html_template_count, post_comment_id: destroyed_post_comment.id.to_s, method: "destroy", micropost_id: destroyed_post_comment.micropost_id })
+      ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: current_user.id })
+      return
     else
       flash.now[:warn] = "削除に失敗しました"
+      ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: current_user.id })
+      return
     end
-    ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: current_user.id })
   end
 
   private

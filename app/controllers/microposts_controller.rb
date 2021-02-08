@@ -32,10 +32,13 @@ class MicropostsController < ApplicationController
     if @micropost.destroy
       flash.now[:success] = "削除完了しました！"
       ActionCable.server.broadcast("home_channel", { user_id: current_user.id, micropost_id: @micropost.id.to_s, method: "destroy" })
+      ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: current_user.id })
+      return
     else
       flash.now[:warn] = "削除に失敗しました"
+      ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: current_user.id })
+      return
     end
-    ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: current_user.id })
   end
 
   private
