@@ -132,6 +132,21 @@ class User < ApplicationRecord
     self.following.include?(other_user)
   end
 
+  # フォローされているユーザ（リスナー）の一覧を取得
+  def followed_list_id
+    self.passive_relation.map { |i| i["follower_id"] }
+  end
+
+  # 投稿の一覧を取得する
+  def micropost_index
+    # userがフォローしているユーザ達の一覧(following_id)を取得する
+    following_id_list = "SELECT following_id FROM follow_relations
+                     WHERE follower_id = :user_id"
+    # 上記で取得したuser達のfollowing_idとMicropost.user_idが一致する投稿IDを全て抜き出す。さらに、user自身の投稿も抜き出す
+    Micropost.where("user_id IN (#{following_id_list})
+                     OR user_id = :user_id", user_id: self.id)
+  end
+
   private
 
   # メールアドレスをすべて小文字にする

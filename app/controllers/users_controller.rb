@@ -27,6 +27,7 @@ class UsersController < ApplicationController
     if logged_in?
       @current_user = current_user
       @microposts = current_user.microposts
+      @microposts_index = current_user.micropost_index
       @profiles = current_user.profiles
       @post_comment = PostComment.new
     else

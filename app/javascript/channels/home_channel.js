@@ -11,7 +11,6 @@ $(document).on('turbolinks:load', function () {
     }
     let current_user_id_int = document.getElementById("current_user_id").getAttribute("data-user_id");
     const current_user_id = current_user_id_int.toString()
-    const micropostsContainer = document.getElementById('microposts-container-' + current_user_id);
     consumer.subscriptions.create("HomeChannel", {
         connected() {
             // Called when the subscription is ready for use on the server
@@ -26,7 +25,21 @@ $(document).on('turbolinks:load', function () {
             if (data["user_id"] == current_user_id) {
                 if (data["method"] == "create") {
                     // サーバー側から受け取ったHTMLを一番最後に加える
-                    micropostsContainer.insertAdjacentHTML("afterbegin", data["micropost"])
+                    let micropostsContainersSelf = document.getElementsByClassName('microposts-container-' + data["user_id"]);
+                    Array.from(micropostsContainersSelf).forEach(function (container) {
+                        container.insertAdjacentHTML("afterbegin", data["micropost"])
+                    });
+                    let container = document.getElementById('microposts-container-' + data["user_id"])
+                    data["followed_list"].forEach(function (id_int) {
+                        let id = id_int.toString()
+                        container.insertAdjacentHTML("afterbegin", `<div class="hidden"><div class="microposts-container-` + id + `"><div class="hidden-microposts-container"></div></div>`)
+                        console.log(container)
+                        let micropostsContainer = document.getElementsByClassName('microposts-container-' + id);
+                        Array.from(micropostsContainer).forEach(function (container) {
+                            container.insertAdjacentHTML("afterbegin", data["micropost"])
+                        });
+                    });
+                    $('.hidden').removeClass('hidden');
                     document.getElementById('microposts_form-' + data["user_id"]).reset();
                     document.getElementById("image-name-" + data["user_id"]).innerHTML = "";
                     if (document.getElementById("micropost_no_post_anything-" + data["user_id"]) != null) {

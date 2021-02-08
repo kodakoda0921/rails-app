@@ -10,8 +10,9 @@ class MicropostsController < ApplicationController
       @micropost = current_user.microposts.build(micropost_params)
       @micropost.image.attach(params[:image])
       if @micropost.save
+        followed_list = current_user.followed_list_id
         flash.now[:success] = "投稿に成功しました！"
-        ActionCable.server.broadcast("home_channel", { micropost: @micropost.html_template, user_id: current_user.id, method: "create" })
+        ActionCable.server.broadcast("home_channel", { micropost: @micropost.html_template(current_user), user_id: current_user.id, method: "create", followed_list: followed_list })
         ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: current_user.id })
         return
       else

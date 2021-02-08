@@ -2,10 +2,10 @@
   <div class="card-comment" style="border-bottom:1px dashed #adb5bd;">
     <!-- User image -->
     <div class="user-block">
-      <%= image_tag url_for(comment.micropost.user.display_image), class: "img-circle img-sm" if comment.micropost.user.image.attached? %>
+      <%= image_tag url_for(comment.user.display_image), class: "img-circle img-sm" if comment.user.image.attached? %>
 
       <a href="#" class="float-right text-muted" data-toggle="modal" data-target="#modal_comment_destroy-<%= comment.id %>"><i class="fas fa-times"></i></a>
-      <span class="username"><%= link_to comment.micropost.user.name, comment.micropost.user %>
+      <span class="username"><%= link_to comment.user.name, comment.user %>
 
       </span>
       <span class="description"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>

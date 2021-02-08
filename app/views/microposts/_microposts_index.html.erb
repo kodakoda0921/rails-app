@@ -1,7 +1,7 @@
 <!-- Post -->
-<% if @microposts.present? %>
-  <% @microposts.first(10).each do |micropost| %>
-    <%= render "microposts/microposts_create", micropost: micropost, post_comment: @post_comment %>
+<% if @microposts_index.present? %>
+  <% @microposts_index.first(10).each do |micropost| %>
+    <%= render "microposts/microposts_create", micropost: micropost, current_user: @current_user, post_comment: @post_comment %>
   <% end %>
 <% else %>
   <div class="post" id="micropost_no_post_anything-<%= @current_user.id.to_s %>">

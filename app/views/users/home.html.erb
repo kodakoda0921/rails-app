@@ -58,7 +58,9 @@
 
                   </div>
                   <div class="microposts-container" id="microposts-container-<%= @current_user.id %>">
-                    <%= render "microposts/microposts_index" %>
+                    <div class="microposts-container-<%= @current_user.id %>">
+                      <%= render "microposts/microposts_index", microposts_index: @microposts_index, current_user: @current_user %>
+                    </div>
                   </div>
                 </div>
 
