@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
   get 'password_resets/edit'
   get 'password_resets/new'
-  root "frame#show"
+  root 'frame#show'
   get 'users/home'
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
@@ -12,6 +12,6 @@ Rails.application.routes.draw do
   resources :microposts, only: [:create, :destroy]
   resources :profiles, only: [:edit, :destroy]
   resources :post_comments, only: [:create, :destroy]
-  resources :follow_relation, only: [:create, :destroy]
+  resources :follow_relation, only: [:create, :destroy, :index]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

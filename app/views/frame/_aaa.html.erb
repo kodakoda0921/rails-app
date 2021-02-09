@@ -1,0 +1,19 @@
+<script>
+    $(document).ready(function () {
+        $('#iframe_tab').IFrame('createTab', 'Home', '<%= users_home_path %>', 'home', true)
+        //window.elem = document.getElementById('elem');
+        window.iframe = $("#elem").find("iframe");
+        iframe.id = "users_home"
+        //$("#users_home")
+        //const target = iframe.contentWindow.document.querySelector('#users_home');
+        // iframeのDOMを取得
+
+
+    })
+
+    function parentFollowingIndexPageLink() {
+        $('.content-wrapper').IFrame('createTab', 'フォロー中一覧', "<%= follow_relation_index_path(id:1) %>", 'aaaaaaaaaa', false)
+    }
+
+
+</script>

@@ -10,5 +10,16 @@ class FollowRelationController < ApplicationController
     @other_user = FollowRelation.find_by(id: params[:id]).following
     current_user.unfollow(@other_user)
   end
+
+  #一覧表示
+  def index
+    if logged_in?
+      @current_user = current_user
+      user = User.find_by(id: params[:id])
+      @following_user_all = user.following
+    else
+      redirect_to new_session_path
+    end
+  end
 end
 

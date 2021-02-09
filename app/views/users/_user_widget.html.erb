@@ -37,7 +37,7 @@
         <div class="col-sm-4 border-right">
           <div class="description-block">
             <h5 class="description-header">3,200</h5>
-            <span class="description-text small">Following</span>
+            <span class="description-text small"><a class="nav-link" href="javascript:FollowingIndexPageLink();" id="following_index_page_link">Following</a></span>
           </div>
           <!-- /.description-block -->
         </div>
@@ -71,3 +71,9 @@
   </div>
   <!-- /.widget-user -->
 </div>
+<script>
+    function FollowingIndexPageLink(){
+        window.parent.parentFollowingIndexPageLink();
+    }
+</script>
+
