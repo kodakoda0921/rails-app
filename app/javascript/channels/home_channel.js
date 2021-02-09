@@ -40,16 +40,14 @@ $(document).on('turbolinks:load', function () {
                 }
 
             }
-            if (data["post_user_id"] == current_user_id) {
-                if (data["method"] == "destroy") {
-                    let micropost_view = "micropost-" + data["micropost_id"]
-                    let micropost_modal = "modal_destroy-" + data["micropost_id"]
-                    if (data["post_user_id"] === current_user_id) {
-                        $("#" + micropost_modal).modal('hide');
-                    }
-                    $("#" + micropost_view).remove();
-                }
+
+            if (data["method"] == "destroy") {
+                let micropost_view = "micropost-" + data["micropost_id"]
+                let micropost_modal = "modal_destroy-" + data["micropost_id"]
+                $("#" + micropost_modal).modal('hide');
+                $("#" + micropost_view).remove();
             }
+
             if (data["method"] == "update") {
                 if (data["user"].id.toString() == current_user_id) {
                     let user_name_all = document.getElementsByClassName("user_widget_user_name-" + data["user"].id.toString())
