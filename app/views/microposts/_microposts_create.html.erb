@@ -3,11 +3,12 @@
   <div class="user-block">
     <%= image_tag url_for(micropost.user.display_image), class: "profile-user-img img-fluid img-circle" if micropost.user.image.attached? %>
     <span class="username">
-                          <%= link_to micropost.user.name, micropost.user %>
-      <a href="#" class="float-right text-muted" data-toggle="modal" data-target="#modal_destroy-<%= micropost.id %>"><i class="fas fa-times"></i></a>
-                          </span>
-    <span class="description"><%= micropost.created_at.strftime('%Y/%m/%d %H:%M') %>
-                          </span>
+      <%= link_to micropost.user.name, micropost.user %>
+      <% if micropost.user == current_user %>
+        <a href="#" class="float-right text-muted" data-toggle="modal" data-target="#modal_destroy-<%= micropost.id %>"><i class="fas fa-times"></i></a>
+      <% end %>
+    </span>
+    <span class="description"><%= micropost.created_at.strftime('%Y/%m/%d %H:%M') %></span>
   </div>
   <p>
     <%= micropost.content %>

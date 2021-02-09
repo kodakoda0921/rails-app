@@ -3,10 +3,10 @@
     <!-- User image -->
     <div class="user-block">
       <%= image_tag url_for(comment.user.display_image), class: "img-circle img-sm" if comment.user.image.attached? %>
-
-      <a href="#" class="float-right text-muted" data-toggle="modal" data-target="#modal_comment_destroy-<%= comment.id %>"><i class="fas fa-times"></i></a>
+      <% if comment.user == current_user %>
+        <a href="#" class="float-right text-muted" data-toggle="modal" data-target="#modal_comment_destroy-<%= comment.id %>"><i class="fas fa-times"></i></a>
+      <% end %>
       <span class="username"><%= link_to comment.user.name, comment.user %>
-
       </span>
       <span class="description"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
     </div>
