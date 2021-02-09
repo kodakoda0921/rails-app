@@ -24,35 +24,34 @@ $(document).on('turbolinks:load', function () {
             // Called when there's incoming data on the websocket for this channel
 
             if (data["method"] == "create") {
-                if (data["user_id"] == current_user_id) {
-                    // サーバー側から受け取ったHTMLを一番最後に加える
-                    let micropostsContainersSelf = document.getElementsByClassName('microposts-container-' + data["user_id"]);
-                    Array.from(micropostsContainersSelf).forEach(function (container) {
-                        container.insertAdjacentHTML("afterbegin", data["micropost"])
-                    });
-                    document.getElementById('microposts_form-' + data["user_id"]).reset();
-                    document.getElementById("image-name-" + data["user_id"]).innerHTML = "";
-                    if (document.getElementById("micropost_no_post_anything-" + data["user_id"]) != null) {
-                        $("#micropost_no_post_anything-" + data["user_id"]).remove();
-                    }
-                } else {
-                    let following_users_micropost_find = data["followed_list"].find(i => i.toString() == current_user_id)
-                    if (following_users_micropost_find !== undefined) {
-                        let micropostsContainers = document.getElementsByClassName('microposts-container-' + following_users_micropost_find.toString());
-                        Array.from(micropostsContainers).forEach(function (container) {
-                            container.insertAdjacentHTML("afterbegin", data["micropost"])
-                        });
-                    }
+                // サーバー側から受け取ったHTMLを一番上に加える
+                let micropostsContainersSelf = document.getElementsByClassName('microposts-container-' + data["user_id"]);
+                Array.from(micropostsContainersSelf).forEach(function (container) {
+                    container.insertAdjacentHTML("afterbegin", data["micropost"])
+                });
+                // 投稿者の場合のみフォームをクリアする
+                if (data["post_user_id"] === current_user_id) {
+                    document.getElementById('microposts_form-' + data["post_user_id"]).reset();
+                    document.getElementById("image-name-" + data["post_user_id"]).innerHTML = "";
                 }
+                // 「まだ投稿されていません」が表示されている場合は非表示にする
+                if (document.getElementById("micropost_no_post_anything-" + data["user_id"]) != null) {
+                    $("#micropost_no_post_anything-" + data["user_id"]).remove();
+                }
+
             }
-            if (data["user_id"] == current_user_id) {
+            if (data["post_user_id"] == current_user_id) {
                 if (data["method"] == "destroy") {
                     let micropost_view = "micropost-" + data["micropost_id"]
                     let micropost_modal = "modal_destroy-" + data["micropost_id"]
-                    $("#" + micropost_modal).modal('hide');
+                    if (data["post_user_id"] === current_user_id) {
+                        $("#" + micropost_modal).modal('hide');
+                    }
                     $("#" + micropost_view).remove();
                 }
-                if (data["method"] == "update") {
+            }
+            if (data["method"] == "update") {
+                if (data["user"].id.toString() == current_user_id) {
                     let user_name_all = document.getElementsByClassName("user_widget_user_name-" + data["user"].id.toString())
                     let user_job_all = document.getElementsByClassName("user_widget_user_job-" + data["user"].id.toString())
                     let user_widget_images = $(".user_widget_images")
@@ -75,6 +74,7 @@ $(document).on('turbolinks:load', function () {
                     $("#modal-user_widget-" + data["user"].id.toString()).modal('hide');
                 }
             }
+
         }
     })
 });
