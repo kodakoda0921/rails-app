@@ -17,6 +17,7 @@ class FollowRelationController < ApplicationController
       @current_user = current_user
       user = User.find_by(id: params[:id])
       @following_user_all = user.following
+      @index = params[:index]
     else
       redirect_to new_session_path
     end

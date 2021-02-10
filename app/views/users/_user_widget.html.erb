@@ -37,7 +37,7 @@
         <div class="col-sm-4 border-right">
           <div class="description-block">
             <h5 class="description-header">3,200</h5>
-            <span class="description-text small"><a class="nav-link" href="javascript:FollowingIndexPageLink();" id="following_index_page_link">Following</a></span>
+            <span class="description-text small"><a class="text-muted" href="javascript:FollowingIndexPageLink();">Following</a></span>
           </div>
           <!-- /.description-block -->
         </div>
@@ -45,7 +45,7 @@
         <div class="col-sm-4 border-right">
           <div class="description-block">
             <h5 class="description-header">13,000</h5>
-            <span class="description-text small">Followers</span>
+            <span class="description-text small"><a class="text-muted" href="javascript:FollowersIndexPageLink();">Followers</a></span>
           </div>
           <!-- /.description-block -->
         </div>
@@ -73,7 +73,11 @@
 </div>
 <script>
     function FollowingIndexPageLink() {
-        window.parent.parentFollowingIndexPageLink("<%= follow_relation_index_path(id:user.id) %>","<%=user.name %>");
+        window.parent.parentFollowingIndexPageLink("<%= follow_relation_index_path(id:user.id,index:'following') %>", "<%=user.name %>");
+    }
+
+    function FollowersIndexPageLink() {
+        window.parent.parentFollowingIndexPageLink("<%= follow_relation_index_path(id:user.id,index:'followers') %>", "<%=user.name %>");
     }
 </script>
 

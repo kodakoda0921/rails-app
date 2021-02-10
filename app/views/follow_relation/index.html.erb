@@ -1,4 +1,4 @@
-<% provide(:title, 'following_index') %>
+<% provide(:title, @current_user.name + 'のFollow List') %>
 <%= render "users/user_top_path" %>
 <!-- Main content -->
 <section class="content">
@@ -8,9 +8,10 @@
     <div class="card-header p-2">
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link active" href="#following" data-toggle="tab">Following</a>
+          <a class="nav-link <%= "active" if @index == "following" %>" href="#following" data-toggle="tab">Following</a>
         </li>
-        <li class="nav-item"><a class="nav-link" href="#followers" data-toggle="tab">Followers</a>
+        <li class="nav-item">
+          <a class="nav-link <%= "active" if @index == "followers" %>" href="#followers" data-toggle="tab">Followers</a>
         </li>
       </ul>
     </div><!-- /.card-header -->
@@ -32,7 +33,8 @@
                           <p class="text-muted text-sm"><b>Notes: </b> <%= following_user.profiles.notes %>
                           </p>
                           <ul class="ml-4 mb-0 fa-ul text-muted">
-                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Location:
+                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>
+                              Location:
                               <%= following_user.profiles.location %>
                             </li>
                             <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
@@ -78,7 +80,8 @@
                           <p class="text-muted text-sm"><b>Notes: </b> <%= following_user.profiles.notes %>
                           </p>
                           <ul class="ml-4 mb-0 fa-ul text-muted">
-                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Location:
+                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>
+                              Location:
                               <%= following_user.profiles.location %>
                             </li>
                             <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
