@@ -6,7 +6,9 @@
       <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="<%= root_path %>" class="nav-link">Home</a>
+      <div class="nav-link">
+        <a class="text-muted" href="javascript:window.parent.parentHomePageLink()">Home</a>
+      </div>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
       <a href="#" class="nav-link">Contact</a>
@@ -116,8 +118,9 @@
       <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">User
         Menu</a>
       <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-        <li><a href="<%= root_path %>" class="dropdown-item">My Page</a></li>
-
+        <div class="dropdown-item">
+          <li><a class="text-dark" href="javascript:window.parent.parentHomePageLink()">My Page</a></li>
+        </div>
         <li><%= link_to "Logout", session_path(current_user), method: :delete, class: "dropdown-item" %></li>
         <!-- End Level two -->
       </ul>
