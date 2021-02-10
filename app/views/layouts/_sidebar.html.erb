@@ -45,23 +45,23 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <div class="nav-link">
-                <a href="javascript:SideFollowingIndexPageLink();">
+              <div>
+                <a class="nav-link" href="javascript:SideFollowingIndexPageLink();">
                   <i class="far fa-circle nav-icon"></i>
+                  <span class="badge badge-info float-xl-right"><%= @current_user.following.count %></span>
                   <p>
                     Following
                   </p>
                 </a>
-                <span class="badge badge-info right"><%= @current_user.following.count %></span>
               </div>
             </li>
             <li class="nav-item">
-              <div class="nav-link">
-                <a href="javascript:SideFollowersIndexPageLink();">
+              <div>
+                <a class="nav-link" href="javascript:SideFollowersIndexPageLink();">
+                  <span class="badge badge-info float-lg-right"><%= @current_user.follower.count %></span>
                   <i class="far fa-circle nav-icon"></i>
                   <p>Follower</p>
                 </a>
-                <span class="badge badge-info right"><%= @current_user.follower.count %></span>
               </div>
             </li>
           </ul>

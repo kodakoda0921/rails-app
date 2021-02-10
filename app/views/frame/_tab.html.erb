@@ -1,23 +1,7 @@
 <script>
 
     $(document).ready(function () {
-        $('#iframe_tab').IFrame({
-            onTabClick(item) {
-                return item
-            },
-            onTabChanged(item) {
-                return item
-            },
-            onTabCreated(item) {
-                return item
-            },
-            autoIframeMode: true,
-            autoItemActive: true,
-            autoShowNewTab: true,
-            loadingScreen: 750,
-            useNavbarItems: false
-        })
-        $('#iframe_tab').IFrame('createTab', 'Home', '<%= users_home_path %>', 'home', true)
+    $('#iframe_tab').IFrame('createTab', 'Home', '<%= users_home_path %>', 'home', true)
     })
 
     function parentHomePageLink(link, user_name) {
