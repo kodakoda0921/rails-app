@@ -14,7 +14,7 @@
         <%= image_tag @current_user.display_image, class: "img-circle elevation-2" %>
       </div>
       <div class="info">
-        <a href="#" class="d-block" id="user_home_path_tab_open"><%= current_user.name %></a>
+        <a href="javascript:window.parent.parentHomePageLink()" class="d-block" id="user_home_path_tab_open"><%= current_user.name %></a>
       </div>
     </div>
 
