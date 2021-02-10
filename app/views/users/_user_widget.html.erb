@@ -72,8 +72,8 @@
   <!-- /.widget-user -->
 </div>
 <script>
-    function FollowingIndexPageLink(){
-        window.parent.parentFollowingIndexPageLink();
+    function FollowingIndexPageLink() {
+        window.parent.parentFollowingIndexPageLink("<%= follow_relation_index_path(id:user.id) %>","<%=user.name %>");
     }
 </script>
 

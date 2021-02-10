@@ -11,8 +11,8 @@
 
     })
 
-    function parentFollowingIndexPageLink() {
-        $('.content-wrapper').IFrame('createTab', 'フォロー中一覧', "<%= follow_relation_index_path(id:1) %>", 'aaaaaaaaaa', false)
+    function parentFollowingIndexPageLink(link, user_name) {
+        $('.content-wrapper').IFrame('createTab', user_name + 'フォロー中一覧', link, 'aaaaaaaaaa', true)
     }
 
 
