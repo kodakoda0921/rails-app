@@ -16,7 +16,8 @@ class FollowRelationController < ApplicationController
     if logged_in?
       @current_user = current_user
       user = User.find_by(id: params[:id])
-      @following_user_all = user.following
+      @following_user_all = user.following.paginate(page: params[:page])
+      @followers_user_all = user.follower.paginate(page: params[:page])
       @index = params[:index]
     else
       redirect_to new_session_path
