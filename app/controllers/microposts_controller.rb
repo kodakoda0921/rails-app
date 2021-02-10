@@ -10,10 +10,15 @@ class MicropostsController < ApplicationController
       @micropost = current_user.microposts.build(micropost_params)
       @micropost.image.attach(params[:image])
       if @micropost.save
+        followed_list = current_user.followed_list_id
         flash.now[:success] = "投稿に成功しました！"
-        ActionCable.server.broadcast("home_channel", { micropost: @micropost.html_template, user_id: current_user.id, method: "create" })
+        ActionCable.server.broadcast("home_channel", { micropost: @micropost.html_template(current_user), post_user_id: current_user.id.to_s, user_id: current_user.id.to_s, method: "create" })
         ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: current_user.id })
-        return
+        followed_list.each do |user_id|
+          follower_user = User.find_by(id: user_id)
+          logger.error(follower_user)
+          ActionCable.server.broadcast("home_channel", { micropost: @micropost.html_template(follower_user), post_user_id: current_user.id.to_s, user_id: user_id.to_s, method: "create" })
+        end
       else
         if @micropost.errors.any?
           flash.now[:danger] = @micropost.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
@@ -31,7 +36,7 @@ class MicropostsController < ApplicationController
   def destroy
     if @micropost.destroy
       flash.now[:success] = "削除完了しました！"
-      ActionCable.server.broadcast("home_channel", { user_id: current_user.id, micropost_id: @micropost.id.to_s, method: "destroy" })
+      ActionCable.server.broadcast("home_channel", { post_user_id: current_user.id, micropost_id: @micropost.id.to_s, method: "destroy" })
       ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: current_user.id })
       return
     else

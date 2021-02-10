@@ -29,23 +29,23 @@
 
     </div>
     <div class="widget-user-image">
-      <%= image_tag url_for(user.display_image), class: "profile-user-img img-fluid img-circle", id: "#{"preview_profile_img" if preview }" %>
+      <%= image_tag url_for(user.display_image.processed), class: "profile-user-img img-fluid img-circle", id: "#{"preview_profile_img" if preview }" %>
     </div>
 
     <div class="card-footer">
       <div class="row">
         <div class="col-sm-4 border-right">
           <div class="description-block">
-            <h5 class="description-header">3,200</h5>
-            <span class="description-text small">Following</span>
+            <h5 class="description-header"><%= user.following.count %></h5>
+            <span class="description-text small"><a class="text-muted" href="javascript:FollowingIndexPageLink();">Following</a></span>
           </div>
           <!-- /.description-block -->
         </div>
         <!-- /.col -->
         <div class="col-sm-4 border-right">
           <div class="description-block">
-            <h5 class="description-header">13,000</h5>
-            <span class="description-text small">Followers</span>
+            <h5 class="description-header"><%= user.follower.count %></h5>
+            <span class="description-text small"><a class="text-muted" href="javascript:FollowersIndexPageLink();">Followers</a></span>
           </div>
           <!-- /.description-block -->
         </div>
@@ -53,7 +53,7 @@
         <div class="col-sm-4">
           <div class="description-block">
             <h5 class="description-header">35</h5>
-            <span class="description-text small">Groupe</span>
+            <span class="description-text small">Group</span>
           </div>
           <!-- /.description-block -->
         </div>
@@ -61,9 +61,23 @@
       </div>
       <!-- /.row -->
       <% if user != current_user %>
-        <a href="#" class="btn btn-primary btn-flat btn-sm float-lg-right">Follow</a>
+        <% if current_user.following?(user) %>
+          <%= link_to "Unfollow", follow_relation_path(id: current_user.active_relation.find_by(following_id: user.id).id), class: "btn btn-primary btn-flat btn-sm float-lg-right", method: :delete %>
+        <% else %>
+          <%= link_to "Follow", follow_relation_index_path(following_id: user.id), class: "btn btn-primary btn-flat btn-sm float-lg-right", method: :post %>
+        <% end %>
       <% end %>
     </div>
   </div>
   <!-- /.widget-user -->
 </div>
+<script>
+    function FollowingIndexPageLink() {
+        window.parent.parentFollowingIndexPageLink("<%= follow_relation_index_path(id:user.id,index:'following') %>", "<%=user.name %>");
+    }
+
+    function FollowersIndexPageLink() {
+        window.parent.parentFollowingIndexPageLink("<%= follow_relation_index_path(id:user.id,index:'followers') %>", "<%=user.name %>");
+    }
+</script>
+

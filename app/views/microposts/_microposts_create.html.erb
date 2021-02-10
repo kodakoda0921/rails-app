@@ -3,11 +3,12 @@
   <div class="user-block">
     <%= image_tag url_for(micropost.user.display_image), class: "profile-user-img img-fluid img-circle" if micropost.user.image.attached? %>
     <span class="username">
-                          <%= link_to micropost.user.name, micropost.user %>
-      <a href="#" class="float-right text-muted" data-toggle="modal" data-target="#modal_destroy-<%= micropost.id %>"><i class="fas fa-times"></i></a>
-                          </span>
-    <span class="description"><%= micropost.created_at.strftime('%Y/%m/%d %H:%M') %>
-                          </span>
+      <%= link_to micropost.user.name, micropost.user %>
+      <% if micropost.user == current_user %>
+        <a href="#" class="float-right text-muted" data-toggle="modal" data-target="#modal_destroy-<%= micropost.id %>"><i class="fas fa-times"></i></a>
+      <% end %>
+    </span>
+    <span class="description"><%= micropost.created_at.strftime('%Y/%m/%d %H:%M') %></span>
   </div>
   <p>
     <%= micropost.content %>
@@ -37,9 +38,9 @@
       <% end %>
     </div>
   </div>
-  <%= form_with(model: post_comment, url: post_comments_path, class: "form-horizontal", local: false, id: "post_comment_form-#{micropost.user.id.to_s + '-' + micropost.id.to_s}") do |f| %>
+  <%= form_with(model: post_comment, url: post_comments_path(user_id: current_user.id), class: "form-horizontal", local: false, id: "post_comment_form-#{current_user.id.to_s + '-' + micropost.id.to_s}") do |f| %>
     <div class="card-footer">
-      <%= image_tag url_for(micropost.user.display_image), class: "img-fluid img-circle img-sm" if micropost.user.image.attached? %>
+      <%= image_tag url_for(current_user.display_image), class: "img-fluid img-circle img-sm" if current_user.image.attached? %>
       <div class="img-push">
         <%= f.hidden_field :micropost_id, value: micropost.id, id: "micropost_hidden_field-#{micropost.id}" %>
         <div class="input-group input-group-sm mb-0">

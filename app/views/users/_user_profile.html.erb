@@ -8,7 +8,7 @@
     <strong><i class="fas fa-book mr-1"></i> Url</strong>
 
     <p class="text-muted">
-      <%= link_to user.profiles.url, user.profiles.url, id: "user_profile_url-#{user.id.to_s}" %>
+      <%= link_to user.profiles.url, user.profiles.url, id: "user_profile_url-#{user.id.to_s}", target: :_blank, rel: "noopener noreferrer" %>
     </p>
 
     <hr>

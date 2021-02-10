@@ -1,247 +1,248 @@
-<div class="content-wrapper">
-  <% provide(:title, 'Home') %>
-  <%= render "user_top_path" %>
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
-      <div class="flash-container" id="flash-container-<%= @current_user %>"></div>
-      <div class="row">
-        <div class="col-md-3">
-          <!--チャネル使用時に下記の1行を使う-->
-          <div id="current_user_id" data-user_id="<%= @current_user.id %>"></div>
-          <%= render "users/user_widget_modal", user: @current_user %>
-          <%= render "users/user_widget", user: @current_user, current_user: @current_user, preview: false %>
-          <%= render "users/user_profile", user: @current_user %>
-        </div>
-        <!-- /.col -->
-        <div class="col-md-9">
-          <div class="card">
-            <div class="card-header p-2">
-              <ul class="nav nav-pills">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#activity" data-toggle="tab">MyPost</a>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Activity</a>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a>
-                </li>
-              </ul>
-            </div><!-- /.card-header -->
-            <div class="card-body">
-              <div class="tab-content">
-                <div class="active tab-pane" id="activity">
-                  <!-- MyPost -->
-                  <div class="post" style="border-bottom:5px double #adb5bd;">
-                    <div class="user-block">
-                      Post
-                    </div>
-                    <%= form_with(model: @microposts, url: microposts_path, class: "form-horizontal", local: false, id: "microposts_form-#{@current_user.id}") do |f| %>
-                      <div class="input-group input-group-sm mb-0">
-                        <%= f.text_field :content, class: "form-control form-control-sm", placeholder: "Post message" %>
-                        <div class="input-group-append">
-                          <%= f.submit "Post", class: "btn btn-primary" %>
-                        </div>
-                      </div>
-
-                      <label class="upload-img-btn">
-                        <a class="text-muted">
-                          <i class="fas fa-image col-md fa-2x"></i>
-                        </a>
-                        <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", style: "display:none", name: "image", id: "myfile", onclick: "openFile()" %>
-                        <p id=image-name-<%= @current_user.id.to_s %>></p>
-                      </label>
-
-                    <% end %>
-
-                    <img id="img1" style="width:300px;height:300px;display:none;" alt="hidden_img" src=""/>
-                    <%= render "user_script" %>
-
+<% provide(:title, 'Home') %>
+<%= render "user_top_path" %>
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="flash-container" id="flash-container-<%= @current_user %>"></div>
+    <div class="row">
+      <div class="col-md-3">
+        <!--チャネル使用時に下記の1行を使う-->
+        <div id="current_user_id" data-user_id="<%= @current_user.id %>"></div>
+        <%= render "users/user_widget_modal", user: @current_user %>
+        <%= render "users/user_widget", user: @current_user, current_user: @current_user, preview: false %>
+        <%= render "users/user_profile", user: @current_user %>
+      </div>
+      <!-- /.col -->
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header p-2">
+            <ul class="nav nav-pills">
+              <li class="nav-item">
+                <a class="nav-link active" href="#activity" data-toggle="tab">MyPost</a>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Activity</a>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a>
+              </li>
+            </ul>
+          </div><!-- /.card-header -->
+          <div class="card-body">
+            <div class="tab-content">
+              <div class="active tab-pane" id="activity">
+                <!-- MyPost -->
+                <div class="post" style="border-bottom:5px double #adb5bd;">
+                  <div class="user-block">
+                    Post
                   </div>
-                  <div class="microposts-container" id="microposts-container-<%= @current_user.id %>">
-                    <%= render "microposts/microposts_index" %>
+                  <%= form_with(model: @microposts, url: microposts_path, class: "form-horizontal", local: false, id: "microposts_form-#{@current_user.id}") do |f| %>
+                    <div class="input-group input-group-sm mb-0">
+                      <%= f.text_field :content, class: "form-control form-control-sm", placeholder: "Post message" %>
+                      <div class="input-group-append">
+                        <%= f.submit "Post", class: "btn btn-primary" %>
+                      </div>
+                    </div>
+
+                    <label class="upload-img-btn">
+                      <a class="text-muted">
+                        <i class="fas fa-image col-md fa-2x"></i>
+                      </a>
+                      <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", style: "display:none", name: "image", id: "myfile", onclick: "openFile()" %>
+                      <p id=image-name-<%= @current_user.id.to_s %>></p>
+                    </label>
+
+                  <% end %>
+
+                  <img id="img1" style="width:300px;height:300px;display:none;" alt="hidden_img" src=""/>
+                  <%= render "user_script" %>
+
+                </div>
+                <div class="microposts-container" id="microposts-container-<%= @current_user.id %>">
+                  <div class="microposts-container-<%= @current_user.id %>">
+                    <%= render "microposts/microposts_index", microposts_index: @microposts_index, current_user: @current_user %>
                   </div>
                 </div>
+              </div>
 
-                <!-- /.tab-pane -->
-                <div class="tab-pane" id="timeline">
-                  <!-- The timeline -->
-                  <div class="timeline timeline-inverse">
-                    <!-- timeline time label -->
-                    <div class="time-label">
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="timeline">
+                <!-- The timeline -->
+                <div class="timeline timeline-inverse">
+                  <!-- timeline time label -->
+                  <div class="time-label">
                         <span class="bg-danger">
                           10 Feb. 2014
                         </span>
-                    </div>
-                    <!-- /.timeline-label -->
-                    <!-- timeline item -->
-                    <div>
-                      <i class="fas fa-envelope bg-primary"></i>
+                  </div>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <div>
+                    <i class="fas fa-envelope bg-primary"></i>
 
-                      <div class="timeline-item">
-                        <span class="time"><i class="far fa-clock"></i> 12:05</span>
+                    <div class="timeline-item">
+                      <span class="time"><i class="far fa-clock"></i> 12:05</span>
 
-                        <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+                      <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
 
-                        <div class="timeline-body">
-                          Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                          weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                          jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                          quora plaxo ideeli hulu weebly balihoo...
-                        </div>
-                        <div class="timeline-footer">
-                          <a href="#" class="btn btn-primary btn-sm">Read more</a>
-                          <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                        </div>
+                      <div class="timeline-body">
+                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                        weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                        quora plaxo ideeli hulu weebly balihoo...
+                      </div>
+                      <div class="timeline-footer">
+                        <a href="#" class="btn btn-primary btn-sm">Read more</a>
+                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
                       </div>
                     </div>
-                    <!-- END timeline item -->
-                    <!-- timeline item -->
-                    <div>
-                      <i class="fas fa-user bg-info"></i>
+                  </div>
+                  <!-- END timeline item -->
+                  <!-- timeline item -->
+                  <div>
+                    <i class="fas fa-user bg-info"></i>
 
-                      <div class="timeline-item">
-                        <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
+                    <div class="timeline-item">
+                      <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
 
-                        <h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted your
-                          friend
-                          request
-                        </h3>
+                      <h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted your
+                        friend
+                        request
+                      </h3>
+                    </div>
+                  </div>
+                  <!-- END timeline item -->
+                  <!-- timeline item -->
+                  <div>
+                    <i class="fas fa-comments bg-warning"></i>
+
+                    <div class="timeline-item">
+                      <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
+
+                      <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
+
+                      <div class="timeline-body">
+                        Take me to your leader!
+                        Switzerland is small and neutral!
+                        We are more like Germany, ambitious and misunderstood!
+                      </div>
+                      <div class="timeline-footer">
+                        <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
                       </div>
                     </div>
-                    <!-- END timeline item -->
-                    <!-- timeline item -->
-                    <div>
-                      <i class="fas fa-comments bg-warning"></i>
-
-                      <div class="timeline-item">
-                        <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
-
-                        <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                        <div class="timeline-body">
-                          Take me to your leader!
-                          Switzerland is small and neutral!
-                          We are more like Germany, ambitious and misunderstood!
-                        </div>
-                        <div class="timeline-footer">
-                          <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- END timeline item -->
-                    <!-- timeline time label -->
-                    <div class="time-label">
+                  </div>
+                  <!-- END timeline item -->
+                  <!-- timeline time label -->
+                  <div class="time-label">
                         <span class="bg-success">
                           3 Jan. 2014
                         </span>
-                    </div>
-                    <!-- /.timeline-label -->
-                    <!-- timeline item -->
-                    <div>
-                      <i class="fas fa-camera bg-purple"></i>
+                  </div>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <div>
+                    <i class="fas fa-camera bg-purple"></i>
 
-                      <div class="timeline-item">
-                        <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
+                    <div class="timeline-item">
+                      <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
 
-                        <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+                      <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
 
-                        <div class="timeline-body">
-                          <img src="https://placehold.it/150x100" alt="...">
-                          <img src="https://placehold.it/150x100" alt="...">
-                          <img src="https://placehold.it/150x100" alt="...">
-                          <img src="https://placehold.it/150x100" alt="...">
-                        </div>
+                      <div class="timeline-body">
+                        <img src="https://placehold.it/150x100" alt="...">
+                        <img src="https://placehold.it/150x100" alt="...">
+                        <img src="https://placehold.it/150x100" alt="...">
+                        <img src="https://placehold.it/150x100" alt="...">
                       </div>
-                    </div>
-                    <!-- END timeline item -->
-                    <div>
-                      <i class="far fa-clock bg-gray"></i>
                     </div>
                   </div>
+                  <!-- END timeline item -->
+                  <div>
+                    <i class="far fa-clock bg-gray"></i>
+                  </div>
                 </div>
-                <!-- /.tab-pane -->
-
-                <div class="tab-pane" id="settings">
-                  <%= form_with(model: @current_user, method: "PUT", local: false, remote: true) do |f| %>
-                    <div class="form-group row">
-                      <%= f.label :name, class: "col-sm-2 col-form-label" %>
-                      <div class="col-sm-10">
-                        <%= f.text_field :name, class: "form-control", placeholder: "Name", value: @current_user.name %>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <%= f.label :email, class: "col-sm-2 col-form-label" %>
-                      <div class="col-sm-10">
-                        <%= f.email_field :email, class: "form-control", placeholder: "Email ", value: @current_user.email %>
-                      </div>
-                    </div>
-                    <%= f.fields_for :profiles do |i| %>
-                      <div class="form-group row">
-                        <%= i.label :job, class: "col-sm-2 col-form-label" %>
-                        <div class="col-sm-10">
-                          <%= i.text_field :job, class: "form-control", placeholder: "Job ", value: @profiles.job %>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <%= i.label :location, class: "col-sm-2 col-form-label" %>
-                        <div class="col-sm-10">
-                          <%= i.text_field :location, class: "form-control", placeholder: "Location ", value: @profiles.location %>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <%= i.label :skills, class: "col-sm-2 col-form-label" %>
-                        <div class="col-sm-10">
-                          <%= i.text_area :skills, class: "form-control", placeholder: "Skills ", value: @profiles.skills %>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <%= i.label :notes, class: "col-sm-2 col-form-label" %>
-                        <div class="col-sm-10">
-                          <%= i.text_area :notes, class: "form-control", placeholder: "Notes ", value: @profiles.notes %>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <%= i.label :url, class: "col-sm-2 col-form-label" %>
-                        <div class="col-sm-10">
-                          <%= i.url_field :url, class: "form-control", placeholder: "Url", value: @profiles.url %>
-                        </div>
-                      </div>
-                    <% end %>
-                    <div class="form-group row">
-                      <%= f.label :password, class: "col-sm-2 col-form-label" %>
-                      <div class="col-sm-10">
-                        <%= f.password_field :password, class: "form-control", placeholder: "Password", id: "profile_password_field-#{@current_user.id.to_s}" %>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <%= f.label :password_confirmation, "Confirmation", class: "col-sm-2 col-form-label" %>
-                      <div class="col-sm-10">
-                        <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Password confirmation", id: "profile_password_confirmation_field-#{@current_user.id.to_s}" %>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="offset-sm-2 col-sm-10">
-                        <%= f.submit "Submit", class: "btn btn-danger", name: :save %>
-                      </div>
-                    </div>
-
-                  <% end %>
-                </div>
-                <!-- /.tab-pane -->
-
               </div>
-              <!-- /.tab-content -->
+              <!-- /.tab-pane -->
+
+              <div class="tab-pane" id="settings">
+                <%= form_with(model: @current_user, method: "PUT", local: false, remote: true) do |f| %>
+                  <div class="form-group row">
+                    <%= f.label :name, class: "col-sm-2 col-form-label" %>
+                    <div class="col-sm-10">
+                      <%= f.text_field :name, class: "form-control", placeholder: "Name", value: @current_user.name %>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <%= f.label :email, class: "col-sm-2 col-form-label" %>
+                    <div class="col-sm-10">
+                      <%= f.email_field :email, class: "form-control", placeholder: "Email ", value: @current_user.email %>
+                    </div>
+                  </div>
+                  <%= f.fields_for :profiles do |i| %>
+                    <div class="form-group row">
+                      <%= i.label :job, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-10">
+                        <%= i.text_field :job, class: "form-control", placeholder: "Job ", value: @profiles.job %>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <%= i.label :location, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-10">
+                        <%= i.text_field :location, class: "form-control", placeholder: "Location ", value: @profiles.location %>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <%= i.label :skills, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-10">
+                        <%= i.text_area :skills, class: "form-control", placeholder: "Skills ", value: @profiles.skills %>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <%= i.label :notes, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-10">
+                        <%= i.text_area :notes, class: "form-control", placeholder: "Notes ", value: @profiles.notes %>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <%= i.label :url, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-10">
+                        <%= i.url_field :url, class: "form-control", placeholder: "Url", value: @profiles.url %>
+                      </div>
+                    </div>
+                  <% end %>
+                  <div class="form-group row">
+                    <%= f.label :password, class: "col-sm-2 col-form-label" %>
+                    <div class="col-sm-10">
+                      <%= f.password_field :password, class: "form-control", placeholder: "Password", id: "profile_password_field-#{@current_user.id.to_s}" %>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <%= f.label :password_confirmation, "Confirmation", class: "col-sm-2 col-form-label" %>
+                    <div class="col-sm-10">
+                      <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Password confirmation", id: "profile_password_confirmation_field-#{@current_user.id.to_s}" %>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="offset-sm-2 col-sm-10">
+                      <%= f.submit "Submit", class: "btn btn-danger", name: :save %>
+                    </div>
+                  </div>
+
+                <% end %>
+              </div>
+              <!-- /.tab-pane -->
+
             </div>
-            <!-- /.card-body -->
+            <!-- /.tab-content -->
           </div>
-          <!-- /.card -->
+          <!-- /.card-body -->
         </div>
-        <!-- /.col -->
+        <!-- /.card -->
       </div>
-      <!-- /.row -->
+      <!-- /.col -->
     </div>
-    <!-- /.container-fluid -->
-  </section>
-</div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
 
 

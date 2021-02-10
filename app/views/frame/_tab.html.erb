@@ -1,0 +1,30 @@
+<script>
+
+    $(document).ready(function () {
+        $('#iframe_tab').IFrame({
+            onTabClick(item) {
+                return item
+            },
+            onTabChanged(item) {
+                return item
+            },
+            onTabCreated(item) {
+                return item
+            },
+            autoIframeMode: true,
+            autoItemActive: true,
+            autoShowNewTab: true,
+            loadingScreen: 750,
+            useNavbarItems: false
+        })
+        $('#iframe_tab').IFrame('createTab', 'Home', '<%= users_home_path %>', 'home', true)
+    })
+
+    function parentFollowingIndexPageLink(link, user_name) {
+        $('.content-wrapper').IFrame('createTab', user_name + 'のFollow List', link, 'index', true)
+    }
+
+    function close_tab() {
+        $('.content-wrapper').IFrame('removeActiveTab')
+    }
+</script>
