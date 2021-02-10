@@ -29,7 +29,7 @@
 
     </div>
     <div class="widget-user-image">
-      <%= image_tag url_for(user.display_image), class: "profile-user-img img-fluid img-circle", id: "#{"preview_profile_img" if preview }" %>
+      <%= image_tag url_for(user.display_image.processed), class: "profile-user-img img-fluid img-circle", id: "#{"preview_profile_img" if preview }" %>
     </div>
 
     <div class="card-footer">
