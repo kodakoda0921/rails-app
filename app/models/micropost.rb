@@ -18,5 +18,4 @@ class Micropost < ApplicationRecord
   def html_template(current_user)
     ApplicationController.renderer.render partial: "microposts/microposts_create", locals: { micropost: self, current_user: current_user, post_comment: PostComment.new }
   end
-
 end

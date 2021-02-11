@@ -27,5 +27,6 @@ module RailsApp
     # 標準出力のみに出力
     config.semantic_logger.add_appender(io: $stdout, level: config.log_level)
     # :
+    # config.action_cable.mount_path = '/websocket'
   end
 end

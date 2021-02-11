@@ -33,7 +33,7 @@
     <div id="post-comment-container-<%= micropost.id %>" class="post-comment-container">
       <% if micropost.post_comment.present? %>
         <% micropost.post_comment.each do |comment| %>
-          <%= render "post_comments/post_comment_container", comment: comment %>
+          <%= render "post_comments/post_comment_container", comment: comment, current_user: current_user %>
         <% end %>
       <% end %>
     </div>

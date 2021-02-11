@@ -72,7 +72,9 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.logger = Logger.new('log/development.log')
   # Uncomment if you wish to allow Action Cable access from any origin.
-  # config.action_cable.disable_request_forgery_protection = true
+  config.action_cable.disable_request_forgery_protection = true
+  # Rails側で、このようにOriginが設定されているものとする
+  config.action_cable.allowed_request_origins = ["http://localhost:3000/"]
 
   # hostのホワイトリスト全体をクリア　https://qiita.com/kodai_0122/items/67c6d390f18698950440
   # ただし、せっかくRails6で追加された保護機能を無効化してしまうため、推奨はhostを指定すること

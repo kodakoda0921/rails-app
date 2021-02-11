@@ -1,15 +1,22 @@
 <script>
 
     $(document).ready(function () {
-    $('#iframe_tab').IFrame('createTab', 'Home', '<%= users_home_path %>', 'home', true)
+        let val = ""
+        let link = '<%= search_index_path %>?value=' + val
+        $('.content-wrapper').IFrame('createTab', 'Search', link, 'search', true)
     })
 
-    function parentHomePageLink(link, user_name) {
-        $('.content-wrapper').IFrame('createTab', 'Home', '<%= users_home_path %>', 'index', true)
+    function parentHomePageLink() {
+        $('.content-wrapper').IFrame('createTab', 'Home', '<%= users_home_path %>', 'home', true)
     }
 
     function parentFollowingIndexPageLink(link, user_name) {
         $('.content-wrapper').IFrame('createTab', user_name + 'のFollow List', link, 'index', true)
+    }
+
+    function parentSearchPageLink(val) {
+        let link = '<%= search_index_path %>?value=' + val
+        $('.content-wrapper').IFrame('createTab', 'Search', link, 'search', true)
     }
 
     function close_tab() {

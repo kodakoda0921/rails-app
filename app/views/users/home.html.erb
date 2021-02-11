@@ -3,7 +3,6 @@
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
-    <div class="flash-container" id="flash-container-<%= @current_user %>"></div>
     <div class="row">
       <div class="col-md-3">
         <!--チャネル使用時に下記の1行を使う-->
@@ -58,7 +57,7 @@
                 </div>
                 <div class="microposts-container" id="microposts-container-<%= @current_user.id %>">
                   <div class="microposts-container-<%= @current_user.id %>">
-                    <%= render "microposts/microposts_index", microposts_index: @microposts_index, current_user: @current_user %>
+                    <%= render "microposts/microposts_index", microposts_index: @microposts_index, current_user: @current_user, post_comment: @post_comment %>
                   </div>
                 </div>
               </div>
