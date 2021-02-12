@@ -55,8 +55,8 @@
                   <%= render "user_script" %>
 
                 </div>
-                <div class="microposts-container" id="microposts-container-<%= @current_user.id.to_s %>">
-                  <div class="microposts-container-<%= @current_user.id %>">
+                <div class="microposts-container-<%= @current_user.id.to_s %>" id="microposts-container-<%= @current_user.id.to_s %>">
+                  <div id="microposts-container">
                     <%= render "microposts/microposts_index", microposts_index: @microposts_index, current_user: @current_user, post_comment: @post_comment %>
                   </div>
                 </div>

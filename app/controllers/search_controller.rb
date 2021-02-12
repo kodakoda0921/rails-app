@@ -12,7 +12,7 @@ class SearchController < ApplicationController
       logger.error(@micropost_search)
 
       @post_comment = PostComment.new
-      ActionCable.server.broadcast("search_channel_#{@page_tab_id}", { microposts: microposts_html_template(@micropost_search), current_user_id: current_user.id.to_s, tab_id: page_tab_id })
+      ActionCable.server.broadcast("search_channel", { microposts: microposts_html_template(@micropost_search), current_user_id: current_user.id.to_s, tab_id: page_tab_id, method: "new" })
     else
       redirect_to new_session_path
     end

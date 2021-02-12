@@ -1,8 +1,7 @@
 import consumer from "./consumer"
 // turbolinks の読み込みが終わった後にidを取得しないと，エラーが出ます。
 $(document).on('turbolinks:load', function () {
-    window.micropostsClassContainer = document.getElementsByClassName('microposts-container')
-// 以下のプログラムが他のページで動作しないようにしておく
+    window.micropostsClassContainer = document.getElementById('microposts-container')
     // 以下のプログラムが他のページで動作しないようにしておく
     if (micropostsClassContainer === null) {
         return
