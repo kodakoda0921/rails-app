@@ -28,6 +28,7 @@ $(document).on('turbolinks:load', function () {
             let match_micropost_id = html_micropost_id.dataset.micropost_id.toString()
             if (match_micropost_id == data["micropost_id"]) {
                 if (data["method"] == "create") {
+                    // コメントを投稿した際に投稿者と投稿が見れる人全員に対して行われる処理
                     // サーバー側から受け取ったHTMLを一番最初に加える
                     postCommentContainer.insertAdjacentHTML("beforeend", data["post_comment_html"])
                     postCommentCountContainer.innerHTML = data["post_comment_count"]

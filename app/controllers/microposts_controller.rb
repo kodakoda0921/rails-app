@@ -12,8 +12,8 @@ class MicropostsController < ApplicationController
       if @micropost.save
         followed_list = current_user.followed_list_id
         flash.now[:success] = "投稿に成功しました！"
-        ActionCable.server.broadcast("home_channel", { micropost: @micropost.html_template(current_user), post_user_id: current_user.id.to_s, user_id: current_user.id.to_s, method: "create" })
-        ActionCable.server.broadcast("search_channel", { micropost_html: @micropost.html_template(current_user), micropost: @micropost, method: "add" })
+        ActionCable.server.broadcast("home_channel", { micropost: @micropost.html_template(@micropost.user), post_user_id: current_user.id.to_s, user_id: current_user.id.to_s, method: "create" })
+        ActionCable.server.broadcast("search_channel", { micropost_html: @micropost.html_template(@micropost.user), micropost: @micropost, method: "add" })
         ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: current_user.id })
         followed_list.each do |user_id|
           follower_user = User.find_by(id: user_id)
