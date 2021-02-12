@@ -136,8 +136,10 @@
 <!-- /.navbar -->
 <script>
     function searchValue() {
-        let val = $("#search_value").val()
-        window.parent.parentSearchPageLink(val);
-        $("#search_value").val("")
+        if ($("#search_value").val()) {
+            let val = $("#search_value").val()
+            window.parent.parentSearchPageLink(val);
+            $("#search_value").val("")
+        }
     }
 </script>
