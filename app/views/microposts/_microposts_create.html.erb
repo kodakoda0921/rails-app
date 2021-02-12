@@ -46,7 +46,7 @@
         <div class="input-group input-group-sm mb-0">
           <%= f.text_field :content, class: "form-control form-control-sm", placeholder: "Type a comment", id: "micropost_content_field-#{micropost.id}" %>
           <div class="input-group-append">
-            <%= f.submit "Post", class: "btn btn-info" %>
+            <%= f.submit "Post", class: "btn btn-info", id: "comment_submit-#{micropost.id}" %>
           </div>
         </div>
       </div>
@@ -71,4 +71,5 @@
   </div>
 </div>
 <!--/削除確認モーダル-->
+
 

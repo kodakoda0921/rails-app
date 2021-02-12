@@ -28,6 +28,8 @@ $(document).on('turbolinks:load', function () {
                 if (data["tab_id"] == tab_id) {
                     let searchClassContainer = $(".search-container-" + data["current_user_id"] + "-" + data["tab_id"])
                     searchClassContainer.empty()
+                    let aaa = "search-btn-" + data["tab_id"]
+                    $("#search-btn-" + tab_id).attr("id", aaa)
                     searchClassContainer.attr("data-value", data["value"])
                     Array.from(searchClassContainer).forEach(function (container) {
                         container.innerHTML = data["microposts"]
@@ -37,17 +39,19 @@ $(document).on('turbolinks:load', function () {
             }
             // micropost投稿時に呼び出される検索結果へのhtml追加処理
             if (data["method"] == "add") {
-                let image_html_src = $(image_html).attr('src')
-                let micropost_jquery = $(data["micropost_html"]).find("#comment_form_current_user_image").each(function (index, value) {
-                    $(this).attr('src', image_html_src);
-                })
+                // let image_html_src = $(image_html).attr('src')
+                // let micropost_jquery_image = $(data["micropost_html"]).find("#comment_form_current_user_image").each(function (index, value) {
+                //     $(this).attr('src', image_html_src);
+                // })
+                // let micropost_jquery_last = $(micropost_jquery_image.parents(".post").find(".form-horizontal")).attr({
+                //     "id": 'post_comment_form-' + current_user_id + '-' + data["micropost"].id.toString(),
+                //     "action": "/post_comments?user_id=" + current_user_id
+                // })
                 // micropostが投稿された瞬間に、検索値（value）を含む場合のみ以下の処理を行う
                 if (data["micropost"].content.includes(value)) {
-                    // 今回の検索で一致したため、micropostを検索結果にaddする
-                    let searchValueClassContainer = $(".search_value-" + value);
-                    Array.from(searchValueClassContainer).forEach(function (container) {
-                        container.prepend(micropost_jquery.parents(".post")[0])
-                    });
+                    // 今回の検索で一致したため、micropostを検索結果を更新する
+                    $("#search_field-" + tab_id).val(value);
+                    document.getElementById("search-btn-" + tab_id).click();
                 }
             }
             // 検索結果から自分の投稿を削除するまたは、他人の投稿が削除される時に呼び出される
