@@ -1,4 +1,9 @@
 <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750" id="iframe_tab">
+  <!--チャネル使用時に下記の2行を使う-->
+  <div id="current_user_id" data-user_id="<%= @current_user.id %>"></div>
+  <div class="flash-container" id="flash-container-<%= @current_user.id.to_s %>"></div>
+  <div id="search-scope-<%= @current_user.id.to_s %>"></div>
+  <!--/チャネル使用時に上記の2行を使う-->
   <div class="nav navbar navbar-expand-lg navbar-white border-bottom p-2">
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav nav-pills" role="tablist"></ul>

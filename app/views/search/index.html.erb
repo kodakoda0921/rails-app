@@ -1,24 +1,32 @@
 <% provide(:title, @current_user.name + 'の検索') %>
 <%= render "users/user_top_path" %>
+<!--チャネル使用時に下記の1行を使う-->
+<div id="current_user_id" data-user_id="<%= @current_user.id %>"></div>
+<!-- タブを開いた時にタブのIDを生成する -->
+<div id="search_tab_id-<%= @current_user.id.to_s %>" data-tab_id="<%= @tab_id %>"></div>
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
-    <!--チャネル使用時に下記の1行を使う-->
-    <div id="current_user_id" data-user_id="<%= @current_user.id %>"></div>
     <div class="row">
       <div class="col-md-8 offset-md-2">
         <%= form_with(url: search_index_path, method: "GET", local: false, remote: true) do |f| %>
           <div class="input-group input-group-lg">
+            <%= f.hidden_field :tab_id, value: @tab_id %>
             <%= f.search_field :value, class: "form-control", placeholder: "Type your keywords here", value: "#{@search_value if @search_value.present?}" %>
             <div class="input-group-append">
-              <%= button_tag sanitize('<i class="fa fa-search"></i>Register'), :type => "submit", :class => "btn btn-lg btn-default" %>
+              <%= button_tag sanitize('<i class="fa fa-search"></i>Register'), :type => "submit", :class => "btn btn-lg btn-default", id: "search-btn" %>
             </div>
           </div>
         <% end %>
       </div>
     </div>
-    <div id="search-container" class="search-container-<%= @current_user.id.to_s %>">
+    <div id="search-container-<%= @current_user.id.to_s %>" class="search-container-<%= @current_user.id.to_s %>-<%= @tab_id %>">
       <% render "microposts/microposts_index", microposts_index: @micropost_search, current_user: @current_user, post_comment: @post_comment %>
     </div>
   </div>
 </section>
+<script>
+    window.onload = function () {
+        $("#search-btn").click()
+    }
+</script>

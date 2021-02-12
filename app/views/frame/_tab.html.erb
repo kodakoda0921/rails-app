@@ -1,9 +1,7 @@
 <script>
 
     $(document).ready(function () {
-        let val = ""
-        let link = '<%= search_index_path %>?value=' + val
-        $('.content-wrapper').IFrame('createTab', 'Search', link, 'search', true)
+        $('.content-wrapper').IFrame('createTab', 'Home', '<%= users_home_path %>', 'home', true)
     })
 
     function parentHomePageLink() {
@@ -15,7 +13,7 @@
     }
 
     function parentSearchPageLink(val) {
-        let link = '<%= search_index_path %>?value=' + val
+        let link = '<%= search_index_path %>?value=' + val + '&tab="1"'
         $('.content-wrapper').IFrame('createTab', 'Search', link, 'search', true)
     }
 

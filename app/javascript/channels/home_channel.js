@@ -2,14 +2,14 @@ import consumer from "./consumer"
 // turbolinks の読み込みが終わった後にidを取得しないと，エラーが出ます。
 $(document).on('turbolinks:load', function () {
     // js.erb 内で使用できるように変数を定義しておく
-    window.micropostsClassContainer = document.getElementsByClassName('microposts-container')
-
-    // 以下のプログラムが他のページで動作しないようにしておく
-    if (micropostsClassContainer === null) {
-        return
-    }
     let current_user_id_int = document.getElementById("current_user_id").getAttribute("data-user_id");
     const current_user_id = current_user_id_int.toString()
+    const micropostsContainer = document.getElementById('microposts-container-' + current_user_id)
+
+    // 以下のプログラムが他のページで動作しないようにしておく
+    if (micropostsContainer === null) {
+        return
+    }
     consumer.subscriptions.create("HomeChannel", {
         connected() {
             // Called when the subscription is ready for use on the server
