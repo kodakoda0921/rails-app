@@ -16,16 +16,18 @@
   </ul>
 
   <!-- SEARCH FORM -->
-
-  <div class="input-group input-group-sm">
-    <div class="input-group-append">
-      <input class="form-control form-control-navbar" placeholder="Search" id="search_value">
-      <input type="button" value="送信" onclick="searchValue()">
-      <i class="fas fa-search"></i>
+  <form data-remote="true">
+    <div class="form-inline ml-3">
+      <div class="input-group input-group-sm">
+        <input class="form-control form-control-navbar" placeholder="Search" id="search_value">
+        <div class="input-group-append">
+          <button class="btn btn-navbar" onclick="searchValue()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
-
-
+  </form>
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <!-- Messages Dropdown Menu -->
@@ -136,5 +138,6 @@
     function searchValue() {
         let val = $("#search_value").val()
         window.parent.parentSearchPageLink(val);
+        $("#search_value").val("")
     }
 </script>

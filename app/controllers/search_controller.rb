@@ -2,7 +2,6 @@ class SearchController < ApplicationController
   def index
     if logged_in?
       @button = true
-      logger.error(params)
       if params[:tab]
         @tab_id = SecureRandom.urlsafe_base64
         @button = false
