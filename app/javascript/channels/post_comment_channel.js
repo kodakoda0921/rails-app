@@ -29,17 +29,28 @@ $(document).on('turbolinks:load', function () {
             if (match_micropost_id == data["micropost_id"]) {
                 if (data["method"] == "create") {
                     // サーバー側から受け取ったHTMLを一番最初に加える
-                    postCommentContainer.insertAdjacentHTML("beforeend", data["post_comment"])
+                    postCommentContainer.insertAdjacentHTML("beforeend", data["post_comment_html"])
                     postCommentCountContainer.innerHTML = data["post_comment_count"]
-                    document.getElementById('post_comment_form-' + current_user_id + '-' + match_micropost_id).reset();
                     if ($('#collapse-card-comment-' + match_micropost_id).hasClass("show") == false) {
                         $('#collapse-card-comment-' + match_micropost_id).collapse('show')
+                    }
+                    // コメント投稿者以外の人に対する処理
+                    if (data["post_comment"].user_id.toString() != current_user_id) {
+                        $("#comment_destroy_view-" + data["post_comment"].id.toString()).empty()
+                    } else {
+                        // コメント投稿者のみに対する処理
+                        document.getElementById('post_comment_form-' + data["current_user_id"] + '-' + match_micropost_id).reset();
                     }
                 }
                 if (data["method"] == "destroy") {
                     postCommentCountContainer.innerHTML = data["post_comment_count"]
+
+                    // コメント投稿者のみに対する処理（場合分け未）
                     $("#modal_comment_destroy-" + data["post_comment_id"]).modal('hide');
+
+                    // idがhtml上から消えてしまうため、一番最後に削除を行う
                     document.getElementById("comment-" + data["post_comment_id"]).remove();
+
                 }
             }
 

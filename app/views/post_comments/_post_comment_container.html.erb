@@ -4,7 +4,7 @@
     <div class="user-block">
       <%= image_tag url_for(comment.user.display_image), class: "img-circle img-sm" if comment.user.image.attached? %>
       <% if comment.user == current_user %>
-        <a href="#" class="float-right text-muted" data-toggle="modal" data-target="#modal_comment_destroy-<%= comment.id %>"><i class="fas fa-times"></i></a>
+        <a href="#" class="float-right text-muted" data-toggle="modal" data-target="#modal_comment_destroy-<%= comment.id %>" id="comment_destroy_view-<%= comment.id %>"><i class="fas fa-times"></i></a>
       <% end %>
       <span class="username"><%= link_to comment.user.name, comment.user %>
       </span>

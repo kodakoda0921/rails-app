@@ -14,8 +14,9 @@ class PostComment < ApplicationRecord
   end
 
   # 投稿されたコメントをコメント用の部分テンプレートでHTMLに変換
-  def html_template(current_user)
-    ApplicationController.renderer.render partial: "post_comments/post_comment_container", locals: { comment: self, current_user: current_user }
+  # テンプレートに対してcurrent_userを送っても無意味（投稿者のcurrent_userが入るだけ。）
+  def html_template
+    ApplicationController.renderer.render partial: "post_comments/post_comment_container", locals: { comment: self, current_user: self.user }
   end
 
   def html_template_count
