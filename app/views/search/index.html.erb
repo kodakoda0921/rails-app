@@ -21,10 +21,13 @@
         <% end %>
       </div>
     </div>
-    <div class="search_value-<%= @search_value %>"></div>
-    <div id="search-container" class="search-container-<%= @current_user.id.to_s %>-<%= @tab_id %>" data-value="<%= @search_value %>">
+    <!--    ここに新しい投稿を追加   -->
+    <div id="search_value-<%= @tab_id %>" class="search_value-<%= @search_value %>"></div>
+    <% if @button %>
       <% render "microposts/microposts_index", microposts_index: @micropost_search, current_user: @current_user, post_comment: @post_comment %>
-    </div>
+    <% else %>
+      <div id="search-container" class="search-container-<%= @current_user.id.to_s %>-<%= @tab_id %>" data-value="<%= @search_value %>"></div>
+    <% end %>
   </div>
 </section>
 <script>

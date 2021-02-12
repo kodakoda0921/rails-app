@@ -9,7 +9,6 @@ $(document).on('turbolinks:load', function () {
         return
     }
     const tab_id = document.getElementById("search_tab_id-" + current_user_id).getAttribute("data-tab_id");
-    const value = document.getElementById("search-container").getAttribute("data-value");
     consumer.subscriptions.create("SearchChannel", {
         connected() {
             // Called when the subscription is ready for use on the server
@@ -21,15 +20,22 @@ $(document).on('turbolinks:load', function () {
 
         received(data) {
             // Called when there's incoming data on the websocket for this channel
+            const value = document.getElementById("search-container").getAttribute("data-value");
             if (data["method"] == "new") {
                 if (data["tab_id"] == tab_id) {
-                    let searchClassContainer = document.getElementsByClassName('search-container-' + data["current_user_id"] + "-" + data["tab_id"])
+                    let searchClassContainer = $(".search-container-" + data["current_user_id"] + "-" + data["tab_id"])
+                    searchClassContainer.empty()
+                    searchClassContainer.attr("data-value", data["value"])
+                    let searchAddContainer = $("#search_value-" + data["tab_id"]).attr("class", "search_value-" + data["value"])
+                    searchAddContainer.empty()
                     Array.from(searchClassContainer).forEach(function (container) {
                         container.innerHTML = data["microposts"]
                     });
+
                 }
             }
             if (data["method"] == "add") {
+                console.log(value)
                 if (data["micropost"].content.includes(value)) {
                     let searchValueClassContainer = document.getElementsByClassName("search_value-" + value);
                     Array.from(searchValueClassContainer).forEach(function (container) {

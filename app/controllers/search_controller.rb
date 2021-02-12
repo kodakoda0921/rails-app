@@ -1,18 +1,18 @@
 class SearchController < ApplicationController
   def index
     if logged_in?
+      @button = true
+      logger.error(params)
       if params[:tab]
         @tab_id = SecureRandom.urlsafe_base64
-        logger.error(@tab_id)
+        @button = false
       end
       page_tab_id = params[:tab_id]
       @search_value = params[:value]
       @current_user = current_user
       @micropost_search = Micropost.where('content like ?', "%#{params[:value]}%")
-      logger.error(@micropost_search)
-
       @post_comment = PostComment.new
-      ActionCable.server.broadcast("search_channel", { microposts: microposts_html_template(@micropost_search), current_user_id: current_user.id.to_s, tab_id: page_tab_id, method: "new" })
+      ActionCable.server.broadcast("search_channel", { microposts: microposts_html_template(@micropost_search), current_user_id: current_user.id.to_s, tab_id: page_tab_id, value: @search_value, method: "new" })
     else
       redirect_to new_session_path
     end

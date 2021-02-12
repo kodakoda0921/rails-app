@@ -14,7 +14,7 @@
     <%= micropost.content %>
   </p>
   <div class="text-left">
-    <%= image_tag url_for(micropost.display_image), class: "img-fluid rounded" if micropost.image.attached? %>
+    <%= image_tag url_for(micropost.display_image.processed), class: "img-fluid rounded" if micropost.image.attached? %>
   </div>
   <p>
     <a href="#" class="link-black text-sm mr-2"><i class="far fa-thumbs-up mr-1"></i>
