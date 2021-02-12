@@ -5,6 +5,9 @@
 <div id="post-comment-container"></div>
 <!-- タブを開いた時にタブのIDを生成する -->
 <div id="search_tab_id-<%= @current_user.id.to_s %>" data-tab_id="<%= @tab_id %>"></div>
+<!-- タブを開いた時に現在ユーザのプロフィール画像を表示するためのhtmlを取得する -->
+<div id="current_user_img-<%= @current_user.id.to_s %>"
+     data-user_image='<%= image_tag url_for(@current_user.display_image), class: "img-fluid rounded" if @current_user.image.attached? %>'></div>
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
@@ -22,12 +25,14 @@
       </div>
     </div>
     <!--    ここに新しい投稿を追加   -->
-    <div id="search_value-<%= @tab_id %>" class="search_value-<%= @search_value %>"></div>
-    <% if @button %>
-      <% render "microposts/microposts_index", microposts_index: @micropost_search, current_user: @current_user, post_comment: @post_comment %>
-    <% else %>
-      <div id="search-container" class="search-container-<%= @current_user.id.to_s %>-<%= @tab_id %>" data-value="<%= @search_value %>"></div>
-    <% end %>
+    <div>
+      <div id="search_value-<%= @tab_id %>" class="search_value-<%= @search_value %>">
+        <div id="search-container" class="search-container-<%= @current_user.id.to_s %>-<%= @tab_id %>" data-value="<%= @search_value %>">
+          <%= render "microposts/microposts_index", microposts_index: @micropost_search, current_user: @current_user, post_comment: @post_comment %>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 <script>

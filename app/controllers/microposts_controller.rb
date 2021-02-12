@@ -10,16 +10,21 @@ class MicropostsController < ApplicationController
       @micropost = current_user.microposts.build(micropost_params)
       @micropost.image.attach(params[:image])
       if @micropost.save
-        followed_list = current_user.followed_list_id
-        flash.now[:success] = "投稿に成功しました！"
+        # 自分だけに表示させる処理
         ActionCable.server.broadcast("home_channel", { micropost: @micropost.html_template(@micropost.user), post_user_id: current_user.id.to_s, user_id: current_user.id.to_s, method: "create" })
         ActionCable.server.broadcast("search_channel", { micropost_html: @micropost.html_template(@micropost.user), micropost: @micropost, method: "add" })
-        ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: current_user.id })
+
+        # 他人に対して表示させる処理
+        followed_list = current_user.followed_list_id
         followed_list.each do |user_id|
           follower_user = User.find_by(id: user_id)
           logger.error(follower_user)
           ActionCable.server.broadcast("home_channel", { micropost: @micropost.html_template(follower_user), post_user_id: current_user.id.to_s, user_id: user_id.to_s, method: "create" })
         end
+
+        # 成功のフラッシュメッセージを投稿者に送信する
+        flash.now[:success] = "投稿に成功しました！"
+        ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: current_user.id })
       else
         if @micropost.errors.any?
           flash.now[:danger] = @micropost.errors.full_messages.to_s.gsub(",", "<br>").gsub("[", "").gsub("]", "").gsub('"', "").html_safe
