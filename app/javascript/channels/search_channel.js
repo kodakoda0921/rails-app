@@ -37,6 +37,12 @@ $(document).on('turbolinks:load', function () {
                     });
                 }
             }
+            if (data["method"] == "destroy") {
+                let micropost_view = "micropost-" + data["micropost_id"]
+                $("#" + micropost_view).remove();
+                let micropost_modal = "modal_destroy-" + data["micropost_id"]
+                $("#" + micropost_modal).modal('hide');
+            }
         }
     });
 })
