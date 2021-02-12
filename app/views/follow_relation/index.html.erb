@@ -1,5 +1,7 @@
 <% provide(:title, @current_user.name + 'のFollow List') %>
 <%= render "users/user_top_path" %>
+<!--チャネル使用時に下記の1行を使う-->
+<div id="current_user_id" data-user_id="<%= @current_user.id %>"></div>
 <!-- Main content -->
 <section class="content">
 
