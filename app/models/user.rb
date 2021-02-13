@@ -147,6 +147,16 @@ class User < ApplicationRecord
                      OR user_id = :user_id", user_id: self.id)
   end
 
+  # 名前に特定の文字を含むユーザとユーザプロフィールのnotesに特定の文字を含むユーザの一覧を取得する
+  def all_user_include_params_name_and_notes(value)
+    # notesにvalueの値を含むuser_idの一覧を取得
+    notes_sql = "SELECT user_id FROM profiles
+                     WHERE (notes like '%:value%')"
+    User.where("id IN (#{notes_sql})
+                     OR name like '%:value%'", value: value)
+    # User.joins(:profiles).where('notes like ?', "%#{value}%")
+  end
+
   private
 
   # メールアドレスをすべて小文字にする

@@ -15,6 +15,8 @@ class SearchController < ApplicationController
         @search_value = params[:value]
         @current_user = current_user
         @micropost_search = Micropost.where('content like ?', "%#{params[:value]}%")
+        @user_search = @current_user.all_user_include_params_name_and_notes(params[:value])
+        logger.error(@user_search)
         @post_comment = PostComment.new
         ActionCable.server.broadcast("search_channel", { microposts: microposts_html_template(@micropost_search), current_user_id: current_user.id.to_s, tab_id: page_tab_id, value: @search_value, method: "new" })
         return
