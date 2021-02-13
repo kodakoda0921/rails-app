@@ -151,9 +151,9 @@ class User < ApplicationRecord
   def all_user_include_params_name_and_notes(value)
     # notesにvalueの値を含むuser_idの一覧を取得
     notes_sql = "SELECT user_id FROM profiles
-                     WHERE (notes like '%:value%')"
+                     WHERE (notes like '%#{value}%')"
     User.where("id IN (#{notes_sql})
-                     OR name like '%:value%'", value: value)
+                     OR name like ?", "%#{value}%")
     # User.joins(:profiles).where('notes like ?', "%#{value}%")
   end
 
