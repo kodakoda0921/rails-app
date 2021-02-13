@@ -4,9 +4,9 @@
   <div class="flash-container" id="flash-container-<%= @current_user.id.to_s %>"></div>
   <div id="search-scope-<%= @current_user.id.to_s %>"></div>
   <!--/チャネル使用時に上記の2行を使う-->
-  <div class="nav navbar navbar-expand-lg navbar-white border-bottom p-2">
+  <div class="nav navbar navbar-expand-lg sidebar-dark-primary navbar-dark pt-2 p-1">
     <div class="collapse navbar-collapse">
-      <ul class="navbar-nav nav-pills" role="tablist"></ul>
+      <ul class="navbar-nav nav-tabs" role="tablist"></ul>
       <a class="nav-link bg-danger" href="javascript:close_tab();"><i class="fas fa-times"></i></a>
     </div>
   </div>
@@ -22,3 +22,9 @@
     </div>
   </div>
 </div>
+<style>
+    .navbar-dark .navbar-nav .active > .nav-link{
+        color: black;
+        background-color: whitesmoke;
+    }
+</style>
