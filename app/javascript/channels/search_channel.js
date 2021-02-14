@@ -50,21 +50,20 @@ $(document).on('turbolinks:load', function () {
                 }
             }
             // micropost投稿時に呼び出される検索結果へのhtml追加処理
-            if (data["method"] == "add") {
-                // let image_html_src = $(image_html).attr('src')
-                // let micropost_jquery_image = $(data["micropost_html"]).find("#comment_form_current_user_image").each(function (index, value) {
-                //     $(this).attr('src', image_html_src);
-                // })
-                // let micropost_jquery_last = $(micropost_jquery_image.parents(".post").find(".form-horizontal")).attr({
-                //     "id": 'post_comment_form-' + current_user_id + '-' + data["micropost"].id.toString(),
-                //     "action": "/post_comments?user_id=" + current_user_id
-                // })
+            if (data["method"] == "new_micropost") {
                 // micropostが投稿された瞬間に、検索値（value）を含む場合のみ以下の処理を行う
-                if (data["micropost"].content.includes(value) || data["user"].plofiles.notes.includes(value)) {
-                    // 今回の検索で一致したため、micropostを検索結果を更新する
-                    $("#search_field-" + tab_id).val(value);
+                if (data["micropost_content"].includes(value)) {
+                    console.log(data["micropost_content"])
+                    // 今回の検索で一致したため、結果を更新する
+                    // $("#search_field-" + tab_id).val(value);
                     document.getElementById("search-btn-" + tab_id).click();
                 }
+            }
+            if (data["method"] == "new_profile") {
+                // 今回の検索で一致したため、検索結果を更新する
+                // $("#search_field-" + tab_id).val(value);
+                document.getElementById("search-btn-" + tab_id).click();
+
             }
             // 検索結果から自分の投稿を削除するまたは、他人の投稿が削除される時に呼び出される
             if (data["method"] == "destroy") {

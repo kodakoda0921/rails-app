@@ -23,7 +23,7 @@
             <% if @following_user_all.present? %>
               <% @following_user_all.each do |following_user| %>
                 <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
-                <%= render "users/user_index", user: following_user %>
+                  <%= render "users/user_view", user: following_user %>
                 </div>
               <% end %>
             <% else %>
@@ -85,14 +85,6 @@
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
-      <nav aria-label="Contacts Page Navigation">
-        <ul class="pagination justify-content-center m-0">
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-
-        </ul>
-      </nav>
     </div>
     <!-- /.card-footer -->
   </div>
