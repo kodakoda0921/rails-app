@@ -1,36 +1,12 @@
-<div class="card bg-light">
-  <div class="card-header text-muted border-bottom-0">
-    <%#= user.profiles.job %>
-  </div>
-  <div class="card-body pt-0">
-    <div class="row">
-      <div class="col-8">
-        <h4 class="lead"><b><%= user.name %></b></h4>
-        <ul class="ml-4 mb-0 fa-ul text-muted">
-          <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>
-            Location:
-            <%= user.profiles.location %>
-          </li>
-          <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
-            Skills: <%= user.profiles.skills %>
-          </li>
-        </ul>
-        <p class="text-muted text-sm"><b>Notes: </b> <%= user.profiles.notes %>
-        </p>
+<% if search_user_list.present? %>
+  <div class="row">
+    <% search_user_list.each do |user| %>
+      <div class="col-md-5 align-items-stretch d-flex justify-content-around m-md-4">
+        <%= render "users/user_view", user: user %>
       </div>
-      <div class="col-4 text-center">
-        <%= image_tag url_for(user.display_image), class: "img-circle img-fluid" if user.image.attached? %>
-      </div>
-    </div>
+    <% end %>
   </div>
-  <div class="card-footer">
-    <div class="text-right">
-      <a href="#" class="btn btn-sm bg-teal">
-        <i class="fas fa-comments"></i>
-      </a>
-      <a href="#" class="btn btn-sm btn-primary">
-        <i class="fas fa-user"></i> View Profile
-      </a>
-    </div>
-  </div>
-</div>
+<% else %>
+  <p>ユーザが存在しません</p>
+<% end %>
+

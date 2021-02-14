@@ -26,14 +26,26 @@ $(document).on('turbolinks:load', function () {
             // 検索タブが初回に開かれる時、または検索ボタンが押された時の処理
             if (data["method"] == "new") {
                 if (data["tab_id"] == tab_id) {
+                    // それぞれの一覧画面を表示させる箇所を定義する
                     let searchClassContainer = $(".search-container-" + data["current_user_id"] + "-" + data["tab_id"])
+                    let searchUserClassContainer = $(".search-user-container-" + data["current_user_id"] + "-" + data["tab_id"])
+                    // 一度表示箇所のhtmlの表示を全て削除する
                     searchClassContainer.empty()
-                    let aaa = "search-btn-" + data["tab_id"]
-                    $("#search-btn-" + tab_id).attr("id", aaa)
+                    searchUserClassContainer.empty()
+                    // ボタンのidを最新のvalueのものに書き換える
+                    let search_btn_id = "search-btn-" + data["tab_id"]
+                    $("#search-btn-" + tab_id).attr("id", search_btn_id)
+                    // <div data-value>の値を最新のvalueに書き換える
                     searchClassContainer.attr("data-value", data["value"])
+                    searchUserClassContainer.attr("data-value", data["value"])
+                    // 以下の箇所をサーバ側から送られてきたhtmlに置き換える
                     Array.from(searchClassContainer).forEach(function (container) {
                         container.innerHTML = data["microposts"]
                     });
+                    Array.from(searchUserClassContainer).forEach(function (container) {
+                        container.innerHTML = data["users"]
+                    });
+
 
                 }
             }
@@ -48,7 +60,7 @@ $(document).on('turbolinks:load', function () {
                 //     "action": "/post_comments?user_id=" + current_user_id
                 // })
                 // micropostが投稿された瞬間に、検索値（value）を含む場合のみ以下の処理を行う
-                if (data["micropost"].content.includes(value)) {
+                if (data["micropost"].content.includes(value) || data["user"].plofiles.notes.includes(value)) {
                     // 今回の検索で一致したため、micropostを検索結果を更新する
                     $("#search_field-" + tab_id).val(value);
                     document.getElementById("search-btn-" + tab_id).click();

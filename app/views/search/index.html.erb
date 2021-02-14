@@ -51,17 +51,13 @@
                   </div>
                 </div>
                 <div class="tab-pane" id="user">
-                  <% if @search_user_list.present? %>
-                    <div class="row">
-                      <% @search_user_list.each do |user_list| %>
-                        <div class="col-md-5 align-items-stretch shadow-sm d-flex justify-content-around p-0 m-md-4">
-                          <%= render "users/user_index", user: user_list %>
-                        </div>
-                      <% end %>
-                    </div>
-                  <% else %>
-                    <p>ユーザが存在しません</p>
-                  <% end %>
+                  <div class="search-user-container-<%= @current_user.id.to_s %>-<%= @tab_id %>" data-value="<%= @search_value %>">
+                    <% if @search_user_list.present? %>
+                      <%= render "users/user_index", search_user_list: @search_user_list %>
+                    <% else %>
+                      <p>ユーザが存在しません</p>
+                    <% end %>
+                  </div>
                 </div>
               </div>
             </div>
