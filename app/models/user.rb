@@ -147,14 +147,40 @@ class User < ApplicationRecord
                      OR user_id = :user_id", user_id: self.id)
   end
 
-  # 名前に特定の文字を含むユーザとユーザプロフィールのnotesに特定の文字を含むユーザの一覧を取得する
+  # 名前に特定の文字を含むユーザとユーザプロフィールのnotesに特定の文字を含む全ユーザの一覧を取得する
   def all_user_include_params_name_and_notes(value)
     # notesにvalueの値を含むuser_idの一覧を取得
     notes_sql = "SELECT user_id FROM profiles
                      WHERE (notes like '%#{value}%')"
     User.where("id IN (#{notes_sql})
                      OR name like ?", "%#{value}%")
-    # User.joins(:profiles).where('notes like ?', "%#{value}%")
+  end
+
+  # フォローしている人の中で、ユーザ名もしくはnotesに特定の文字を含む人の一覧を取得する
+  def only_follow_user_include_params(value)
+    # フォロー中のuser_idの一覧を取得
+    follow_user_sql = "SELECT following_id FROM follow_relations
+                     WHERE follower_id = #{self.id}"
+    # notesにvalueの値を含むuser_idの一覧を取得
+    notes_sql = "SELECT user_id FROM profiles
+                     WHERE (notes like '%#{value}%')
+                      AND user_id IN (#{follow_user_sql})"
+    # notesにvalueの値を含むuser_idの一覧を取得
+    users_sql = "SELECT id FROM users
+                     WHERE (name like '%#{value}%')
+                      AND id IN (#{follow_user_sql})"
+    # nameにvalueの値を含むuserのidの一覧を取得
+    User.where("id IN (#{notes_sql})
+               OR id IN (#{users_sql})")
+  end
+
+  # フォローしている人の中で、投稿内容に特定の文字を含む投稿の一覧を取得する
+  def only_follow_user_micropost_include_params(value)
+    # フォロー中のuser_idの一覧を取得
+    follow_user_sql = "SELECT following_id FROM follow_relations
+                     WHERE follower_id = '#{self.id}'"
+    Micropost.where("user_id IN (#{follow_user_sql})
+                     AND content like ?", "%#{value}%")
   end
 
   private

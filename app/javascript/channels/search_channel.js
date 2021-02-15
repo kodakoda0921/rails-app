@@ -9,7 +9,6 @@ $(document).on('turbolinks:load', function () {
         return
     }
     const tab_id = document.getElementById("search_tab_id-" + current_user_id).getAttribute("data-tab_id");
-    const image_html = document.getElementById("current_user_img-" + current_user_id).getAttribute("data-user_image");
     consumer.subscriptions.create("SearchChannel", {
         connected() {
             // Called when the subscription is ready for use on the server
