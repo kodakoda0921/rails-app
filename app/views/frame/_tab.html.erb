@@ -13,8 +13,7 @@
     }
 
     function parentSearchPageLink(val) {
-        let link = '<%= search_index_path %>?value=' + val + '&tab=1&function=new'
-
+        let link = '<%= search_index_path %>?value=' + val + '&tab=1&function=new&radio_val=all_user_by'
         $('.content-wrapper').IFrame('createTab', 'Search', link, 'search', true)
     }
 

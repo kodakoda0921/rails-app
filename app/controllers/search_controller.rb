@@ -14,13 +14,14 @@ class SearchController < ApplicationController
           page_tab_id = params[:tab_id]
           @search_value = params[:value]
           @current_user = current_user
+          logger.error(@current_user.id)
           @post_comment = PostComment.new
           if radio_val == "follow_user_only"
             @micropost_search = @current_user.only_follow_user_micropost_include_params(params[:value])
             @search_user_list = @current_user.only_follow_user_include_params(params[:value])
           else
             @micropost_search = Micropost.where('content like ?', "%#{params[:value]}%")
-            @search_user_list = @current_user.all_user_include_params_name_and_notes(params[:value])
+            @search_user_list = all_user_include_params_name_and_notes(params[:value])
           end
           ActionCable.server.broadcast("search_channel", { microposts: microposts_html_template(@micropost_search), users: users_html_template(@search_user_list, current_user), current_user_id: current_user.id.to_s, tab_id: page_tab_id, value: @search_value, method: "new" })
         end
@@ -41,7 +42,7 @@ class SearchController < ApplicationController
           end
         end
         if params[:user].present?
-          search_user_list = current_user.all_user_include_params_name_and_notes(params[:value])
+          search_user_list = all_user_include_params_name_and_notes(params[:value])
           # target_user = search_user_list.find_by(id: params[:user])
           #targetのuserが条件に一致してもしなくても毎回ブロードキャストする
           ActionCable.server.broadcast("search_channel", { users: users_html_template(search_user_list, current_user), current_user_id: params[:current_user], tab_id: page_tab_id, value: params[:value], method: "add" })
@@ -64,5 +65,13 @@ class SearchController < ApplicationController
 
   def users_html_template(users, current_user)
     ApplicationController.renderer.render partial: "users/user_index", locals: { search_user_list: users, current_user: current_user }
+  end
+  # 名前に特定の文字を含むユーザとユーザプロフィールのnotesに特定の文字を含む全ユーザの一覧を取得する
+  def all_user_include_params_name_and_notes(value)
+    # notesにvalueの値を含むuser_idの一覧を取得
+    notes_sql = "SELECT user_id FROM profiles
+                     WHERE (notes like '%#{value}%')"
+    User.where("id IN (#{notes_sql})
+                     OR name like ?", "%#{value}%")
   end
 end
