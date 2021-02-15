@@ -13,7 +13,8 @@
     }
 
     function parentSearchPageLink(val) {
-        let link = '<%= search_index_path %>?value=' + val + '&tab="1"'
+        let link = '<%= search_index_path %>?value=' + val + '&tab=1&function=new'
+        console.log(link)
         $('.content-wrapper').IFrame('createTab', 'Search', link, 'search', true)
     }
 

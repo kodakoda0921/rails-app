@@ -12,7 +12,7 @@ class MicropostsController < ApplicationController
       if @micropost.save
         # 自分だけに表示させる処理
         ActionCable.server.broadcast("home_channel", { micropost: @micropost.html_template(@micropost.user), post_user_id: current_user.id.to_s, user_id: current_user.id.to_s, method: "create" })
-        ActionCable.server.broadcast("search_channel", { micropost_content: @micropost.content, method: "new_micropost" })
+        ActionCable.server.broadcast("search_channel", { micropost: @micropost, method: "new_micropost" })
 
         # 他人に対して表示させる処理
         followed_list = current_user.followed_list_id

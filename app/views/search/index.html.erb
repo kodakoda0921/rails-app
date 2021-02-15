@@ -5,9 +5,6 @@
 <div id="post-comment-container"></div>
 <!-- タブを開いた時にタブのIDを生成する -->
 <div id="search_tab_id-<%= @current_user.id.to_s %>" data-tab_id="<%= @tab_id %>"></div>
-<!-- タブを開いた時に現在ユーザのプロフィール画像を表示するためのhtmlを取得する -->
-<div id="current_user_img-<%= @current_user.id.to_s %>"
-     data-user_image='<%= image_tag url_for(@current_user.display_image), class: "img-fluid rounded" if @current_user.image.attached? %>'></div>
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
@@ -17,6 +14,7 @@
           <!--見えるフォーム-->
           <%= form_with(url: search_index_path, method: "GET", local: false, remote: true) do |f| %>
             <div class="input-group input-group-lg">
+              <%= f.hidden_field :function, value: 'new' %>
               <%= f.hidden_field :tab_id, value: @tab_id %>
               <%= f.hidden_field :radio_val, value: "all_user_by", id: "radio_val" %>
               <%= f.search_field :value, class: "form-control", placeholder: "Type your keywords here", value: "#{@search_value if @search_value.present?}", id: "search_field-#{@tab_id}" %>
@@ -27,11 +25,15 @@
           <% end %>
         </div>
       </div>
-      <!--channel用の隠しフォーム-->
+      <!--channel用の隠しフォーム(add)-->
       <%= form_with(url: search_index_path, method: "GET", local: false, remote: true) do |f| %>
-        <%= f.hidden_field :tab_id, value: @tab_id %>
+        <%= f.hidden_field :function, value: "add", id: "add_method" %>
+        <%= f.hidden_field :tab_id, value: @tab_id, id: "add_tab_id" %>
+        <%= f.hidden_field :current_user, value: @current_user.id.to_s %>
         <%= f.hidden_field :radio_val, value: "all_user_by", id: "radio_val_hidden" %>
         <%= f.hidden_field :value, class: "form-control", placeholder: "Type your keywords here", value: "", id: "search_hidden_field-#{@tab_id}" %>
+        <%= f.hidden_field :user, value: nil, id: "search_hidden_user_field-#{@tab_id}" %>
+        <%= f.hidden_field :micropost, value: nil, id: "search_hidden_micropost_field-#{@tab_id}" %>
         <%= button_tag sanitize('<i class="fa fa-search"></i>Search'), :type => "submit", :class => "btn btn-lg btn-default", id: "search-hidden-btn-#{@tab_id}", style: "visibility:hidden" %>
       <% end %>
     </div>
@@ -62,7 +64,7 @@
                 <div class="tab-pane" id="user">
                   <% if @search_user_list.present? %>
                     <div class="search-user-container-<%= @current_user.id.to_s %>-<%= @tab_id %>" data-value="<%= @search_value %>">
-                      <%= render "users/user_index", search_user_list: @search_user_list %>
+                      <%= render "users/user_index", search_user_list: @search_user_list, current_user: @current_user, tab_id: @tab_id %>
                     </div>
                   <% else %>
                     <div class="search-user-container-<%= @current_user.id.to_s %>-<%= @tab_id %>" data-value="<%= @search_value %>">
@@ -111,7 +113,6 @@
             $("#radio_val").val(radioval)
             $("#radio_val_hidden").val(radioval)
         });
-
     });
 
 </script>
