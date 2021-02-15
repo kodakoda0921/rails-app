@@ -53,16 +53,15 @@ $(document).on('turbolinks:load', function () {
             if (data["method"] == "new_micropost") {
                 // micropostが投稿された瞬間に、検索値（value）を含む場合のみ以下の処理を行う
                 if (data["micropost_content"].includes(value)) {
-                    console.log(data["micropost_content"])
                     // 今回の検索で一致したため、結果を更新する
-                    // $("#search_field-" + tab_id).val(value);
-                    document.getElementById("search-btn-" + tab_id).click();
+                    $("#search_hidden_field-" + tab_id).val(value);
+                    document.getElementById("search-hidden-btn-" + tab_id).click();
                 }
             }
             if (data["method"] == "new_profile") {
                 // 今回の検索で一致したため、検索結果を更新する
-                // $("#search_field-" + tab_id).val(value);
-                document.getElementById("search-btn-" + tab_id).click();
+                $("#search_hidden_field-" + tab_id).val(value);
+                document.getElementById("search-hidden-btn-" + tab_id).click();
 
             }
             // 検索結果から自分の投稿を削除するまたは、他人の投稿が削除される時に呼び出される
