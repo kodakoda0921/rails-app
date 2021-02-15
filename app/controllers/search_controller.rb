@@ -11,6 +11,8 @@ class SearchController < ApplicationController
           @tab_id = SecureRandom.urlsafe_base64
           @button = false
         end
+        radio_val = params[:radio_val]
+        logger.error(radio_val)
         page_tab_id = params[:tab_id]
         @search_value = params[:value]
         @current_user = current_user

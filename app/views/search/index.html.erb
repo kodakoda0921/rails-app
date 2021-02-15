@@ -17,6 +17,7 @@
           <%= form_with(url: search_index_path, method: "GET", local: false, remote: true) do |f| %>
             <div class="input-group input-group-lg">
               <%= f.hidden_field :tab_id, value: @tab_id %>
+              <%= f.hidden_field :radio_val, value: "all_user_by", id: "radio_val" %>
               <%= f.search_field :value, class: "form-control", placeholder: "Type your keywords here", value: "#{@search_value if @search_value.present?}", id: "search_field-#{@tab_id}" %>
               <div class="input-group-append">
                 <%= button_tag sanitize('<i class="fa fa-search"></i>Search'), :type => "submit", :class => "btn btn-lg btn-default", id: "search-btn-#{@tab_id}" %>
@@ -77,11 +78,11 @@
               <div class="form-group">
                 <label>アカウント</label>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input custom-control-input-green" type="radio" id="follow_user_only" name="customRadio">
+                  <input class="custom-control-input custom-control-input-green" type="radio" id="follow_user_only" name="fromUserRadio">
                   <label for="follow_user_only" class="custom-control-label">フォロー中のアカウントのみ</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input custom-control-input-yellow" type="radio" id="all_user_by" name="customRadio" checked>
+                  <input class="custom-control-input custom-control-input-yellow" type="radio" id="all_user_by" name="fromUserRadio" checked>
                   <label for="all_user_by" class="custom-control-label">全てのアカウントを含む</label>
                 </div>
               </div>
@@ -96,4 +97,12 @@
     window.onload = function () {
         $("#search-btn-<%= @tab_id %>").click()
     }
+    $(function () {
+        $('input[name="fromUserRadio"]:radio').change(function () {
+            var radioval = $(this).attr("id");
+            $("#radio_val").val(radioval)
+        });
+
+    });
+
 </script>
