@@ -1,12 +1,17 @@
 <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750" id="iframe_tab">
-  <div class="nav navbar navbar-expand-lg navbar-white border-bottom p-2">
+  <!--チャネル使用時に下記の2行を使う-->
+  <div id="current_user_id" data-user_id="<%= @current_user.id %>"></div>
+  <div class="flash-container" id="flash-container-<%= @current_user.id.to_s %>"></div>
+  <div id="search-scope-<%= @current_user.id.to_s %>"></div>
+  <!--/チャネル使用時に上記の2行を使う-->
+  <div class="nav navbar navbar-expand-lg sidebar-dark-primary navbar-dark pt-2 p-1">
     <div class="collapse navbar-collapse">
-      <ul class="navbar-nav nav-pills" role="tablist"></ul>
+      <ul class="navbar-nav nav-tabs" role="tablist"></ul>
       <a class="nav-link bg-danger" href="javascript:close_tab();"><i class="fas fa-times"></i></a>
     </div>
   </div>
 
-  <div class="tab-content">
+  <div class="tab-content" id="iframe_tab_content">
     <div class="tab-empty">
       <h2 class="display-9">左メニュからタブを選択して下さい</h2>
     </div>
@@ -17,3 +22,9 @@
     </div>
   </div>
 </div>
+<style>
+    .navbar-dark .navbar-nav .active > .nav-link{
+        color: black;
+        background-color: whitesmoke;
+    }
+</style>

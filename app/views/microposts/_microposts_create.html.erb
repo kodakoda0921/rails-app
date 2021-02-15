@@ -14,7 +14,7 @@
     <%= micropost.content %>
   </p>
   <div class="text-left">
-    <%= image_tag url_for(micropost.display_image), class: "img-fluid rounded" if micropost.image.attached? %>
+    <%= image_tag url_for(micropost.display_image.processed), class: "img-fluid rounded" if micropost.image.attached? %>
   </div>
   <p>
     <a href="#" class="link-black text-sm mr-2"><i class="far fa-thumbs-up mr-1"></i>
@@ -33,20 +33,20 @@
     <div id="post-comment-container-<%= micropost.id %>" class="post-comment-container">
       <% if micropost.post_comment.present? %>
         <% micropost.post_comment.each do |comment| %>
-          <%= render "post_comments/post_comment_container", comment: comment %>
+          <%= render "post_comments/post_comment_container", comment: comment, current_user: current_user %>
         <% end %>
       <% end %>
     </div>
   </div>
   <%= form_with(model: post_comment, url: post_comments_path(user_id: current_user.id), class: "form-horizontal", local: false, id: "post_comment_form-#{current_user.id.to_s + '-' + micropost.id.to_s}") do |f| %>
     <div class="card-footer">
-      <%= image_tag url_for(current_user.display_image), class: "img-fluid img-circle img-sm" if current_user.image.attached? %>
+      <%= image_tag url_for(current_user.display_image), class: "img-fluid img-circle img-sm", id: "comment_form_current_user_image" if current_user.image.attached? %>
       <div class="img-push">
         <%= f.hidden_field :micropost_id, value: micropost.id, id: "micropost_hidden_field-#{micropost.id}" %>
         <div class="input-group input-group-sm mb-0">
           <%= f.text_field :content, class: "form-control form-control-sm", placeholder: "Type a comment", id: "micropost_content_field-#{micropost.id}" %>
           <div class="input-group-append">
-            <%= f.submit "Post", class: "btn btn-info" %>
+            <%= f.submit "Post", class: "btn btn-info", id: "comment_submit-#{micropost.id}" %>
           </div>
         </div>
       </div>
@@ -71,4 +71,5 @@
   </div>
 </div>
 <!--/削除確認モーダル-->
+
 

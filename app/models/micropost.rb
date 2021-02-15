@@ -15,8 +15,7 @@ class Micropost < ApplicationRecord
   end
 
   # 投稿されたメッセージをメッセージ用の部分テンプレートでHTMLに変換
-  def html_template(current_user)
-    ApplicationController.renderer.render partial: "microposts/microposts_create", locals: { micropost: self, current_user: current_user, post_comment: PostComment.new }
+  def html_template(user)
+    ApplicationController.renderer.render partial: "microposts/microposts_create", locals: { micropost: self, current_user: user, post_comment: PostComment.new }
   end
-
 end

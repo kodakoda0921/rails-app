@@ -11,7 +11,7 @@ class PostCommentsController < ApplicationController
       @post_comment.user_id = current_user.id
       if @post_comment.save
         flash.now[:success] = "投稿に成功しました！"
-        ActionCable.server.broadcast("post_comment_channel", { post_comment: @post_comment.html_template(@current_user), post_comment_count: @post_comment.html_template_count, micropost_id: @post_comment.micropost_id, method: "create" })
+        ActionCable.server.broadcast("post_comment_channel", { post_comment: @post_comment, post_comment_html: @post_comment.html_template, current_user_id: current_user.id.to_s, post_comment_count: @post_comment.html_template_count, micropost_id: @post_comment.micropost_id, method: "create" })
         ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: current_user.id })
         return
       else

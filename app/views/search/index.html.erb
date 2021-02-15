@@ -1,0 +1,119 @@
+<% provide(:title, 'Search') %>
+<%= render "users/user_top_path" %>
+<!--チャネル使用時に下記の1行を使う-->
+<div id="current_user_id" data-user_id="<%= @current_user.id %>"></div>
+<div id="post-comment-container"></div>
+<!-- タブを開いた時にタブのIDを生成する -->
+<div id="search_tab_id-<%= @current_user.id.to_s %>" data-tab_id="<%= @tab_id %>"></div>
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="shadow-sm p-0 mb-1 bg-white rounded">
+          <!--見えるフォーム-->
+          <%= form_with(url: search_index_path, method: "GET", local: false, remote: true) do |f| %>
+            <div class="input-group input-group-lg">
+              <%= f.hidden_field :function, value: 'new' %>
+              <%= f.hidden_field :tab_id, value: @tab_id %>
+              <%= f.hidden_field :radio_val, value: "all_user_by", id: "radio_val" %>
+              <%= f.search_field :value, class: "form-control", placeholder: "Type your keywords here", value: "#{@search_value if @search_value.present?}", id: "search_field-#{@tab_id}" %>
+              <div class="input-group-append">
+                <%= button_tag sanitize('<i class="fa fa-search"></i>Search'), :type => "submit", :class => "btn btn-lg btn-default", id: "search-btn-#{@tab_id}" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <!--channel用の隠しフォーム(add)-->
+      <%= form_with(url: search_index_path, method: "GET", local: false, remote: true) do |f| %>
+        <%= f.hidden_field :function, value: "add", id: "add_method" %>
+        <%= f.hidden_field :tab_id, value: @tab_id, id: "add_tab_id" %>
+        <%= f.hidden_field :current_user, value: @current_user.id.to_s %>
+        <%= f.hidden_field :radio_val, value: "all_user_by", id: "radio_val_hidden" %>
+        <%= f.hidden_field :value, class: "form-control", placeholder: "Type your keywords here", value: "", id: "search_hidden_field-#{@tab_id}" %>
+        <%= f.hidden_field :user, value: nil, id: "search_hidden_user_field-#{@tab_id}" %>
+        <%= f.hidden_field :micropost, value: nil, id: "search_hidden_micropost_field-#{@tab_id}" %>
+        <%= button_tag sanitize('<i class="fa fa-search"></i>Search'), :type => "submit", :class => "btn btn-lg btn-default", id: "search-hidden-btn-#{@tab_id}", style: "visibility:hidden" %>
+      <% end %>
+    </div>
+    <div class="row mt-5">
+      <div class="col-lg-7 offset-sm-1">
+        <div class="shadow-sm p-0 mb-5 bg-white rounded">
+          <div class="card card-primary card-tabs">
+            <div class="card-header p-0 pt-3">
+              <ul class="nav nav-tabs nav-justified">
+                <li class="pt-1 px-lg-3"><h3 class="card-title"><i class="fas fa-search"></i></h3></li>
+                <li class="nav-item active">
+                  <a class="nav-link active" href="#micropost" data-toggle="tab"><i class="fas fa-comment-alt"></i>
+                    Post</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#user" data-toggle="tab"><i class="fas fa-user"> User</i></a></li>
+              </ul>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+              <div class="tab-content">
+                <div class="tab-pane active" id="micropost">
+                  <!--    ここに新しい投稿を追加   -->
+                  <div id="search_value-<%= @tab_id %>" class="search_value-<%= @search_value %>"></div>
+                  <div id="search-container" class="search-container-<%= @current_user.id.to_s %>-<%= @tab_id %>" data-value="<%= @search_value %>">
+                    <%= render "microposts/microposts_index", microposts_index: @micropost_search, current_user: @current_user, post_comment: @post_comment %>
+                  </div>
+                </div>
+                <div class="tab-pane" id="user">
+                  <% if @search_user_list.present? %>
+                    <div class="search-user-container-<%= @current_user.id.to_s %>-<%= @tab_id %>" data-value="<%= @search_value %>">
+                      <%= render "users/user_index", search_user_list: @search_user_list, current_user: @current_user, tab_id: @tab_id %>
+                    </div>
+                  <% else %>
+                    <div class="search-user-container-<%= @current_user.id.to_s %>-<%= @tab_id %>" data-value="<%= @search_value %>">
+                      <p>ユーザが存在しません</p>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="shadow-sm p-0 mb-5 bg-white rounded">
+          <div class="card card-green">
+            <div class="card-header pt-4">
+              <h3 class="card-title"><i class="fas fa-wrench"></i> Option</h3>
+            </div>
+            <div class="card-body">
+              <!-- radio -->
+              <div class="form-group">
+                <label>アカウント</label>
+                <div class="custom-control custom-radio">
+                  <input class="custom-control-input custom-control-input-green" type="radio" id="follow_user_only" name="fromUserRadio">
+                  <label for="follow_user_only" class="custom-control-label">フォロー中のアカウントのみ</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input class="custom-control-input custom-control-input-yellow" type="radio" id="all_user_by" name="fromUserRadio" checked>
+                  <label for="all_user_by" class="custom-control-label">全てのアカウントを含む</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+    window.onload = function () {
+        $("#search-btn-<%= @tab_id %>").click()
+    }
+    $(function () {
+        $('input[name="fromUserRadio"]:radio').change(function () {
+            var radioval = $(this).attr("id");
+            $("#radio_val").val(radioval)
+            $("#radio_val_hidden").val(radioval)
+            $("#search-btn-<%= @tab_id %>").click()
+        });
+    });
+
+</script>

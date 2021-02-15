@@ -78,6 +78,7 @@ class UsersController < ApplicationController
       if @user.update(user_params)
         flash.now[:success] = "プロフィールを更新しました！"
         ActionCable.server.broadcast("home_channel", { method: "update", user_id: @user.id, user: @user, profiles: @user.profiles, profile_images: @user.user_widget_html })
+        ActionCable.server.broadcast("search_channel", { user_notes: @user.profiles.notes,user:@user ,method: "new_profile" })
         ActionCable.server.broadcast("flash_channel", { flash: flash, user_id: @user.id })
         render json: 'success'
       else
