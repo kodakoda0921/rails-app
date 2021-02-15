@@ -1,8 +1,6 @@
 class SearchController < ApplicationController
   def index
     if logged_in?
-      logger.error(params)
-
       if params[:function] == "new"
         if params[:value].empty?
           flash.now[:info] = "検索値を入力して下さい"
@@ -13,7 +11,6 @@ class SearchController < ApplicationController
             @tab_id = SecureRandom.urlsafe_base64
           end
           radio_val = params[:radio_val]
-          logger.error(radio_val)
           page_tab_id = params[:tab_id]
           @search_value = params[:value]
           @current_user = current_user

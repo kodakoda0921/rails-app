@@ -18,7 +18,6 @@ class MicropostsController < ApplicationController
         followed_list = current_user.followed_list_id
         followed_list.each do |user_id|
           follower_user = User.find_by(id: user_id)
-          logger.error(follower_user)
           ActionCable.server.broadcast("home_channel", { micropost: @micropost.html_template(follower_user), post_user_id: current_user.id.to_s, user_id: user_id.to_s, method: "create" })
         end
 
