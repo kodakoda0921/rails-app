@@ -3,7 +3,7 @@ name: Docker Image CI/CD
 on:
   workflow_dispatch:
     inputs:
-      パラメーター名:
+      param:
         description: '説明'
         required: true
         default: 'デフォルト値'
