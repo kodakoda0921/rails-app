@@ -1,12 +1,8 @@
 name: Docker Image CI/CD
 
 on:
-  workflow_dispatch:
-    inputs:
-      param:
-        description: '説明'
-        required: true
-        default: 'デフォルト値'
+  push:
+    branches: [ master ]
 
 jobs:
 
@@ -22,16 +18,6 @@ jobs:
       - name: Compile with Webpacker
         run: |
           sudo apt-get -yqq install libpq-dev
-          echo -e "n\nn\nn" | bundle exec rails webpacker:install
-          bundle exec rails webpacker:compile
-        env:
-          NODE_ENV: production
-      - name: Build the Docker image
-        run: docker-compose build
-      - name: docker-compose up
-        run: |
-          docker-compose down
-          docker-compose up -d
-          sleep 10
-          docker-compose exec -T web bash -c "rails db:migrate:reset RAILS_ENV=test"
-          docker-compose exec -T web bash -c "rails db:seed RAILS_ENV=test"
+  staging:
+    needs: build
+    name: Deploy to staging
