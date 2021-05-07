@@ -4,3 +4,18 @@ on:
   workflow_dispatch:
   push:
     branches: [ master ]
+jobs:
+
+  test:
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+  staging:
+    needs: build
+    name: Deploy to staging
+    environment:
+      name: staging
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
