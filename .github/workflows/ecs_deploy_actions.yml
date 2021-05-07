@@ -2,25 +2,5 @@ name: Docker Image CI/CD
 
 on:
   workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
-      tags:
-        description: 'Test scenario tags'
-jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-  staging:
-    needs: build
-    name: Deploy to staging
-    environment:
-      name: staging
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+  push:
+    branches: [ master ]
