@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
   staging:
-    needs: build
+    needs: test
     name: Deploy to staging
     environment:
       name: staging
